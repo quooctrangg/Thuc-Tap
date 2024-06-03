@@ -1,0 +1,21 @@
+@import "../../css/styles/common.scss";
+
+.form-group {
+
+    .input-group {
+        background: white;
+        border-color: #80bdff;
+        outline: 0;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+
+        &:focus-within {
+            box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+        }
+
+        .form-control {
+            border: none;
+            box-shadow: none
+        }
+    }
+}

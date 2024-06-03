@@ -1,0 +1,19 @@
+.main_menu {
+    transition: width 2s, top 4s;
+
+    .box-message-quantity {
+        border-radius: 50%;
+        width: 20px;
+        height: 15px;
+        background-color: #ee4266;
+        color: #fff;
+        line-height: 15px;
+        text-align: center;
+        display: block;
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        font-size: 12px;
+    }
+
+}

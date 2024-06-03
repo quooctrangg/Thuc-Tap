@@ -1,0 +1,27 @@
+.box-productFeature {
+    // .slick-prev {
+    //     z-index: 50 !important;
+    //     left: 30px !important;
+    //     height: 48px !important;
+    //     width: 44px !important;
+    //     top: 206px;
+    // }
+
+    .slick-prev::before,
+    .slick-next::before {
+        font-size: 50px;
+        color: #ffa704 !important;
+    }
+
+    // .slick-next {
+    //     right: 45px !important;
+    //     z-index: 50 !important;
+    //     height: 48px !important;
+    //     width: 44px !important;
+    //     top: 206px;
+    // }
+
+    .slick-disable {
+        display: none !important;
+    }
+}
