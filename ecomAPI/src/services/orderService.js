@@ -7,6 +7,7 @@ require('dotenv').config()
 import moment from 'moment';
 import localization from 'moment/locale/vi';
 import { EXCHANGE_RATES } from '../utils/constants'
+import { concat } from 'lodash';
 moment.updateLocale('vi', localization);
 paypal.configure({
     'mode': 'sandbox',
@@ -262,6 +263,7 @@ let getAllOrdersByUser = (userId) => {
                     errMessage: 'Missing required parameter !'
                 })
             } else {
+                let data = []
                 let addressUser = await db.AddressUser.findAll({
                     where: { userId: userId }
                 })
@@ -307,10 +309,19 @@ let getAllOrdersByUser = (userId) => {
                         }
                         addressUser[i].order[j].orderDetail = orderDetail
                     }
+
                 }
+                for (let i = 0; i < addressUser.length; i++) {
+                    if (addressUser[i]?.order && addressUser[i]?.order.length) {
+                        data = concat(data, addressUser[i].order)
+                    }
+                }
+                data = data.sort((a, b) => {
+                    return new Date(b.createdAt) - new Date(a.createdAt)
+                })
                 resolve({
                     errCode: 0,
-                    data: addressUser
+                    data: data
                 })
             }
         } catch (error) {
@@ -351,7 +362,6 @@ let getAllOrdersByShipper = (data) => {
             resolve({
                 errCode: 0,
                 data: addressUser
-
             })
         } catch (error) {
             reject(error)

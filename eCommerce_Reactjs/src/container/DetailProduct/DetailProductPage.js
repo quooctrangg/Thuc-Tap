@@ -14,11 +14,11 @@ function DetailProductPage(props) {
     const [dataProductRecommend, setdataProductRecommend] = useState([])
 
     useEffect(async () => {
-        // const userData = JSON.parse(localStorage.getItem('userData'));
-        // if (userData) {
-        //     fetchProductFeature(userData.id)
-        //     setUser(userData)
-        // }
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (userData) {
+            fetchProductFeature(userData.id)
+            setUser(userData)
+        }
         window.scrollTo(0, 0);
         await fetchDetailProduct()
     }, [])

@@ -7,6 +7,7 @@ import { handleLoginService, checkPhonenumberEmail, createNewUser } from '../../
 import Otp from "./Otp";
 import { authentication } from "../../utils/firebase";
 import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth'
+import axios from "axios";
 const LoginWebPage = () => {
     const [inputValues, setInputValues] = useState({
         email: '', password: 'passwordsecrect', lastName: '', phonenumber: '', isOpen: false, dataUser: {}
@@ -91,7 +92,8 @@ const LoginWebPage = () => {
     }
 
     const getBase64FromUrl = async (url) => {
-        const data = await fetch(url);
+        const data = await axios.get(url)
+        if (!data) return null
         const blob = await data.blob();
         return new Promise((resolve) => {
             const reader = new FileReader();
@@ -125,24 +127,22 @@ const LoginWebPage = () => {
                 ["email"]: re.user.providerData[0].email,
             })
             handleLoginSocial(re.user.providerData[0].email)
-
         } else {
-            getBase64FromUrl(re.user.providerData[0].photoURL).then(async (value) => {
-                let res = await createNewUser({
-                    email: re.user.providerData[0].email,
-                    lastName: re.user.providerData[0].displayName,
-                    phonenumber: re.user.providerData[0].phoneNumber,
-                    avatar: value,
-                    roleId: "R2",
-                    password: inputValues.password
-                })
-                if (res && res.errCode === 0) {
-                    toast.success("Tạo tài khoản thành công")
-                    handleLoginSocial(re.user.providerData[0].email)
-                } else {
-                    toast.error(res.errMessage)
-                }
+            // const value = await getBase64FromUrl(re.user.providerData[0].photoURL)
+            let res = await createNewUser({
+                email: re.user.providerData[0].email,
+                lastName: re.user.providerData[0].displayName,
+                phonenumber: re.user.providerData[0].phoneNumber,
+                avatar: null,
+                roleId: "R2",
+                password: inputValues.password
             })
+            if (res && res.errCode === 0) {
+                toast.success("Tạo tài khoản thành công")
+                handleLoginSocial(re.user.providerData[0].email)
+            } else {
+                toast.error(res.errMessage)
+            }
         }
     }
 
@@ -191,7 +191,7 @@ const LoginWebPage = () => {
                                             </div>
                                             <hr></hr>
                                             <h5 class="text-center">hoặc</h5>
-                                            <FacebookLoginButton text="Đăng nhập với Facebook" iconSize="25px" style={{ width: "350px", height: "40px", fontSize: "16px", marginTop: "20px", marginBottom: "10px" }} onClick={() => signInwithFacebook()} />
+                                            {/* <FacebookLoginButton text="Đăng nhập với Facebook" iconSize="25px" style={{ width: "350px", height: "40px", fontSize: "16px", marginTop: "20px", marginBottom: "10px" }} onClick={() => signInwithFacebook()} /> */}
                                             <GoogleLoginButton text="Đăng nhập với Google" iconSize="25px" style={{ width: "350px", height: "40px", fontSize: "16px" }} onClick={() => signInwithGoogle()} />
                                         </form>
                                     </div>

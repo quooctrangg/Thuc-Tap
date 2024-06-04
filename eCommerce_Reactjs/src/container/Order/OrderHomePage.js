@@ -74,7 +74,6 @@ function OrderHomePage(props) {
     }
 
     let handleOpenAddressUserModal = async () => {
-
         setisOpenModalAddressUser(true)
     }
 
