@@ -17,7 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         orderId: DataTypes.INTEGER,
         productId: DataTypes.INTEGER,
         quantity: DataTypes.INTEGER,
-        realPrice: DataTypes.BIGINT
+        realPrice: DataTypes.BIGINT,
+        isRate: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        }
     }, {
         sequelize,
         modelName: 'OrderDetail',

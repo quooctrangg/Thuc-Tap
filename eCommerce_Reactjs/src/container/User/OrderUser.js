@@ -5,10 +5,15 @@ import './OrderUser.scss';
 import { getAllOrdersByUser, updateStatusOrderService } from '../../services/userService'
 import CommonUtils from '../../utils/CommonUtils';
 import moment from 'moment'
+import RateModal from '../../container/User/RateModal'
 
 function OrderUser(props) {
     const { id } = useParams();
     const [DataOrder, setDataOrder] = useState([]);
+    const [isOpenModalRate, setisOpenModalRate] = useState(false)
+    const [productId, setProductId] = useState()
+    const [productName, setProductName] = useState()
+    const [orderDetailId, setOderDetailId] = useState()
     let price = 0;
 
     useEffect(async () => {
@@ -18,13 +23,6 @@ function OrderUser(props) {
     let loadDataOrder = async () => {
         if (id) {
             let order = await getAllOrdersByUser(id)
-            // if (order && order.errCode == 0) {
-            //     let orderArray = []
-            //     for (let i = 0; i < order.data.length; i++) {
-            //         orderArray = concat(orderArray, order.data[i].order)
-            //     }
-            //     setDataOrder(orderArray)
-            // }
             setDataOrder(order.data)
         }
     }
@@ -62,6 +60,18 @@ function OrderUser(props) {
         } else {
             return price - discount.typeVoucherOfVoucherData.maxValue
         }
+    }
+
+    let handleCloseModaRate = () => {
+        setisOpenModalRate(false)
+    }
+
+    let handleOpenRateModal = async (id, name, orderId) => {
+        setProductId(id)
+        setProductName(name)
+        setOderDetailId(orderId)
+        setisOpenModalRate(true)
+        console.log(DataOrder);
     }
 
     return (
@@ -115,19 +125,13 @@ function OrderUser(props) {
                                                                 <div style={{ fontSize: '18px', marginLeft: '16px' }}>
                                                                     {CommonUtils.formatter.format(element.realPrice)}
                                                                 </div>
-                                                                {/* <Link to={`/detail-product/${item.product.id}`} className='btn btn-primary profile-button'>
-                                                                    <div className='view-shop'>
-                                                                        Đánh giá
-                                                                    </div>
-                                                                </Link> */}
-                                                                {/* {element.isRate} */}
-                                                                {item.statusId == 'S6' ?
+                                                                {item.statusId == 'S6' && element.isRate == 0 ?
                                                                     <>
-                                                                        <p className='btn btn-primary profile-button'>
+                                                                        <button type='button' onClick={() => handleOpenRateModal(element.product.id, element.product.name, element.id)} className='btn btn-primary profile-button'>
                                                                             <div className='view-shop'>
                                                                                 Đánh giá
                                                                             </div>
-                                                                        </p>
+                                                                        </button>
                                                                     </> : null
                                                                 }
                                                             </div>
@@ -180,6 +184,7 @@ function OrderUser(props) {
                     }
                 </div>
             </div>
+            <RateModal loadDataOrder={loadDataOrder} orderDetailId={orderDetailId} productId={productId} productName={productName} userId={id} handleCloseModaRate={handleCloseModaRate} isOpenModalRate={isOpenModalRate}></RateModal>
         </div >
     );
 }

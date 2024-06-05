@@ -83,7 +83,7 @@ function ReviewProduct(props) {
                 star: inputValues.activeStar
             })
             if (response && response.errCode === 0) {
-                toast.success("Đăng đánh giá thành công !")
+                toast.success("Đánh giá thành công !")
                 await loadAllReview()
             } else {
                 toast.error(response.errMessage)

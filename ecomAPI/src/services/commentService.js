@@ -4,7 +4,7 @@ require('dotenv').config();
 let createNewReview = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.content || !data.productId || !data.userId || !data.star) {
+            if (!data.content || !data.productId || !data.userId || !data.star, !data.orderDetailId) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing required parameter !'
@@ -16,6 +16,13 @@ let createNewReview = (data) => {
                     userId: data.userId,
                     star: data.star,
                     image: data.image
+                })
+                await db.OrderDetail.update({
+                    isRate: 1
+                }, {
+                    where: {
+                        id: data.orderDetailId
+                    }
                 })
                 resolve({
                     errCode: 0,

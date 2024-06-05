@@ -30,6 +30,11 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
+            },
+            isRate: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
             }
         });
     },
