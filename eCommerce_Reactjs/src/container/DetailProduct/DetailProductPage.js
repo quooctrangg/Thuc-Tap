@@ -21,7 +21,7 @@ function DetailProductPage(props) {
         }
         window.scrollTo(0, 0);
         await fetchDetailProduct()
-    }, [])
+    }, [id])
 
     let sendDataFromInforDetail = (data) => {
         setdataDetailSize(data)

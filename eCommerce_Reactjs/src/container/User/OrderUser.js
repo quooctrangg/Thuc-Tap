@@ -98,33 +98,38 @@ function OrderUser(props) {
                                             </div>
                                         </div>
                                         {item.orderDetail && item.orderDetail.length > 0 &&
-                                            item.orderDetail.map((item, index) => {
-                                                price += item.quantity * item.realPrice
+                                            item.orderDetail.map((element, index) => {
+                                                price += element.quantity * element.realPrice
                                                 return (
-                                                    <div className='content-center' key={item.id}>
+                                                    <div className='content-center' key={element.id}>
                                                         <div className='box-item-order'>
-                                                            <img src={item.productImage[0].image}></img>
+                                                            <img src={element.productImage[0].image}></img>
                                                             <div className='box-des'>
-                                                                <a href={`/detail-product/${item.product.id}`}>
-                                                                    <span className='name'>{item.product.name}</span>
+                                                                <a href={`/detail-product/${element.product.id}`}>
+                                                                    <span className='name'>{element.product.name}</span>
                                                                 </a>
-                                                                <span className='type'>Phân loại hàng: {item.productDetail.nameDetail} | {item.productDetailSize.sizeData.value}</span>
-                                                                <span>x{item.quantity}</span>
+                                                                <span className='type'>Phân loại hàng: {element.productDetail.nameDetail} | {element.productDetailSize.sizeData.value}</span>
+                                                                <span>x{element.quantity}</span>
                                                             </div>
                                                             <div className='box-price'>
                                                                 <div style={{ fontSize: '18px', marginLeft: '16px' }}>
-                                                                    {CommonUtils.formatter.format(item.realPrice)}
+                                                                    {CommonUtils.formatter.format(element.realPrice)}
                                                                 </div>
                                                                 {/* <Link to={`/detail-product/${item.product.id}`} className='btn btn-primary profile-button'>
                                                                     <div className='view-shop'>
                                                                         Đánh giá
                                                                     </div>
                                                                 </Link> */}
-                                                                <a href={`/detail-product/${item.product.id}`} className='btn btn-primary profile-button'>
-                                                                    <div className='view-shop'>
-                                                                        Đánh giá
-                                                                    </div>
-                                                                </a>
+                                                                {/* {element.isRate} */}
+                                                                {item.statusId == 'S6' ?
+                                                                    <>
+                                                                        <p className='btn btn-primary profile-button'>
+                                                                            <div className='view-shop'>
+                                                                                Đánh giá
+                                                                            </div>
+                                                                        </p>
+                                                                    </> : null
+                                                                }
                                                             </div>
                                                         </div>
                                                     </div>
