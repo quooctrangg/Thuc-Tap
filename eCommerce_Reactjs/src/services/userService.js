@@ -182,7 +182,7 @@ const getProductShopcartService = (data) => {
 }
 
 const getProductRecommendService = (data) => {
-    return axios.get(`/api/get-product-recommend?userId=${data.userId}&limit=${data.limit}`)
+    return axios.get(`/api/get-product-recommend?categoryId=${data.categoryId}&limit=${data.limit}&currentProductId=${data.currentProductId}`)
 }
 
 //===============BANNER======================//

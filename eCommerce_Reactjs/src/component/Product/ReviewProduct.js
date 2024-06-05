@@ -186,7 +186,7 @@ function ReviewProduct(props) {
                     </div>
                 </div>
                 <div className="review_list">
-                    {inputValues.user &&
+                    {/* {inputValues.user &&
                         <div className="review_item">
                             <div className="form-group">
                                 <label style={{ color: '#333', fontSize: '16px', fontWeight: '600' }}>Viết đánh giá của bạn</label>
@@ -208,7 +208,7 @@ function ReviewProduct(props) {
                             </div>
                             <div style={{ backgroundImage: `url(${inputValues.imageReview})` }} className="preview-cmt-img"></div>
                         </div>
-                    }
+                    } */}
                     {inputValues.dataReview && inputValues.dataReview.length > 0 && inputValues.dataReview.map((item, index) => {
                         if (!item.parentId) {
                             let name = `${item.user.firstName ? item.user.firstName : ''} ${item.user.lastName}`

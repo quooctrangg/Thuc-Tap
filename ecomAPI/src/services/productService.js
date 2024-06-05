@@ -1,7 +1,7 @@
 import db from "../models/index";
 import jsrecommender from 'js-recommender'
 require('dotenv').config();
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 function dynamicSort(property) {
     var sortOrder = 1;
@@ -588,7 +588,6 @@ let updateProductDetailImage = (data) => {
                     errMessage: 'Missing required parameter!'
                 })
             } else {
-
                 let productImage = await db.ProductImage.findOne({
                     where: { id: data.id },
                     raw: false
@@ -666,7 +665,6 @@ let deleteProductDetail = (data) => {
                     await db.ProductDetail.destroy({
                         where: { id: data.id }
                     })
-
                     let productImg = await db.ProductImage.findOne({
                         where: { productdetailId: data.id }
                     })
@@ -815,7 +813,6 @@ let updateProductDetailSize = (data) => {
                     res.sizeId = data.sizeId
                     res.width = data.width
                     res.height = data.height
-
                     res.weight = data.weight
                     await res.save();
                     resolve({
@@ -1008,52 +1005,44 @@ let getProductRecommend = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let productArr = []
-            if (!data.userId && !data.limit) {
+            let { categoryId, limit, currentProductId } = data
+            if (!data.categoryId && !data.limit) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing required parameter!'
                 })
             } else {
-                let recommender = new jsrecommender.Recommender();
-                let table = new jsrecommender.Table();
-                let rateList = await db.Comment.findAll({
+                productArr = await db.Product.findAll({
                     where: {
-                        star: { [Op.not]: null }
-                    }
+                        categoryId: categoryId,
+                        id: { [Op.not]: currentProductId }
+                    },
+                    limit: Number(limit)
                 })
-                for (let i = 0; i < rateList.length; i++) {
-                    table.setCell(`${rateList[i].productId}`, `${rateList[i].userId}`, rateList[i].star)
-                }
-                let model = recommender.fit(table);
-                let predicted_table = recommender.transform(table);
-
-                for (let i = 0; i < predicted_table.columnNames.length; ++i) {
-                    let user = predicted_table.columnNames[i];
-                    for (let j = 0; j < predicted_table.rowNames.length; ++j) {
-                        let product = predicted_table.rowNames[j];
-                        if (user == data.userId && Math.round(predicted_table.getCell(product, user)) > 3) {
-                            let productdata = await db.Product.findOne({ where: { id: product } })
-                            if (productArr.length == +data.limit) {
-                                break;
-                            } else {
-                                productArr.push(productdata)
+                if (productArr && productArr.length) {
+                    for (let i = 0; i < productArr.length; i++) {
+                        productArr[i].productDetail = await db.ProductDetail.findAll({
+                            where: {
+                                productId: productArr[i].id
                             }
-                        }
-                    }
-                }
-                if (productArr && productArr.length > 0) {
-                    for (let g = 0; g < productArr.length; g++) {
-                        let objectFilterProductDetail = {
-                            where: { productId: productArr[g].id }, raw: true
-                        }
-                        productArr[g].productDetail = await db.ProductDetail.findAll(objectFilterProductDetail)
-                        for (let j = 0; j < productArr[g].productDetail.length; j++) {
-                            productArr[g].productDetail[j].productDetailSize = await db.ProductDetailSize.findAll({ where: { productdetailId: productArr[g].productDetail[j].id }, raw: true })
-
-                            productArr[g].price = productArr[g].productDetail[0].discountPrice
-                            productArr[g].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: productArr[g].productDetail[j].id }, raw: true })
-                            for (let k = 0; k < productArr[g].productDetail[j].productImage.length > 0; k++) {
-                                productArr[g].productDetail[j].productImage[k].image = Buffer.from(productArr[g].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                        })
+                        if (productArr[i].productDetail && productArr[i].productDetail.length) {
+                            for (let j = 0; j < productArr[i].productDetail.length; j++) {
+                                productArr[i].productDetail[j].productDetailSize = await db.ProductDetailSize.findAll({
+                                    where: {
+                                        productdetailId: productArr[i].productDetail[j].id
+                                    }
+                                })
+                                productArr[i].productDetail[j].productImage = await db.ProductImage.findAll({
+                                    where: {
+                                        productdetailId: productArr[i].productDetail[j].id
+                                    }
+                                })
+                                if (productArr[i].productDetail[j].productImage && productArr[i].productDetail[j].productImage.length) {
+                                    for (let k = 0; k < productArr[i].productDetail[j].productImage.length; k++) {
+                                        productArr[i].productDetail[j].productImage[k].image = Buffer.from(productArr[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                                    }
+                                }
                             }
                         }
                     }

@@ -5,6 +5,7 @@ import InfoDetailProduct from '../../component/Product/InfoDetailProduct';
 import ProfileProduct from '../../component/Product/ProfileProduct';
 import ReviewProduct from '../../component/Product/ReviewProduct';
 import DescriptionProduct from '../../component/Product/DescriptionProduct';
+import NewProductFeature from "../../component/HomeFeature/NewProductFeature"
 
 function DetailProductPage(props) {
     const [dataProduct, setDataProduct] = useState({})
@@ -16,7 +17,6 @@ function DetailProductPage(props) {
     useEffect(async () => {
         const userData = JSON.parse(localStorage.getItem('userData'));
         if (userData) {
-            fetchProductFeature(userData.id)
             setUser(userData)
         }
         window.scrollTo(0, 0);
@@ -31,13 +31,15 @@ function DetailProductPage(props) {
         let res = await getDetailProductByIdService(id)
         if (res && res.errCode === 0) {
             setDataProduct(res.data)
+            await fetchProductFeature(res.data.categoryId, res.data.id)
         }
     }
 
-    let fetchProductFeature = async (userId) => {
+    let fetchProductFeature = async (categoryId, currentProductId) => {
         let res = await getProductRecommendService({
-            limit: 20,
-            userId: userId
+            limit: 4,
+            categoryId: categoryId,
+            currentProductId: currentProductId
         })
         if (res && res.errCode === 0) {
             setdataProductRecommend(res.data)
@@ -86,7 +88,7 @@ function DetailProductPage(props) {
                     </ul>
                     <div className="tab-content" id="myTabContent">
                         <div className="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            < ProfileProduct data={dataDetailSize} />
+                            <ProfileProduct data={dataDetailSize} />
                         </div>
                         <div className="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
                             <DescriptionProduct data={dataProduct.contentHTML} />
@@ -96,9 +98,12 @@ function DetailProductPage(props) {
                         </div>
                     </div>
                 </div>
-                {/* {user && dataProductRecommend && dataProductRecommend.length > 0 &&
-                    <ProductFeature title={"Sản phẩm bạn quan tâm"} data={dataProductRecommend}></ProductFeature>
-                } */}
+                {dataProductRecommend && dataProductRecommend.length > 0 ?
+                    <div className='mt-5'>
+                        <NewProductFeature title="Sản phẩm cùng loại" description="" data={dataProductRecommend}></NewProductFeature>
+                    </div>
+                    : null
+                }
             </section>
         </div>
     );
