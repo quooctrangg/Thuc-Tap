@@ -98,11 +98,10 @@ function DetailProductPage(props) {
                         </div>
                     </div>
                 </div>
-                {dataProductRecommend && dataProductRecommend.length > 0 ?
+                {dataProductRecommend && dataProductRecommend.length > 0 &&
                     <div className='mt-5'>
                         <NewProductFeature title="Sản phẩm cùng loại" description="" data={dataProductRecommend}></NewProductFeature>
                     </div>
-                    : null
                 }
             </section>
         </div>

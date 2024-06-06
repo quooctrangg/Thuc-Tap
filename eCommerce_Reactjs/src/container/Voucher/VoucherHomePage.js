@@ -117,7 +117,7 @@ function VoucherHomePage(props) {
                 }
             </div>
             <div className="box-pagination">
-                {dataVoucher && dataVoucher.length > 1 ?
+                {dataVoucher && dataVoucher.length > 1 &&
                     <ReactPaginate
                         previousLabel={'Quay lại'}
                         nextLabel={'Tiếp'}
@@ -135,7 +135,6 @@ function VoucherHomePage(props) {
                         activeClassName={"active"}
                         onPageChange={handleChangePage}
                     />
-                    : null
                 }
             </div>
         </div>

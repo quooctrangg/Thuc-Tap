@@ -1,7 +1,6 @@
-import db from "../models/index";
-import jsrecommender from 'js-recommender'
+import db, { sequelize } from "../models/index";
 require('dotenv').config();
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 
 function dynamicSort(property) {
     var sortOrder = 1;
@@ -155,7 +154,8 @@ let getAllProductUser = (data) => {
             if (data.keyword !== '') {
                 objectFilter.where = {
                     ...objectFilter.where,
-                    name: { [Op.regexp]: data.keyword.split('').map(char => `${char}`).join('.*') }
+                    // name: { [Op.like]: `%${data.keyword}%` }
+                    name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', `%${data.keyword}%`)
                 };
                 // objectFilter.where = { ...objectFilter.where, name: { [Op.substring]: `%${data.keyword}%` } }
             }

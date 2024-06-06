@@ -133,7 +133,7 @@ function MainShop(props) {
                     }
                 </div>
             </div>
-            {count > 1 ?
+            {count > 1 &&
                 <ReactPaginate
                     previousLabel={'Quay lại'}
                     nextLabel={'Tiếp'}
@@ -151,7 +151,6 @@ function MainShop(props) {
                     activeClassName={"active"}
                     onPageChange={handleChangePage}
                 />
-                : null
             }
         </div>
     );

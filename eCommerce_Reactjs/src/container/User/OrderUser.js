@@ -125,14 +125,12 @@ function OrderUser(props) {
                                                                 <div style={{ fontSize: '18px', marginLeft: '16px' }}>
                                                                     {CommonUtils.formatter.format(element.realPrice)}
                                                                 </div>
-                                                                {item.statusId == 'S6' && element.isRate == 0 ?
-                                                                    <>
-                                                                        <button type='button' onClick={() => handleOpenRateModal(element.product.id, element.product.name, element.id)} className='btn btn-primary profile-button'>
-                                                                            <div className='view-shop'>
-                                                                                Đánh giá
-                                                                            </div>
-                                                                        </button>
-                                                                    </> : null
+                                                                {item.statusId == 'S6' && element.isRate == 0 &&
+                                                                    <button type='button' onClick={() => handleOpenRateModal(element.product.id, element.product.name, element.id)} className='btn btn-primary profile-button'>
+                                                                        <div className='view-shop'>
+                                                                            Đánh giá
+                                                                        </div>
+                                                                    </button>
                                                                 }
                                                             </div>
                                                         </div>

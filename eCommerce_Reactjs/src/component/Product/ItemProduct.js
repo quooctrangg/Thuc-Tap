@@ -22,14 +22,16 @@ function ItemProduct(props) {
                     <div style={{ width: props.width, height: '130px' }} className="product-btm">
                         <a href='/' className="d-block">
                             <h4 >{props.name}</h4>
-                            <del className='text-sm' >{props.price ? CommonUtils.formatter.format(props.price) : ''}</del>
+                            {
+                                props.price !== props.discountPrice &&
+                                <del className='text-sm' >{props.price ? CommonUtils.formatter.format(props.price) : ''}</del>
+                            }
                         </a>
                         <div className="mt-3">
                             <span className="mr-4 text-danger">{CommonUtils.formatter.format(props.discountPrice)}</span>
                             {
-                                props.price ?
-                                    <span className='text-red border bg-warning p-1'>{"-" + Math.trunc((props.price - props.discountPrice) / props.price * 100) + '%'}</span>
-                                    : ''
+                                props.price && props.price !== props.discountPrice &&
+                                <span className='text-red border bg-warning p-1'>{"-" + Math.trunc((props.price - props.discountPrice) / props.price * 100) + '%'}</span>
                             }
                         </div>
                     </div>

@@ -148,14 +148,14 @@ function ShopCartPage(props) {
                         </table>
                     </div>
                 </div>
-                {dataCart && dataCart.length !== 0 ?
+                {dataCart && dataCart.length !== 0 &&
                     <>
                         <div className="box-shipping">
                             <h6>
                                 Chọn đơn vị vận chuyển
                             </h6>
                             <div>
-                                {typeShip && typeShip.length > 0 ?
+                                {typeShip && typeShip.length > 0 &&
                                     typeShip.map((item, index) => {
                                         return (
                                             <div key={index} className="form-check">
@@ -166,7 +166,6 @@ function ShopCartPage(props) {
                                             </div>
                                         )
                                     })
-                                    : null
                                 }
                             </div>
                         </div>
@@ -192,7 +191,6 @@ function ShopCartPage(props) {
                             </div>
                         </div>
                     </>
-                    : null
                 }
             </div>
             <VoucherModal closeModalFromVoucherItem={closeModalFromVoucherItem} price={price + (+priceShip)} isOpenModal={isOpenModal}
