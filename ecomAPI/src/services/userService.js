@@ -241,11 +241,16 @@ let handleChangePassword = (data) => {
     })
 }
 
-let getAllUser = (data) => {
+let getAllUser = (data, userId) => {
     return new Promise(async (resolve, reject) => {
         try {
             let objectFilter = {
-                where: { statusId: 'S1' },
+                where: {
+                    statusId: 'S1',
+                    id: {
+                        [Op.not]: userId
+                    }
+                },
                 attributes: {
                     exclude: ['password', 'image']
                 },

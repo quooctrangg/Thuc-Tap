@@ -749,18 +749,32 @@ let getAllProductDetailSizeById = (data) => {
 let createNewProductDetailSize = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.productdetailId || !data.sizeId) {
+            const { sizeId, productdetailId, width, height, weight } = data
+            if (!productdetailId || !sizeId) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing required parameter!'
                 })
             } else {
+                const data = await db.ProductDetailSize.findOne({
+                    where: {
+                        sizeId: sizeId,
+                        productdetailId: productdetailId
+                    }
+                })
+                if (data) {
+                    resolve({
+                        errCode: 1,
+                        errCode: 'Size đã tồn tại!'
+                    })
+                    return
+                }
                 await db.ProductDetailSize.create({
-                    productdetailId: data.productdetailId,
-                    sizeId: data.sizeId,
-                    width: data.width,
-                    height: data.height,
-                    weight: data.weight,
+                    productdetailId: productdetailId,
+                    sizeId: sizeId,
+                    width: width,
+                    height: height,
+                    weight: weight,
                 })
                 resolve({
                     errCode: 0,
@@ -809,6 +823,19 @@ let updateProductDetailSize = (data) => {
                     where: { id: data.id },
                     raw: false
                 })
+                const sizeProduct = await db.ProductDetailSize.findOne({
+                    where: {
+                        sizeId: data.sizeId,
+                        productdetailId: res.dataValues.productdetailId
+                    }
+                })
+                if (sizeProduct) {
+                    resolve({
+                        errCode: 1,
+                        errCode: 'Size đã tồn tại!'
+                    })
+                    return
+                }
                 if (res) {
                     res.sizeId = data.sizeId
                     res.width = data.width

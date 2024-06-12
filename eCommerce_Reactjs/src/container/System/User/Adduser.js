@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import { createNewUser, getDetailUserById, UpdateUserService } from '../../../services/userService';
 import DatePicker from '../../../component/input/DatePicker';
 import { toast } from 'react-toastify';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { useFetchAllcode } from '../../customize/fetch';
 import moment from 'moment';
 
 const Adduser = (props) => {
+    const location = useLocation();
+    const history = useHistory()
     const [birthday, setbirthday] = useState('');
     const [isActionADD, setisActionADD] = useState(true)
     const [isChangeDate, setisChangeDate] = useState(false)
@@ -55,7 +57,6 @@ const Adduser = (props) => {
     };
 
     if (dataGender && dataGender.length > 0 && inputValues.genderId === '' && dataRole && dataRole.length > 0 && inputValues.roleId === '') {
-        console.log(dataRole)
         setInputValues({ ...inputValues, ["genderId"]: dataGender[0].code, ["roleId"]: dataRole[0].code })
     }
 
@@ -75,7 +76,6 @@ const Adduser = (props) => {
                 roleId: inputValues.roleId,
                 genderId: inputValues.genderId,
                 phonenumber: inputValues.phonenumber,
-
                 dob: new Date(birthday).getTime(),
             })
             if (res && res.errCode === 0) {
@@ -89,9 +89,11 @@ const Adduser = (props) => {
                     ["genderId"]: '',
                     ["roleId"]: '',
                     ["email"]: '',
-
                 })
                 setbirthday('')
+                history.push({
+                    pathname: '/admin/list-user',
+                })
             } else {
                 toast.error(res.errMessage)
             }
@@ -108,7 +110,10 @@ const Adduser = (props) => {
             })
             if (res && res.errCode === 0) {
                 toast.success("Cập nhật người dùng thành công")
-
+                history.push({
+                    pathname: '/admin/list-user',
+                    currentPage: location.currentPage
+                })
             } else {
                 toast.error(res.errMessage)
             }

@@ -109,12 +109,12 @@ const ManageCategory = () => {
                                 <tr>
                                     <th>STT</th>
                                     <th>Tên</th>
-                                    <th>mã code</th>
+                                    <th>Mã code</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataCategory && dataCategory.length > 0 &&
+                                {dataCategory && dataCategory.length > 0 ?
                                     dataCategory.map((item, index) => {
                                         return (
                                             <tr key={index}>
@@ -129,26 +129,35 @@ const ManageCategory = () => {
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <td colSpan={4} className='text-center text-red'>
+                                            Không có dữ liệu.
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
-                        <ReactPaginate
-                            previousLabel={'Quay lại'}
-                            nextLabel={'Tiếp'}
-                            breakLabel={'...'}
-                            pageCount={count}
-                            marginPagesDisplayed={3}
-                            containerClassName={"pagination justify-content-center"}
-                            pageClassName={"page-item"}
-                            pageLinkClassName={"page-link"}
-                            previousLinkClassName={"page-link"}
-                            nextClassName={"page-item"}
-                            nextLinkClassName={"page-link"}
-                            breakLinkClassName={"page-link"}
-                            breakClassName={"page-item"}
-                            activeClassName={"active"}
-                            onPageChange={handleChangePage}
-                        />
+                        {
+                            count > 1 &&
+                            <ReactPaginate
+                                previousLabel={'Quay lại'}
+                                nextLabel={'Tiếp'}
+                                breakLabel={'...'}
+                                pageCount={count}
+                                marginPagesDisplayed={3}
+                                containerClassName={"pagination justify-content-center"}
+                                pageClassName={"page-item"}
+                                pageLinkClassName={"page-link"}
+                                previousLinkClassName={"page-link"}
+                                nextClassName={"page-item"}
+                                nextLinkClassName={"page-link"}
+                                breakLinkClassName={"page-link"}
+                                breakClassName={"page-item"}
+                                activeClassName={"active"}
+                                onPageChange={handleChangePage}
+                            />
+                        }
                     </div>
                 </div>
             </div>

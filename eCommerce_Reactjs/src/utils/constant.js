@@ -40,7 +40,7 @@ export const USER_ROLE = {
 }
 
 export const PAGINATION = {
-    pagerow: 6
+    pagerow: 5
 }
 
 export const PREFIX_CURRENCY = {

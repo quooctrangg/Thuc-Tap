@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getStatisticProfit } from '../../../services/userService';
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -15,6 +15,15 @@ const Profit = (props) => {
     const [dateRange, setDateRange] = useState([null, null]);
     const [startDate, endDate] = dateRange;
     const [DateTime, setDateTime] = useState(new Date());
+
+    useEffect(() => {
+        setDateRange([new Date(), new Date()])
+        handleOnclick()
+    }, [])
+
+    useEffect(() => {
+        handleOnclick()
+    }, [type])
 
     let handleOnclick = async () => {
         let res = await getStatisticProfit({

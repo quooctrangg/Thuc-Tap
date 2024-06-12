@@ -133,7 +133,8 @@ function MainShop(props) {
                     }
                 </div>
             </div>
-            {count > 1 &&
+            {
+                count > 1 &&
                 <ReactPaginate
                     previousLabel={'Quay lại'}
                     nextLabel={'Tiếp'}

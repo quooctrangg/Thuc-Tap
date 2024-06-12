@@ -99,15 +99,15 @@ const ManageOrder = () => {
                                     <th>Email</th>
                                     <th>Ngày đặt</th>
                                     <th>Loại ship</th>
-                                    <th>Mã voucher</th>
+                                    {/* <th>Mã voucher</th> */}
                                     <th>Hình thức</th>
                                     <th>Trạng thái</th>
-                                    <th>Shipper</th>
+                                    {/* <th>Shipper</th> */}
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataOrder && dataOrder.length > 0 &&
+                                {dataOrder && dataOrder.length > 0 ?
                                     dataOrder.map((item, index) => {
                                         let date = moment.unix(item.orderdate / 1000).format('DD/MM/YYYY')
                                         return (
@@ -117,39 +117,48 @@ const ManageOrder = () => {
                                                 <td>{item.userData.email}</td>
                                                 <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
                                                 <td>{item.typeShipData.type}</td>
-                                                <td>{item.voucherData.codeVoucher}</td>
+                                                {/* <td>{item.voucherData.codeVoucher}</td> */}
                                                 <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
                                                 <td>{item.statusOrderData.value}</td>
-                                                <td>{item.shipperData && item.shipperData.firstName + " " + item.shipperData.lastName + " - " + item.shipperData.phonenumber}</td>
+                                                {/* <td>{item.shipperData && item.shipperData.firstName + " " + item.shipperData.lastName + " - " + item.shipperData.phonenumber}</td> */}
                                                 <td>
                                                     <Link to={`/admin/order-detail/${item.id}`}>Xem chi tiết</Link>
                                                 </td>
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <td colSpan={8} className='text-center text-red'>
+                                            Không có dữ liệu.
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <ReactPaginate
-                previousLabel={'Quay lại'}
-                nextLabel={'Tiếp'}
-                breakLabel={'...'}
-                pageCount={count}
-                marginPagesDisplayed={3}
-                containerClassName={"pagination justify-content-center"}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                previousLinkClassName={"page-link"}
-                nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
-                breakLinkClassName={"page-link"}
-                breakClassName={"page-item"}
-                activeClassName={"active"}
-                onPageChange={handleChangePage}
-            />
+            {
+                count > 1 &&
+                <ReactPaginate
+                    previousLabel={'Quay lại'}
+                    nextLabel={'Tiếp'}
+                    breakLabel={'...'}
+                    pageCount={count}
+                    marginPagesDisplayed={3}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    activeClassName={"active"}
+                    onPageChange={handleChangePage}
+                />
+            }
         </div>
     )
 }

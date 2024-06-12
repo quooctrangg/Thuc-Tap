@@ -8,7 +8,6 @@ const middlewareControllers = {
         const token = req.headers.authorization
         if (token) {
             const accessToken = token.split(' ')[1]
-
             jwt.verify(accessToken, secretString, async (err, payload) => {
                 if (err) {
                     return res.status(403).json({
@@ -41,7 +40,6 @@ const middlewareControllers = {
         const token = req.headers.authorization
         if (token) {
             const accessToken = token.split(' ')[1]
-
             jwt.verify(accessToken, secretString, async (err, payload) => {
                 if (err) {
                     return res.status(403).json({
@@ -61,7 +59,6 @@ const middlewareControllers = {
                 if (user && (user.roleId == 'R4' || user.roleId == 'R1')) {
                     req.user = user
                     next()
-
                 } else {
                     return res.status(404).json({
                         status: false,

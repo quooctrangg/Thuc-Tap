@@ -126,18 +126,17 @@ function DetailUserPage(props) {
                         <img onClick={() => openPreviewImage(inputValues.image)} className="rounded-circle mt-5" height="150px" style={{ objectFit: "cover", cursor: 'pointer' }} width="150px" src={inputValues.image} />
                         <span className="font-weight-bold">{inputValues.lastName}</span>
                         <div className="box-email-verify">
-                            <span className="text-black-50">{inputValues.email}
-                            </span>
-                            {inputValues.isActiveEmail === 0 &&
+                            <span className="text-black-50">{inputValues.email}</span>
+                            {/* {inputValues.isActiveEmail === 0 &&
                                 <i style={{ color: '#dc0707' }} className="fas fa-times-circle"></i>
                             }
                             {inputValues.isActiveEmail === 1 &&
                                 <i style={{ color: 'green' }} className="fas fa-check-circle"></i>
-                            }
+                            } */}
                         </div>
-                        {inputValues.isActiveEmail === 0 &&
+                        {/* {inputValues.isActiveEmail === 0 &&
                             <span onClick={() => handleSendEmail()} className="text-verify">xác thực</span>
-                        }
+                        } */}
                     </div>
                 </div>
                 <div className="col-md-9 border-right">

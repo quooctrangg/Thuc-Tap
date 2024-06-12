@@ -67,7 +67,7 @@ let handleChangePassword = async (req, res) => {
 
 let getAllUser = async (req, res) => {
     try {
-        let data = await userService.getAllUser(req.query);
+        let data = await userService.getAllUser(req.query, req.user.id);
         return res.status(200).json(data);
     } catch (error) {
         console.log(error)

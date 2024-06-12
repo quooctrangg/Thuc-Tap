@@ -6,23 +6,31 @@ import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import CommonUtils from '../../../utils/CommonUtils';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FormSearch from '../../../component/Search/FormSearch';
 
 const ManageUser = () => {
+    const location = useLocation();
     const [dataUser, setdataUser] = useState([]);
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
 
-    useEffect(() => {
-        fetchAllUser(keyword)
-    }, [])
+    useEffect(async () => {
+        await fetchAllUser(keyword, numberPage)
+    }, [numberPage])
 
-    let fetchAllUser = async (keyword) => {
+    useEffect(() => {
+        if (location.currentPage == 0 || location.currentPage) {
+            handleChangePage({ selected: location.currentPage })
+            location.currentPage = null
+        }
+    })
+
+    let fetchAllUser = async (keyword, page) => {
         let res = await getAllUsers({
             limit: PAGINATION.pagerow,
-            offset: 0,
+            offset: page * PAGINATION.pagerow,
             keyword: keyword
         })
         if (res && res.errCode === 0) {
@@ -36,15 +44,7 @@ const ManageUser = () => {
         let res = await DeleteUserService(id)
         if (res && res.errCode === 0) {
             toast.success("Xóa người dùng thành công")
-            let user = await getAllUsers({
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow,
-                keyword: keyword
-            })
-            if (user && user.errCode === 0) {
-                setdataUser(user.data);
-                setCount(Math.ceil(user.count / PAGINATION.pagerow))
-            }
+            await fetchAllUser(keyword, numberPage)
         } else {
             toast.error("Xóa người dùng thất bại")
         }
@@ -52,25 +52,16 @@ const ManageUser = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllUsers({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            keyword: keyword
-
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataUser(arrData.data)
-        }
     }
 
     let handleSearchUser = (keyword) => {
-        fetchAllUser(keyword)
+        fetchAllUser(keyword, 0)
         setkeyword(keyword)
     }
 
     let handleOnchangeSearch = (keyword) => {
         if (keyword === '') {
-            fetchAllUser(keyword)
+            fetchAllUser(keyword, 0)
             setkeyword(keyword)
         }
     }
@@ -81,11 +72,11 @@ const ManageUser = () => {
             offset: '',
             keyword: ''
         })
-
         if (res && res.errCode == 0) {
             await CommonUtils.exportExcel(res.data, "Danh sách người dùng", "ListUser")
         }
     }
+
     return (
         <div className="container-fluid px-4">
             <h1 className="mt-4">Quản lý người dùng</h1>
@@ -118,20 +109,20 @@ const ManageUser = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataUser && dataUser.length > 0 &&
+                                {dataUser && dataUser.length > 0 ?
                                     dataUser.map((item, index) => {
                                         let date = moment.unix(item.dob / 1000).format('DD/MM/YYYY')
                                         return (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>{item.email}</td>
-                                                <td>{`${item.firstName} ${item.lastName}`}</td>
+                                                <td>{`${item.firstName ? item.firstName : ''} ${item.lastName ? item.lastName : ''}`}</td>
                                                 <td>{item.phonenumber}</td>
                                                 <td>{date}</td>
                                                 <td>{item.genderData.value}</td>
                                                 <td>{item.roleData.value}</td>
                                                 <td>
-                                                    <Link to={`/admin/edit-user/${item.id}`}>Edit</Link>
+                                                    <Link to={{ pathname: `/admin/edit-user/${item.id}`, currentPage: numberPage }}>Edit</Link>
                                                     &nbsp; &nbsp;
                                                     {/* <a href="#" onClick={(event) => handleBanUser(event, item.id)} >Delete</a> */}
                                                     <span style={{ color: '#0E6DFE', cursor: 'pointer' }} >Ban</span>
@@ -139,29 +130,39 @@ const ManageUser = () => {
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <td colSpan={8} className='text-center text-red'>
+                                            Không có dữ liệu.
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <ReactPaginate
-                previousLabel={'Quay lại'}
-                nextLabel={'Tiếp'}
-                breakLabel={'...'}
-                pageCount={count}
-                marginPagesDisplayed={3}
-                containerClassName={"pagination justify-content-center"}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                previousLinkClassName={"page-link"}
-                nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
-                breakLinkClassName={"page-link"}
-                breakClassName={"page-item"}
-                activeClassName={"active"}
-                onPageChange={handleChangePage}
-            />
+            {
+                count > 1 &&
+                <ReactPaginate
+                    previousLabel={'Quay lại'}
+                    nextLabel={'Tiếp'}
+                    breakLabel={'...'}
+                    pageCount={count}
+                    marginPagesDisplayed={3}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    activeClassName={"active"}
+                    onPageChange={handleChangePage}
+                    forcePage={numberPage}
+                />
+            }
         </div>
     )
 }

@@ -45,8 +45,16 @@ let getAllCodeService = (typeInput) => {
                     errMessage: 'Missing required parameters !'
                 })
             } else {
+                let where = {
+                    type: typeInput
+                }
+                if (typeInput === 'ROLE') {
+                    where.code = {
+                        [Op.not]: 'R1'
+                    }
+                }
                 let allcode = await db.Allcode.findAll({
-                    where: { type: typeInput }
+                    where: where
                 })
                 resolve({
                     errCode: 0,

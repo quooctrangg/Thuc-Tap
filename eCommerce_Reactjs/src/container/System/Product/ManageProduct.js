@@ -149,7 +149,7 @@ const ManageProduct = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataProduct && dataProduct.length > 0 &&
+                                {dataProduct && dataProduct.length > 0 ?
                                     dataProduct.map((item, index) => {
                                         return (
                                             <tr key={index}>
@@ -174,29 +174,38 @@ const ManageProduct = () => {
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <td colSpan={9} className='text-center text-red'>
+                                            Không có dữ liệu.
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <ReactPaginate
-                previousLabel={'Quay lại'}
-                nextLabel={'Tiếp'}
-                breakLabel={'...'}
-                pageCount={count}
-                marginPagesDisplayed={3}
-                containerClassName={"pagination justify-content-center"}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                previousLinkClassName={"page-link"}
-                nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
-                breakLinkClassName={"page-link"}
-                breakClassName={"page-item"}
-                activeClassName={"active"}
-                onPageChange={handleChangePage}
-            />
+            {
+                count > 1 &&
+                <ReactPaginate
+                    previousLabel={'Quay lại'}
+                    nextLabel={'Tiếp'}
+                    breakLabel={'...'}
+                    pageCount={count}
+                    marginPagesDisplayed={3}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    activeClassName={"active"}
+                    onPageChange={handleChangePage}
+                />
+            }
         </div>
     )
 }
