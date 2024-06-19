@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const ManageOrder = () => {
     const [dataOrder, setdataOrder] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const { data: dataStatusOrder } = useFetchAllcode('STATUS-ORDER');
     const [StatusId, setStatusId] = useState('ALL')
 
@@ -79,7 +79,7 @@ const ManageOrder = () => {
                         dataStatusOrder && dataStatusOrder.length > 0 &&
                         dataStatusOrder.map((item, index) => {
                             return (
-                                <option value={item.code}>{item.value}</option>
+                                <option key={index} value={item.code}>{item.value}</option>
                             )
                         })
                     }
@@ -94,11 +94,12 @@ const ManageOrder = () => {
                         <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>STT</th>
                                     <th>Mã đơn</th>
                                     <th>SDT</th>
                                     <th>Email</th>
                                     <th>Ngày đặt</th>
-                                    <th>Loại ship</th>
+                                    {/* <th>Loại ship</th> */}
                                     {/* <th>Mã voucher</th> */}
                                     <th>Hình thức</th>
                                     <th>Trạng thái</th>
@@ -109,14 +110,15 @@ const ManageOrder = () => {
                             <tbody>
                                 {dataOrder && dataOrder.length > 0 ?
                                     dataOrder.map((item, index) => {
-                                        let date = moment.unix(item.orderdate / 1000).format('DD/MM/YYYY')
+                                        // let date = moment.unix(item.orderdate / 1000).format('DD/MM/YYYY')
                                         return (
                                             <tr key={index}>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.id}</td>
-                                                <td>{item.userData.phonenumber}</td>
+                                                <td>{item.addressUser.shipPhonenumber}</td>
                                                 <td>{item.userData.email}</td>
                                                 <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                <td>{item.typeShipData.type}</td>
+                                                {/* <td>{item.typeShipData.type}</td> */}
                                                 {/* <td>{item.voucherData.codeVoucher}</td> */}
                                                 <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
                                                 <td>{item.statusOrderData.value}</td>

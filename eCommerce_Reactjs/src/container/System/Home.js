@@ -206,7 +206,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className='row'>
+            <div className='row'>
                 <div className="col-md-8">
                     <label>Chọn năm</label>
                     <DatePicker
@@ -295,7 +295,7 @@ const Home = () => {
                     />
                     <Bar options={getOptions('Biểu đồ doanh thu theo từng ngày trong tháng')} data={dataBar} />
                 </div>
-            </div> */}
+            </div>
         </div>
     )
 }

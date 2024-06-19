@@ -92,12 +92,12 @@ function VoucherHomePage(props) {
 
     return (
         <div className="voucher-container">
-            <div className="voucher-banner">
+            {/* <div className="voucher-banner">
                 <img className="photo-banner" src={bannerPhoto}></img>
                 <img src={voucherTodayPhoto}></img>
                 <img src={voucherAllPhoto}></img>
                 <img src={applyVoucherPhoto}></img>
-            </div>
+            </div> */}
             <div className="voucher-list">
                 {dataVoucher && dataVoucher.length > 0 &&
                     dataVoucher.map((item, index) => {
@@ -109,7 +109,6 @@ function VoucherHomePage(props) {
                             percent = CommonUtils.formatter.format(item.typeVoucherOfVoucherData.value)
                         }
                         let MaxValue = item.typeVoucherOfVoucherData.maxValue
-
                         return (
                             <VoucherItem sendDataFromVoucherItem={sendDataFromVoucherItem} id={item.id} width="550px" height="330px" key={index} name={item.codeVoucher} widthPercent={item.usedAmount * 100 / item.amount} maxValue={MaxValue} usedAmount={Math.round((item.usedAmount * 100 / item.amount) * 10) / 10} typeVoucher={percent} />
                         )

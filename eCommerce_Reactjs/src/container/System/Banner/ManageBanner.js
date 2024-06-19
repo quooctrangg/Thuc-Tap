@@ -17,10 +17,12 @@ const ManageBanner = () => {
     const [imgPreview, setimgPreview] = useState('')
     const [isOpen, setisOpen] = useState(false)
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
+
     useEffect(() => {
         loadBanner(keyword)
     }, [])
+
     let loadBanner = async (keyword) => {
         let arrData = await getAllBanner({
             limit: PAGINATION.pagerow,
@@ -132,13 +134,13 @@ const ManageBanner = () => {
                                     dataBanner.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.name}</td>
                                                 <td style={{ width: '30%' }} ><div onClick={() => openPreviewImage(item.image)} className="box-img-preview" style={{ backgroundImage: `url(${item.image})`, width: '100%' }}></div></td>
                                                 <td style={{ width: '20%' }}>
-                                                    <Link to={`/admin/edit-banner/${item.id}`}>Edit</Link>
+                                                    <Link to={`/admin/edit-banner/${item.id}`}>Sửa</Link>
                                                     &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteBanner(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }} >Delete</span>
+                                                    <span onClick={() => handleDeleteBanner(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
                                                 </td>
                                             </tr>
                                         )

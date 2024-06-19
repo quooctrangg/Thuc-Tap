@@ -26,7 +26,7 @@ const ManageProductImage = () => {
     const [productSizeId, setproductSizeId] = useState('')
     const [count, setCount] = useState('')
     const [countSize, setcountSizes] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
         let fetchProductDetailImage = async () => {
@@ -273,13 +273,13 @@ const ManageProductImage = () => {
                                         dataProductDetailImage.map((item, index) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td>{index + 1}</td>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
                                                     <td>{item.caption}</td>
                                                     <td ><div onClick={() => openPreviewImage(item.image)} className="box-image" style={{ backgroundImage: `url(${item.image})` }}></div></td>
                                                     <td>
-                                                        <span onClick={() => handleEditProductImage(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Edit</span>
+                                                        <span onClick={() => handleEditProductImage(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Sửa</span>
                                                         &nbsp; &nbsp;
-                                                        <span onClick={() => handleDeleteProductImage(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Delete</span>
+                                                        <span onClick={() => handleDeleteProductImage(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
                                                     </td>
                                                 </tr>
                                             )
@@ -302,23 +302,26 @@ const ManageProductImage = () => {
                         onCloseRequest={() => setisOpen(false)}
                     />
                 }
-                <ReactPaginate
-                    previousLabel={'Quay lại'}
-                    nextLabel={'Tiếp'}
-                    breakLabel={'...'}
-                    pageCount={count}
-                    marginPagesDisplayed={3}
-                    containerClassName={"pagination justify-content-center"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    breakLinkClassName={"page-link"}
-                    breakClassName={"page-item"}
-                    activeClassName={"active"}
-                    onPageChange={handleChangePage}
-                />
+                {
+                    count > 1 &&
+                    <ReactPaginate
+                        previousLabel={'Quay lại'}
+                        nextLabel={'Tiếp'}
+                        breakLabel={'...'}
+                        pageCount={count}
+                        marginPagesDisplayed={3}
+                        containerClassName={"pagination justify-content-center"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        activeClassName={"active"}
+                        onPageChange={handleChangePage}
+                    />
+                }
             </div>
             <div>
                 <div className="card mb-4">
@@ -353,9 +356,9 @@ const ManageProductImage = () => {
                                                     <td>{item.weight}</td>
                                                     <td>{item.stock}</td>
                                                     <td>
-                                                        <span onClick={() => handleEditProductSize(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Edit</span>
+                                                        <span onClick={() => handleEditProductSize(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Sửa</span>
                                                         &nbsp; &nbsp;
-                                                        <span onClick={() => handleDeleteProductSize(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Delete</span>
+                                                        <span onClick={() => handleDeleteProductSize(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
                                                     </td>
                                                 </tr>
                                             )
@@ -378,23 +381,26 @@ const ManageProductImage = () => {
                         onCloseRequest={() => setisOpen(false)}
                     />
                 }
-                <ReactPaginate
-                    previousLabel={'Quay lại'}
-                    nextLabel={'Tiếp'}
-                    breakLabel={'...'}
-                    pageCount={countSize}
-                    marginPagesDisplayed={3}
-                    containerClassName={"pagination justify-content-center"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    breakLinkClassName={"page-link"}
-                    breakClassName={"page-item"}
-                    activeClassName={"active"}
-                    onPageChange={handleChangePageProductSize}
-                />
+                {
+                    countSize > 1 &&
+                    <ReactPaginate
+                        previousLabel={'Quay lại'}
+                        nextLabel={'Tiếp'}
+                        breakLabel={'...'}
+                        pageCount={countSize}
+                        marginPagesDisplayed={3}
+                        containerClassName={"pagination justify-content-center"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        activeClassName={"active"}
+                        onPageChange={handleChangePageProductSize}
+                    />
+                }
             </div>
         </div >
     )

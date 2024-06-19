@@ -10,7 +10,7 @@ import FormSearch from '../../../component/Search/FormSearch';
 const ManageTypeShip = () => {
     const [dataTypeShip, setdataTypeShip] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
 
     useEffect(() => {
@@ -117,13 +117,13 @@ const ManageTypeShip = () => {
                                     dataTypeShip.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.type}</td>
                                                 <td>{CommonUtils.formatter.format(item.price)}</td>
                                                 <td>
-                                                    <Link to={`/admin/edit-typeship/${item.id}`}>Edit</Link>
+                                                    <Link to={`/admin/edit-typeship/${item.id}`}>Sửa</Link>
                                                     &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteTypeShip(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Delete</span>
+                                                    <span onClick={() => handleDeleteTypeShip(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
                                                 </td>
                                             </tr>
                                         )

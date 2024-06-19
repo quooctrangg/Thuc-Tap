@@ -114,7 +114,7 @@ const ManageUser = () => {
                                         let date = moment.unix(item.dob / 1000).format('DD/MM/YYYY')
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.email}</td>
                                                 <td>{`${item.firstName ? item.firstName : ''} ${item.lastName ? item.lastName : ''}`}</td>
                                                 <td>{item.phonenumber}</td>
@@ -122,10 +122,14 @@ const ManageUser = () => {
                                                 <td>{item.genderData.value}</td>
                                                 <td>{item.roleData.value}</td>
                                                 <td>
-                                                    <Link to={{ pathname: `/admin/edit-user/${item.id}`, currentPage: numberPage }}>Edit</Link>
+                                                    <Link to={{ pathname: `/admin/edit-user/${item.id}`, currentPage: numberPage }}>
+                                                        Sửa
+                                                    </Link>
                                                     &nbsp; &nbsp;
                                                     {/* <a href="#" onClick={(event) => handleBanUser(event, item.id)} >Delete</a> */}
-                                                    <span style={{ color: '#0E6DFE', cursor: 'pointer' }} >Ban</span>
+                                                    <span style={{ color: '#0E6DFE', cursor: 'pointer' }} >
+                                                        Khóa
+                                                    </span>
                                                 </td>
                                             </tr>
                                         )

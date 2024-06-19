@@ -136,7 +136,7 @@ const SideBar = () => {
                                         <Link to={'/admin/add-typeship'} className="nav-link" >Thêm loại giao hàng</Link>
                                     </nav>
                                 </div>
-                                {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVoucher" aria-expanded="false" aria-controls="collapseLayouts">
+                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVoucher" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div className="sb-nav-link-icon"><i className="fas fa-percentage"></i></div>
                                     Quản lý voucher
                                     <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down" /></div>
@@ -148,7 +148,7 @@ const SideBar = () => {
                                         <Link to={'/admin/list-voucher'} className="nav-link" >DS mã khuyến mãi</Link>
                                         <Link to={'/admin/add-voucher'} className="nav-link" >Thêm mã khuyến mãi</Link>
                                     </nav>
-                                </div> */}
+                                </div>
                             </>
                         }
                         <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSupplier" aria-expanded="false" aria-controls="collapseLayouts">
@@ -181,7 +181,7 @@ const SideBar = () => {
                                 <Link to={'/admin/add-receipt'} className="nav-link" >Thêm nhập hàng</Link>
                             </nav>
                         </div>
-                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrder" aria-expanded="false" aria-controls="collapseLayouts">
+                        {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrder" aria-expanded="false" aria-controls="collapseLayouts">
                             <div className="sb-nav-link-icon">
                                 <i className="fas fa-cart-plus"></i>
                             </div>
@@ -194,6 +194,12 @@ const SideBar = () => {
                             <nav className="sb-sidenav-menu-nested nav">
                                 <Link to={'/admin/list-order'} className="nav-link" >Danh sách đơn hàng</Link>
                             </nav>
+                        </div> */}
+                        <div >
+                            <Link to={'/admin/list-order'} className="nav-link flex gap-2" >
+                                <i className="fas fa-cart-plus"></i>
+                                Quản lý đơn hàng
+                            </Link>
                         </div>
                         {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrder" aria-expanded="false" aria-controls="collapseLayouts">
                             <div className="sb-nav-link-icon"><i class="fa-brands fa-facebook-messenger"></i></div>
@@ -205,7 +211,7 @@ const SideBar = () => {
                                 <Link to={'/admin/chat'} className="nav-link" >Messenger</Link>
                             </nav>
                         </div> */}
-                        {/* {user && user.roleId === "R1" &&
+                        {user && user.roleId === "R1" &&
                             <>
                                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseStatistic" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div className="sb-nav-link-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
@@ -221,7 +227,7 @@ const SideBar = () => {
                                     </nav>
                                 </div>
                             </>
-                        } */}
+                        }
                     </div>
                 </div >
                 {/* <div className="sb-sidenav-footer">

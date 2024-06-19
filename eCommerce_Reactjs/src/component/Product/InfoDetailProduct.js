@@ -134,7 +134,7 @@ function InfoDetailProduct(props) {
                             <input type="number" value={quantityProduct} onChange={(event) => setquantityProduct(event.target.value)} min="1" />
                         </div>
                         <div className="form-group">
-                            <label style={{ fontSize: '14px', color: '#797979', fontFamily: '"Roboto",sans-serif', marginLeft: '16px' }} htmlFor="type">Loại sản phẩm</label>
+                            <label style={{ fontSize: '14px', color: '#797979', fontFamily: '"Roboto",sans-serif', marginLeft: '16px' }} htmlFor="type">Màu</label>
                             <select onChange={(event) => handleSelectDetail(event)} className="sorting" name="type" style={{ outline: 'none', border: '1px solid #eee', marginLeft: '16px' }}>
                                 {dataProduct && productDetail && productDetail.length > 0 &&
                                     productDetail.map((item, index) => {

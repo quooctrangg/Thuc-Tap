@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const ManageVoucher = () => {
     const [dataVoucher, setdataVoucher] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
         try {
@@ -107,7 +107,7 @@ const ManageVoucher = () => {
                                         let name = `${item.typeVoucherOfVoucherData.value} ${item.typeVoucherOfVoucherData.typeVoucherData.value}`
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.codeVoucher}</td>
                                                 <td>{name}</td>
                                                 <td>{item.amount}</td>
@@ -115,9 +115,9 @@ const ManageVoucher = () => {
                                                 <td>{moment.unix(item.fromDate / 1000).format('DD/MM/YYYY')}</td>
                                                 <td>{moment.unix(item.toDate / 1000).format('DD/MM/YYYY')}</td>
                                                 <td>
-                                                    <Link to={`/admin/edit-voucher/${item.id}`}>Edit</Link>
+                                                    <Link to={`/admin/edit-voucher/${item.id}`}>Sửa</Link>
                                                     &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteVoucher(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Delete</span>
+                                                    <span onClick={() => handleDeleteVoucher(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
                                                 </td>
                                             </tr>
                                         )

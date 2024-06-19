@@ -12,7 +12,7 @@ const ManageBrand = () => {
     const [keyword, setkeyword] = useState('')
     const [dataBrand, setdataBrand] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
         try {
@@ -124,13 +124,13 @@ const ManageBrand = () => {
                                     dataBrand.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.value}</td>
                                                 <td>{item.code}</td>
                                                 <td>
-                                                    <Link to={`/admin/edit-Brand/${item.id}`}>Edit</Link>
+                                                    <Link to={`/admin/edit-Brand/${item.id}`}>Sửa</Link>
                                                     &nbsp; &nbsp;
-                                                    <a href="#" onClick={(event) => handleDeleteBrand(event, item.id)} >Delete</a>
+                                                    <a href="#" onClick={(event) => handleDeleteBrand(event, item.id)} >Xóa</a>
                                                 </td>
                                             </tr>
                                         )

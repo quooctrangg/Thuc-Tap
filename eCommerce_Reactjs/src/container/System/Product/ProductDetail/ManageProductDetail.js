@@ -11,7 +11,7 @@ const ManageProductDetail = () => {
     const { id } = useParams()
     const [dataProductDetail, setdataProductDetail] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
         let fetchProductDetail = async () => {
@@ -81,7 +81,7 @@ const ManageProductDetail = () => {
                             <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Tên loại sản phẩm</th>
+                                    <th>Màu</th>
                                     <th>Giá gốc</th>
                                     <th>Giá khuyến mãi</th>
                                     <th>Thao tác</th>
@@ -92,16 +92,16 @@ const ManageProductDetail = () => {
                                     dataProductDetail.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.nameDetail}</td>
                                                 <td>{CommonUtils.formatter.format(item.originalPrice)}</td>
                                                 <td>{CommonUtils.formatter.format(item.discountPrice)}</td>
                                                 <td>
-                                                    <Link to={`/admin/list-product-detail-image/${item.id}`}>View</Link>
+                                                    <Link to={`/admin/list-product-detail-image/${item.id}`}>Xem</Link>
                                                     &nbsp; &nbsp;
-                                                    <Link to={`/admin/update-product-detail/${item.id}`}>Edit</Link>
+                                                    <Link to={`/admin/update-product-detail/${item.id}`}>Sửa</Link>
                                                     &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteProductDetail(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Delete</span>
+                                                    <span onClick={() => handleDeleteProductDetail(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
                                                 </td>
                                             </tr>
                                         )
@@ -112,23 +112,26 @@ const ManageProductDetail = () => {
                     </div>
                 </div>
             </div>
-            <ReactPaginate
-                previousLabel={'Quay lại'}
-                nextLabel={'Tiếp'}
-                breakLabel={'...'}
-                pageCount={count}
-                marginPagesDisplayed={3}
-                containerClassName={"pagination justify-content-center"}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                previousLinkClassName={"page-link"}
-                nextClassName={"page-item"}
-                nextLinkClassName={"page-link"}
-                breakLinkClassName={"page-link"}
-                breakClassName={"page-item"}
-                activeClassName={"active"}
-                onPageChange={handleChangePage}
-            />
+            {
+                count > 1 &&
+                <ReactPaginate
+                    previousLabel={'Quay lại'}
+                    nextLabel={'Tiếp'}
+                    breakLabel={'...'}
+                    pageCount={count}
+                    marginPagesDisplayed={3}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    activeClassName={"active"}
+                    onPageChange={handleChangePage}
+                />
+            }
         </div>
     )
 }

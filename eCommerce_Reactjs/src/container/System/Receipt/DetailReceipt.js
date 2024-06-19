@@ -125,7 +125,7 @@ const DetailReceipt = (props) => {
                                 </select>
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="inputEmail4">Loại sản phẩm</label>
+                                <label htmlFor="inputEmail4">Màu</label>
                                 <select onChange={(event) => handleOnChangeProductDetail(event)} id="inputState" className="form-control">
                                     {dataProductDetail && dataProductDetail.length > 0 &&
                                         dataProductDetail.map((item, index) => {

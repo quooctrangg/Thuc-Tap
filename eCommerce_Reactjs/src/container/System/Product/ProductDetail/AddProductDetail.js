@@ -88,7 +88,7 @@ const AddProductDetail = (props) => {
                     <form>
                         <div className="form-row">
                             <div className="form-group col-md-4">
-                                <label htmlFor="inputEmail4">Tên loại sản phẩm</label>
+                                <label htmlFor="inputEmail4">Màu</label>
                                 <input type="text" value={inputValues.nameDetail} name="nameDetail" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
                             </div>
                             <div className="form-group col-md-4">

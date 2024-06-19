@@ -168,12 +168,12 @@ function DetailOrder(props) {
                                 <div className="content-left">
                                     <div className="wrap-voucher">
                                         <img width="20px" height="20px" style={{ marginLeft: "-3px" }} src={storeVoucherLogo}></img>
-                                        <span className="name-easier">Jolido voucher</span>
+                                        {/* <span className="name-easier">Jolido voucher</span> */}
                                         <span className="choose-voucher">Mã voucher: {DataOrder && DataOrder.voucherData && DataOrder.voucherData.codeVoucher}</span>
                                     </div>
                                     <div className="wrap-note">
-                                        <span>Lời Nhắn:</span>
-                                        <input value={DataOrder.note} type="text" placeholder="Lưu ý cho Người bán..." />
+                                        <span>Lời Nhắn: {DataOrder.note && DataOrder.note}</span>
+                                        {/* <input value={DataOrder.note} type="text" placeholder="Lưu ý cho Người bán..." /> */}
                                     </div>
                                 </div>
                                 <div className="content-right">
@@ -195,10 +195,10 @@ function DetailOrder(props) {
                         <span>Trạng Thái Đơn Hàng</span>
                         <div className='box-type-payment active'>{DataOrder.statusOrderData && DataOrder.statusOrderData.value}</div>
                     </div>
-                    <div className="content-top" style={{ display: 'flex', gap: '10px' }}>
+                    {/* <div className="content-top" style={{ display: 'flex', gap: '10px' }}>
                         <span>Hình ảnh giao hàng</span>
                         <div onClick={() => openPreviewImage(DataOrder.image)} className="box-img-preview" style={{ backgroundImage: `url(${DataOrder.image})`, width: '200px', height: '200px', borderRadius: "10px" }}></div>
-                    </div>
+                    </div> */}
                     <div className="content-bottom">
                         {DataOrder && DataOrder.addressUser &&
                             <div className="wrap-bottom">
@@ -241,7 +241,12 @@ function DetailOrder(props) {
                                     <a onClick={() => handleSendProduct()} className="main_btn">Gửi hàng</a>
                                 }
                                 {DataOrder && DataOrder.statusId == 'S5' &&
-                                    <a onClick={() => handleSuccessShip()} className="main_btn">Đã giao hàng</a>
+                                    <>
+                                        <a onClick={() => handleSuccessShip()} className="main_btn">Đã giao hàng</a>
+                                        <a onClick={() => handleCancelOrder(DataOrder)} style={{ marginLeft: '30px', background: '#cd2b14', border: '1px solid #cd2b14', width: '213px' }} className="main_btn">
+                                            Hủy đơn hàng
+                                        </a>
+                                    </>
                                 }
                             </div>
                             {(DataOrder && DataOrder.statusId == 'S3' && DataOrder.isPaymentOnlien == 0)

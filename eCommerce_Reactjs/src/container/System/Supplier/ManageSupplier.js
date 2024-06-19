@@ -12,7 +12,7 @@ const ManageSupplier = () => {
     const [keyword, setkeyword] = useState('')
     const [dataSupplier, setdataSupplier] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
         try {
@@ -125,15 +125,15 @@ const ManageSupplier = () => {
                                     dataSupplier.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.phonenumber}</td>
                                                 <td>{item.email}</td>
                                                 <td>{item.address}</td>
                                                 <td>
-                                                    <Link to={`/admin/edit-Supplier/${item.id}`}>Edit</Link>
+                                                    <Link to={`/admin/edit-Supplier/${item.id}`}>Sửa</Link>
                                                     &nbsp; &nbsp;
-                                                    <a href="#" onClick={(event) => handleDeleteSupplier(event, item.id)} >Delete</a>
+                                                    <a href="#" onClick={(event) => handleDeleteSupplier(event, item.id)}>Xóa</a>
                                                 </td>
                                             </tr>
                                         )

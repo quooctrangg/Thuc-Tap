@@ -10,7 +10,7 @@ import FormSearch from '../../../component/Search/FormSearch';
 const ManageProduct = () => {
     const [dataProduct, setdataProduct] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
 
     useEffect(() => {
@@ -153,7 +153,7 @@ const ManageProduct = () => {
                                     dataProduct.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.categoryData.value}</td>
                                                 <td>{item.brandData.value}</td>
@@ -162,13 +162,13 @@ const ManageProduct = () => {
                                                 <td>{item.view ? item.view : 0}</td>
                                                 <td>{item.statusData.value}</td>
                                                 <td style={{ width: '12%' }}>
-                                                    <Link to={`/admin/list-product-detail/${item.id}`}>View</Link>
+                                                    <Link to={`/admin/list-product-detail/${item.id}`}>Xem</Link>
                                                     &nbsp; &nbsp;
-                                                    <Link to={`/admin/edit-product/${item.id}`}>Edit</Link>
+                                                    <Link to={`/admin/edit-product/${item.id}`}>Sửa</Link>
                                                     &nbsp; &nbsp;
                                                     {item.statusData.code === 'S1' ?
-                                                        <span onClick={() => handleBanProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }} >Ban</span>
-                                                        : <span onClick={() => handleActiveProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Active</span>
+                                                        <span onClick={() => handleBanProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }} >Ẩn</span>
+                                                        : <span onClick={() => handleActiveProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Hiện</span>
                                                     }
                                                 </td>
                                             </tr>

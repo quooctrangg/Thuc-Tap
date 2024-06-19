@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const ManageReceipt = () => {
     const [dataReceipt, setdataReceipt] = useState([])
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     useEffect(() => {
         try {
             fetchData();
@@ -82,13 +82,13 @@ const ManageReceipt = () => {
                                     dataReceipt.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
                                                 <td>{item.supplierData.name}</td>
                                                 <td>{item.supplierData.phonenumber}</td>
                                                 <td>{item.userData.firstName + " " + item.userData.lastName}</td>
                                                 <td>
-                                                    <Link to={`/admin/detail-receipt/${item.id}`}>view</Link>
+                                                    <Link to={`/admin/detail-receipt/${item.id}`}>Xem</Link>
                                                     &nbsp; &nbsp;
                                                 </td>
                                             </tr>
