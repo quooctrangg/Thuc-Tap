@@ -8,7 +8,7 @@ let createNewTypeShip = (data) => {
             if (!data.type || !data.price) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.TypeShip.create({
@@ -17,7 +17,7 @@ let createNewTypeShip = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -32,7 +32,7 @@ let getDetailTypeshipById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.TypeShip.findOne({
@@ -76,7 +76,7 @@ let updateTypeship = (data) => {
             if (!data.id || !data.type || !data.price) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let typeship = await db.TypeShip.findOne({
@@ -89,7 +89,7 @@ let updateTypeship = (data) => {
                     await typeship.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -105,7 +105,7 @@ let deleteTypeship = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let typeship = await db.TypeShip.findOne({
@@ -117,7 +117,7 @@ let deleteTypeship = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }

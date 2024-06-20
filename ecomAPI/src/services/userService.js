@@ -84,7 +84,7 @@ let handleCreateNewUser = (data) => {
     })
 }
 
-let deleteUser = (userId) => {
+let unBanUser = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!userId) {
@@ -94,7 +94,8 @@ let deleteUser = (userId) => {
                 })
             } else {
                 let foundUser = await db.User.findOne({
-                    where: { id: userId }
+                    where: { id: userId },
+                    raw: false
                 })
                 if (!foundUser) {
                     resolve({
@@ -102,9 +103,40 @@ let deleteUser = (userId) => {
                         errMessage: `The user isn't exist`
                     })
                 }
-                await db.User.destroy({
-                    where: { id: userId }
+                foundUser.statusId = 'S1'
+                await foundUser.save()
+                resolve({
+                    errCode: 0,
+                    message: `The user is deleted`
                 })
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let banUser = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!userId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: `Missing required parameters !`
+                })
+            } else {
+                let foundUser = await db.User.findOne({
+                    where: { id: userId },
+                    raw: false
+                })
+                if (!foundUser) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: `The user isn't exist`
+                    })
+                }
+                foundUser.statusId = 'S2'
+                await foundUser.save()
                 resolve({
                     errCode: 0,
                     message: `The user is deleted`
@@ -148,7 +180,7 @@ let updateUserData = (data) => {
                 } else {
                     resolve({
                         errCode: 1,
-                        errMessage: 'User not found!'
+                        errMessage: 'Người dùng không tồn tại'
                     })
                 }
             }
@@ -164,7 +196,7 @@ let handleLogin = (data) => {
             if (!data.email || !data.password) {
                 resolve({
                     errCode: 4,
-                    errMessage: 'Missing required parameters!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             }
             else {
@@ -172,29 +204,34 @@ let handleLogin = (data) => {
                 let isExist = await checkUserEmail(data.email);
                 if (isExist === true) {
                     let user = await db.User.findOne({
-                        attributes: ['email', 'roleId', 'password', 'firstName', 'lastName', 'id'],
-                        where: { email: data.email, statusId: 'S1' },
+                        attributes: ['email', 'roleId', 'password', 'firstName', 'lastName', 'id', 'statusId'],
+                        where: { email: data.email },
                         raw: true
                     })
                     if (user) {
-                        let check = await bcrypt.compareSync(data.password, user.password);
-                        if (check) {
-                            userData.errCode = 0;
-                            userData.errMessage = 'Ok';
-                            delete user.password;
-                            userData.user = user;
-                            userData.accessToken = CommonUtils.encodeToken(user.id)
+                        if (user.statusId == 'S1') {
+                            let check = await bcrypt.compareSync(data.password, user.password);
+                            if (check) {
+                                userData.errCode = 0;
+                                userData.errMessage = 'Ok';
+                                delete user.password;
+                                userData.user = user;
+                                userData.accessToken = CommonUtils.encodeToken(user.id)
+                            } else {
+                                userData.errCode = 3;
+                                userData.errMessage = 'Wrong password';
+                            }
                         } else {
-                            userData.errCode = 3;
-                            userData.errMessage = 'Wrong password';
+                            userData.errCode = 1
+                            userData.errMessage = 'Tài khoản đã bị khóa'
                         }
                     } else {
                         userData.errCode = 2;
-                        userData.errMessage = 'User not found!'
+                        userData.errMessage = 'Người dùng không tồn tại'
                     }
                 } else {
                     userData.errCode = 1;
-                    userData.errMessage = `Your's email isn't exist in your system. plz try other email`
+                    userData.errMessage = `Email của bạn không tồn tại trong hệ thống của bạn. vui lòng thử email khác`
                 }
                 resolve(userData)
             }
@@ -210,7 +247,7 @@ let handleChangePassword = (data) => {
             if (!data.id || !data.password || !data.oldpassword) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let user = await db.User.findOne({
@@ -224,7 +261,7 @@ let handleChangePassword = (data) => {
                     }
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
                 else {
@@ -246,7 +283,6 @@ let getAllUser = (data, userId) => {
         try {
             let objectFilter = {
                 where: {
-                    statusId: 'S1',
                     id: {
                         [Op.not]: userId
                     }
@@ -284,7 +320,7 @@ let getDetailUserById = (userid) => {
             if (!userid) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.User.findOne({
@@ -319,7 +355,7 @@ let getDetailUserByEmail = (email) => {
             if (!email) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.User.findOne({
@@ -343,7 +379,7 @@ let handleSendVerifyEmailUser = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let user = await db.User.findOne({
@@ -367,7 +403,7 @@ let handleSendVerifyEmailUser = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -382,7 +418,7 @@ let handleVerifyEmailUser = (data) => {
             if (!data.id || !data.token) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let user = await db.User.findOne({
@@ -401,12 +437,12 @@ let handleVerifyEmailUser = (data) => {
                     await user.save();
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'User not found!'
+                        errMessage: 'Người dùng không tồn tại'
                     })
                 }
             }
@@ -422,7 +458,7 @@ let handleSendEmailForgotPassword = (email) => {
             if (!email) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let check = await checkUserEmail(email)
@@ -448,12 +484,12 @@ let handleSendEmailForgotPassword = (email) => {
                     }
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: `Your's email isn't exist in your system. plz try other email`
+                        errMessage: `Email của bạn không tồn tại trong hệ thống của bạn. vui lòng thử email khác`
                     })
                 }
             }
@@ -469,7 +505,7 @@ let handleForgotPassword = (data) => {
             if (!data.id || !data.token || !data.password) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let user = await db.User.findOne({
@@ -490,7 +526,7 @@ let handleForgotPassword = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -532,7 +568,7 @@ let checkPhonenumberEmail = (data) => {
 
 module.exports = {
     handleCreateNewUser: handleCreateNewUser,
-    deleteUser: deleteUser,
+    unBanUser: unBanUser,
     updateUserData: updateUserData,
     handleLogin: handleLogin,
     handleChangePassword: handleChangePassword,
@@ -542,5 +578,6 @@ module.exports = {
     handleVerifyEmailUser: handleVerifyEmailUser,
     handleSendEmailForgotPassword: handleSendEmailForgotPassword,
     handleForgotPassword: handleForgotPassword,
-    checkPhonenumberEmail: checkPhonenumberEmail
+    checkPhonenumberEmail: checkPhonenumberEmail,
+    banUser: banUser
 }

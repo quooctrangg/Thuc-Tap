@@ -8,7 +8,7 @@ let createNewBanner = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -21,7 +21,7 @@ let getDetailBanner = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -34,7 +34,7 @@ let getAllBanner = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -47,7 +47,7 @@ let updateBanner = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -60,7 +60,7 @@ let deleteBanner = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }

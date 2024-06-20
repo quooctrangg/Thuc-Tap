@@ -7,7 +7,7 @@ let createNewRoom = (data) => {
             if (!data.userId1) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let userAdmin = await db.User.findOne({
@@ -17,7 +17,7 @@ let createNewRoom = (data) => {
                 if (room) {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Da Co Phong'
+                        errMessage: 'Phòng đã tồn tại'
                     })
                 } else {
                     if (userAdmin) {
@@ -28,7 +28,7 @@ let createNewRoom = (data) => {
                         if (res) {
                             resolve({
                                 errCode: 0,
-                                errMessage: 'ok'
+                                errMessage: 'Thành công'
                             })
                         }
                     }
@@ -46,7 +46,7 @@ let sendMessage = (data) => {
             if (!data.userId || !data.roomId || !data.text) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Message.create({
@@ -58,7 +58,7 @@ let sendMessage = (data) => {
                 if (res) {
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -74,7 +74,7 @@ let loadMessage = (data) => {
             if (!data.roomId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Message.update({
@@ -111,7 +111,7 @@ let listRoomOfUser = (userId) => {
             if (!userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let room = await db.RoomMessage.findAll({

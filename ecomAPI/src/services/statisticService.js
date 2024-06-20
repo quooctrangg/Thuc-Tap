@@ -46,7 +46,7 @@ let getCountStatusOrder = (data) => {
             if (!data.oneDate && !data.twoDate) {
                 resolve({
                     errCode: 1,
-                    data: 'Missing required paramenter !'
+                    data: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let statusOrder = await db.Allcode.findAll({
@@ -145,7 +145,7 @@ let getStatisticByMonth = (data) => {
             if (!data.year) {
                 resolve({
                     errCode: 1,
-                    data: 'Missing required paramenter !'
+                    data: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let orderProduct = await db.OrderProduct.findAll(
@@ -208,7 +208,7 @@ let getStatisticByDay = (data) => {
             if (!data.month && !data.year) {
                 resolve({
                     errCode: 1,
-                    data: 'Missing required paramenter !'
+                    data: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let day = DaysOfMonth(data.month, data.year)
@@ -280,7 +280,7 @@ let getStatisticProfit = (data) => {
             if (!data.oneDate && !data.twoDate) {
                 resolve({
                     errCode: 1,
-                    data: 'Missing required paramenter !'
+                    data: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let orderProduct = await db.OrderProduct.findAll(
@@ -367,7 +367,7 @@ let getStatisticOverturn = (data) => {
             if (!data.oneDate && !data.twoDate) {
                 resolve({
                     errCode: 1,
-                    data: 'Missing required paramenter !'
+                    data: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let orderProduct = await db.OrderProduct.findAll(
@@ -444,10 +444,10 @@ let getStatisticStockProduct = (data) => {
                 raw: true,
                 nest: true
             }
-            if (data.limit && data.offset) {
-                objectFilter.limit = +data.limit
-                objectFilter.offset = +data.offset
-            }
+            // if (data.limit && data.offset) {
+            //     objectFilter.limit = +data.limit
+            //     objectFilter.offset = +data.offset
+            // }
             let res = await db.ProductDetailSize.findAndCountAll(objectFilter)
             for (let i = 0; i < res.rows.length; i++) {
                 let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: res.rows[i].id } })
@@ -472,15 +472,15 @@ let getStatisticStockProduct = (data) => {
                 for (let k = 0; k < orderDetail.length; k++) {
                     let order = await db.OrderProduct.findOne({ where: { id: orderDetail[k].orderId } })
                     if (order.statusId != 'S7') {
-
                         quantity = quantity - orderDetail[k].quantity
                     }
                 }
                 res.rows[i].stock = quantity
             }
+            res.rows.sort((a, b) => b.stock - a.stock)
             resolve({
                 errCode: 0,
-                data: res.rows,
+                data: res.rows.slice(+data.offset, (+data.offset) + (+data.limit)),
                 count: res.count
 
             })

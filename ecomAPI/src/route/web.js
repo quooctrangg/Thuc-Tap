@@ -24,7 +24,9 @@ let initwebRoutes = (app) => {
     //=====================API USER==========================//
     router.post('/api/create-new-user', userController.handleCreateNewUser)
     router.put('/api/update-user', middlewareControllers.verifyTokenUser, userController.handleUpdateUser)
-    router.delete('/api/delete-user', middlewareControllers.verifyTokenAdmin, userController.handleDeleteUser)
+    router.delete('/api/ban-user', middlewareControllers.verifyTokenAdmin, userController.handleBanUser)
+    router.delete('/api/un-ban-user', middlewareControllers.verifyTokenAdmin, userController.handleunBanUser)
+
     router.post('/api/login', userController.handleLogin)
     router.post('/api/changepassword', middlewareControllers.verifyTokenUser, userController.handleChangePassword)
     router.get('/api/get-all-user', middlewareControllers.verifyTokenAdmin, userController.getAllUser)

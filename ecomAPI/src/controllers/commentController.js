@@ -8,7 +8,7 @@ let createNewReview = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -21,7 +21,7 @@ let getAllReviewByProductId = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -34,7 +34,7 @@ let ReplyReview = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -47,7 +47,7 @@ let deleteReview = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -60,7 +60,7 @@ let createNewComment = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -73,7 +73,7 @@ let getAllCommentByBlogId = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -87,7 +87,7 @@ let ReplyComment = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -101,7 +101,7 @@ let deleteComment = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }

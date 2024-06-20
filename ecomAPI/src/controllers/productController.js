@@ -8,7 +8,7 @@ let createNewProduct = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -21,7 +21,7 @@ let getAllProductAdmin = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -34,7 +34,7 @@ let getAllProductUser = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -47,7 +47,7 @@ let UnactiveProduct = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -60,7 +60,7 @@ let ActiveProduct = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -73,7 +73,7 @@ let getDetailProductById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -86,7 +86,7 @@ let updateProduct = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -99,7 +99,7 @@ let getAllProductDetailById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -112,7 +112,7 @@ let getAllProductDetailImageById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -125,7 +125,7 @@ let createNewProductDetail = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -138,7 +138,7 @@ let updateProductDetail = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -151,7 +151,7 @@ let getDetailProductDetailById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -164,7 +164,7 @@ let createNewProductDetailImage = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -177,7 +177,7 @@ let getDetailProductImageById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -190,7 +190,7 @@ let updateProductDetailImage = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -203,7 +203,7 @@ let deleteProductDetailImage = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -216,7 +216,7 @@ let deleteProductDetail = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -229,7 +229,7 @@ let getAllProductDetailSizeById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -242,7 +242,7 @@ let createNewProductDetailSize = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -255,7 +255,7 @@ let getDetailProductDetailSizeById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -268,7 +268,7 @@ let updateProductDetailSize = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -281,7 +281,7 @@ let deleteProductDetailSize = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -294,7 +294,7 @@ let getProductFeature = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -307,7 +307,7 @@ let getProductNew = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -320,7 +320,7 @@ let getProductShopCart = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -333,7 +333,7 @@ let getProductRecommend = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }

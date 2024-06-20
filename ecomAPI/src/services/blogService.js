@@ -8,7 +8,7 @@ let createNewBlog = (data) => {
             if (!data.title || !data.contentMarkdown || !data.contentHTML || !data.image || !data.subjectId || !data.userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Blog.create({
@@ -24,7 +24,7 @@ let createNewBlog = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -39,7 +39,7 @@ let getDetailBlogById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let blog = await db.Blog.findOne({
@@ -116,7 +116,7 @@ let updateBlog = (data) => {
             if (!data.id || !data.title || !data.contentMarkdown || !data.contentHTML || !data.image || !data.subjectId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let blog = await db.Blog.findOne({
@@ -133,7 +133,7 @@ let updateBlog = (data) => {
                     await blog.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -149,7 +149,7 @@ let deleteBlog = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let blog = await db.Blog.findOne({
@@ -161,7 +161,7 @@ let deleteBlog = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -191,7 +191,6 @@ let getFeatureBlog = (data) => {
                     res[i].commentData = await db.Comment.findAll({ where: { blogId: res[i].id } })
                 }
             }
-
             resolve({
                 errCode: 0,
                 data: res

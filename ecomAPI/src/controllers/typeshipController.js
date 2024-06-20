@@ -8,7 +8,7 @@ let createNewTypeShip = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -21,7 +21,7 @@ let getDetailTypeshipById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -34,7 +34,7 @@ let getAllTypeship = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -47,7 +47,7 @@ let updateTypeship = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -60,7 +60,7 @@ let deleteTypeship = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }

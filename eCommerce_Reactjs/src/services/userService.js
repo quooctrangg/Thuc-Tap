@@ -13,8 +13,16 @@ const UpdateUserService = (data) => {
     return axios.put(`/api/update-user`, data)
 
 }
-const DeleteUserService = (userId) => {
-    return axios.delete(`/api/delete-user`, {
+const banUserService = (userId) => {
+    return axios.delete(`/api/ban-user`, {
+        data: {
+            id: userId
+        }
+    })
+}
+
+const unBanUserService = (userId) => {
+    return axios.delete(`/api/un-ban-user`, {
         data: {
             id: userId
         }
@@ -519,7 +527,7 @@ const getExchangeRate = () => {
 }
 
 export {
-    getAllUsers, getAllCodeService, createNewUser, DeleteUserService, getDetailUserById, UpdateUserService,
+    getAllUsers, getAllCodeService, createNewUser, banUserService, getDetailUserById, UpdateUserService,
     createAllCodeService, getDetailAllcodeById, UpdateAllcodeService, DeleteAllcodeService, handleLoginService,
     handleSendVerifyEmail, handleVerifyEmail, handleChangePassword, CreateNewProduct, getAllProductUser, getAllProductAdmin,
     handleBanProductService, handleActiveProductService, getDetailProductByIdService, UpdateProductService,
@@ -541,5 +549,5 @@ export {
     getStatisticByMonth, getStatisticByDay, checkPhonenumberEmail, createNewSupplierService, updateSupplierService, deleteSupplierService, getDetailSupplierByIdService,
     getAllSupplier, createNewReceiptService, getAllReceipt, getDetailReceiptByIdService, deleteReceiptService, updateReceiptService, createNewReceiptDetailService,
     getStatisticOverturn, getStatisticProfit, getProductShopcartService, getDetailUserByEmail, getProductRecommendService,
-    getStatisticStockProduct, getExchangeRate, paymentOrderVnpayService, confirmOrderVnpay, paymentOrderVnpaySuccessService
+    getStatisticStockProduct, getExchangeRate, paymentOrderVnpayService, confirmOrderVnpay, paymentOrderVnpaySuccessService, unBanUserService
 }

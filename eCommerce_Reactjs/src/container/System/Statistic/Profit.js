@@ -154,7 +154,7 @@ const Profit = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataOrder && dataOrder.length > 0 &&
+                                {dataOrder && dataOrder.length > 0 ?
                                     dataOrder.map((item, index) => {
                                         return (
                                             <tr key={index}>
@@ -174,6 +174,12 @@ const Profit = (props) => {
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <td colSpan={11} className='text-center text-red'>
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

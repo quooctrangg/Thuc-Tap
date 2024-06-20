@@ -8,7 +8,7 @@ let handleCreateNewUser = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -21,20 +21,33 @@ let handleUpdateUser = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
 
-let handleDeleteUser = async (req, res) => {
+let handleBanUser = async (req, res) => {
     try {
-        let data = await userService.deleteUser(req.body.id);
+        let data = await userService.banUser(req.body.id);
         return res.status(200).json(data);
     } catch (error) {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
+        })
+    }
+}
+
+let handleunBanUser = async (req, res) => {
+    try {
+        let data = await userService.unBanUser(req.body.id);
+        return res.status(200).json(data);
+    } catch (error) {
+        console.log(error)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -47,7 +60,7 @@ let handleLogin = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -60,7 +73,7 @@ let handleChangePassword = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -73,7 +86,7 @@ let getAllUser = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -86,7 +99,7 @@ let getDetailUserById = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -99,7 +112,7 @@ let getDetailUserByEmail = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -112,7 +125,7 @@ let handleSendVerifyEmailUser = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -125,7 +138,7 @@ let handleVerifyEmailUser = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -138,7 +151,7 @@ let handleSendEmailForgotPassword = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -151,7 +164,7 @@ let handleForgotPassword = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -164,7 +177,7 @@ let checkPhonenumberEmail = async (req, res) => {
         console.log(error)
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from server'
+            errMessage: 'Lỗi từ máy chủ'
         })
     }
 }
@@ -172,7 +185,7 @@ let checkPhonenumberEmail = async (req, res) => {
 module.exports = {
     handleCreateNewUser: handleCreateNewUser,
     handleUpdateUser: handleUpdateUser,
-    handleDeleteUser: handleDeleteUser,
+    handleBanUser: handleBanUser,
     handleLogin: handleLogin,
     handleChangePassword: handleChangePassword,
     getAllUser: getAllUser,
@@ -182,5 +195,6 @@ module.exports = {
     handleSendEmailForgotPassword: handleSendEmailForgotPassword,
     handleForgotPassword: handleForgotPassword,
     checkPhonenumberEmail: checkPhonenumberEmail,
-    getDetailUserByEmail: getDetailUserByEmail
+    getDetailUserByEmail: getDetailUserByEmail,
+    handleunBanUser: handleunBanUser
 }

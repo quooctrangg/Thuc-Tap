@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { getAllUsers, DeleteUserService } from '../../../services/userService';
+import { getAllUsers, banUserService, unBanUserService } from '../../../services/userService';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
@@ -41,12 +41,23 @@ const ManageUser = () => {
 
     let handleBanUser = async (event, id) => {
         event.preventDefault();
-        let res = await DeleteUserService(id)
+        let res = await banUserService(id)
         if (res && res.errCode === 0) {
-            toast.success("Xóa người dùng thành công")
+            toast.success("Khóa người dùng thành công")
             await fetchAllUser(keyword, numberPage)
         } else {
-            toast.error("Xóa người dùng thất bại")
+            toast.error("Khóa người dùng thất bại")
+        }
+    }
+
+    let handleUnBanUser = async (event, id) => {
+        event.preventDefault();
+        let res = await unBanUserService(id)
+        if (res && res.errCode === 0) {
+            toast.success("Mở khóa người dùng thành công")
+            await fetchAllUser(keyword, numberPage)
+        } else {
+            toast.error("Mở khóa người dùng thất bại")
         }
     }
 
@@ -102,34 +113,55 @@ const ManageUser = () => {
                                     <th>Email</th>
                                     <th>Họ và tên</th>
                                     <th>Số điện thoại</th>
-                                    <th>Ngày sinh</th>
                                     <th>Giới tính</th>
                                     <th>Quyền</th>
+                                    <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {dataUser && dataUser.length > 0 ?
                                     dataUser.map((item, index) => {
-                                        let date = moment.unix(item.dob / 1000).format('DD/MM/YYYY')
+                                        console.log(item);
                                         return (
                                             <tr key={index}>
                                                 <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.email}</td>
                                                 <td>{`${item.firstName ? item.firstName : ''} ${item.lastName ? item.lastName : ''}`}</td>
                                                 <td>{item.phonenumber}</td>
-                                                <td>{date}</td>
                                                 <td>{item.genderData.value}</td>
                                                 <td>{item.roleData.value}</td>
                                                 <td>
+                                                    {
+                                                        item.statusId == 'S1' ?
+                                                            <p className='text-primary'>
+                                                                Hoạt động
+                                                            </p>
+                                                            :
+                                                            <p className='text-red'>
+                                                                Đã khóa
+                                                            </p>
+                                                    }
+                                                </td>
+                                                <td>
                                                     <Link to={{ pathname: `/admin/edit-user/${item.id}`, currentPage: numberPage }}>
-                                                        Sửa
+                                                        <button className='btn btn-primary'>
+                                                            Sửa
+                                                        </button>
                                                     </Link>
                                                     &nbsp; &nbsp;
                                                     {/* <a href="#" onClick={(event) => handleBanUser(event, item.id)} >Delete</a> */}
-                                                    <span style={{ color: '#0E6DFE', cursor: 'pointer' }} >
-                                                        Khóa
-                                                    </span>
+                                                    {
+                                                        item.statusId == 'S1' ?
+                                                            <button onClick={(event) => handleBanUser(event, item.id)} className='btn btn-danger' >
+                                                                Khóa
+                                                            </button>
+                                                            :
+                                                            <button onClick={(event) => handleUnBanUser(event, item.id)} className='btn btn-success' >
+                                                                Mở khóa
+                                                            </button>
+
+                                                    }
                                                 </td>
                                             </tr>
                                         )

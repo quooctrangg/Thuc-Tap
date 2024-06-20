@@ -10,7 +10,7 @@ let createNewReceipt = (data) => {
             ) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
 
@@ -30,7 +30,7 @@ let createNewReceipt = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -47,7 +47,7 @@ let createNewReceiptDetail = (data) => {
             ) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.ReceiptDetail.create({
@@ -58,7 +58,7 @@ let createNewReceiptDetail = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -73,7 +73,7 @@ let getDetailReceiptById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Receipt.findOne({
@@ -138,7 +138,7 @@ let updateReceipt = (data) => {
             if (!data.id || !data.date || !data.supplierId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let receipt = await db.Receipt.findOne({
@@ -150,7 +150,7 @@ let updateReceipt = (data) => {
                     await receipt.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -166,7 +166,7 @@ let deleteReceipt = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let receipt = await db.Receipt.findOne({
@@ -178,7 +178,7 @@ let deleteReceipt = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }

@@ -12,7 +12,7 @@ const middlewareControllers = {
                 if (err) {
                     return res.status(403).json({
                         status: false,
-                        errMessage: 'Token is not valid!',
+                        errMessage: 'Token không hợp lệ!',
                         refresh: true,
                     })
                 }
@@ -20,8 +20,15 @@ const middlewareControllers = {
                 if (!user) {
                     return res.status(404).json({
                         status: false,
-                        errMessage: 'User is not exits',
+                        errMessage: 'Người dùng không tồn tại!',
                         refresh: true,
+                    })
+                }
+                if (user.statusId !== 'S1') {
+                    return res.status(404).json({
+                        status: false,
+                        errMessage: 'Tài khoản đã bị khóa!',
+                        refresh: true
                     })
                 }
                 req.user = user
@@ -30,7 +37,7 @@ const middlewareControllers = {
         } else {
             return res.status(401).json({
                 status: false,
-                message: "You're not authentication!",
+                message: "Bạn không xác thực!",
                 refresh: true,
             })
         }
@@ -44,7 +51,7 @@ const middlewareControllers = {
                 if (err) {
                     return res.status(403).json({
                         status: false,
-                        errMessage: 'Token is not valid!',
+                        errMessage: 'Token không hợp lệ!',
                         refresh: true,
                     })
                 }
@@ -52,7 +59,7 @@ const middlewareControllers = {
                 if (!user) {
                     return res.status(404).json({
                         status: false,
-                        errMessage: 'User is not exits',
+                        errMessage: 'Người dùng không tồn tại!',
                         refresh: true,
                     })
                 }
@@ -70,7 +77,7 @@ const middlewareControllers = {
         } else {
             return res.status(401).json({
                 status: false,
-                errMessage: "You're not authentication!",
+                errMessage: "Bạn không xác thực!",
                 refresh: true,
             })
         }

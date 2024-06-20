@@ -21,7 +21,7 @@ let createNewOrder = (data) => {
             if (!data.addressUserId || !data.typeShipId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productQuantity = []
@@ -89,7 +89,7 @@ let createNewOrder = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -148,7 +148,7 @@ let getDetailOrderById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let order = await db.OrderProduct.findOne({
@@ -223,7 +223,7 @@ let updateStatusOrder = (data) => {
             if (!data.id || !data.statusId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let order = await db.OrderProduct.findOne({
@@ -245,7 +245,7 @@ let updateStatusOrder = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -260,7 +260,7 @@ let getAllOrdersByUser = (userId) => {
             if (!userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let data = []
@@ -463,7 +463,7 @@ let paymentOrder = (data) => {
                 } else {
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok',
+                        errMessage: 'Thành công',
                         link: payment.links[1].href
                     })
                 }
@@ -480,7 +480,7 @@ let paymentOrderSuccess = (data) => {
             if (!data.PayerID || !data.paymentId || !data.token) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 var execute_payment_json = {
@@ -540,7 +540,7 @@ let paymentOrderSuccess = (data) => {
                         }
                         resolve({
                             errCode: 0,
-                            errMessage: 'ok'
+                            errMessage: 'Thành công'
                         })
                     }
                 });
@@ -594,7 +594,7 @@ let paymentOrderVnpaySuccess = (data) => {
             }
             resolve({
                 errCode: 0,
-                errMessage: 'ok'
+                errMessage: 'Thành công'
             })
         } catch (error) {
             reject(error)
@@ -608,7 +608,7 @@ let confirmOrder = (data) => {
             if (!data.shipperId || !data.orderId || !data.statusId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let orderProduct = await db.OrderProduct.findOne({ where: { id: data.orderId }, raw: false })
@@ -618,7 +618,7 @@ let confirmOrder = (data) => {
 
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -760,7 +760,7 @@ let updateImageOrder = (data) => {
             if (!data.id || !data.image) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let order = await db.OrderProduct.findOne({
@@ -771,7 +771,7 @@ let updateImageOrder = (data) => {
                 await order.save()
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {

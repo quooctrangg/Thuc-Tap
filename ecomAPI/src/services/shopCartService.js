@@ -6,7 +6,7 @@ let addShopCart = (data) => {
             if (!data.userId || !data.productdetailsizeId || !data.quantity) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let cart = await db.ShopCart.findOne({ where: { userId: data.userId, productdetailsizeId: data.productdetailsizeId, statusId: 0 }, raw: false })
@@ -64,7 +64,6 @@ let addShopCart = (data) => {
                         for (let k = 0; k < orderDetail.length; k++) {
                             let order = await db.OrderProduct.findOne({ where: { id: orderDetail[k].orderId } })
                             if (order.statusId != 'S7') {
-
                                 quantity = quantity - orderDetail[k].quantity
                             }
                         }
@@ -87,7 +86,7 @@ let addShopCart = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -101,7 +100,7 @@ let getAllShopCartByUserId = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.ShopCart.findAll({
@@ -144,7 +143,7 @@ let deleteItemShopCart = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.ShopCart.findOne({ where: { id: data.id, statusId: 0 } })
@@ -154,7 +153,7 @@ let deleteItemShopCart = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }

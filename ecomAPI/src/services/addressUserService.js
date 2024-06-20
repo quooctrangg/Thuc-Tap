@@ -6,7 +6,7 @@ let createNewAddressUser = (data) => {
             if (!data.userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.AddressUser.create({
@@ -18,7 +18,7 @@ let createNewAddressUser = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -33,7 +33,7 @@ let getAllAddressUserByUserId = (userId) => {
             if (!userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.AddressUser.findAll({
@@ -56,7 +56,7 @@ let deleteAddressUser = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let addressUser = await db.AddressUser.findOne({
@@ -72,12 +72,12 @@ let deleteAddressUser = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: -1,
-                        errMessage: 'Địa chỉ user không tìm thấy'
+                        errMessage: 'Địa chỉ người dùng không tìm thấy'
                     })
                 }
             }
@@ -93,7 +93,7 @@ let editAddressUser = (data) => {
             if (!data.id || !data.shipName || !data.shipAdress || !data.shipEmail || !data.shipPhonenumber) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let addressUser = await db.AddressUser.findOne({
@@ -110,7 +110,7 @@ let editAddressUser = (data) => {
                     await addressUser.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
@@ -131,7 +131,7 @@ let getDetailAddressUserById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.AddressUser.findOne({

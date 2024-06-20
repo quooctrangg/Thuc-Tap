@@ -8,7 +8,7 @@ let createNewBanner = (data) => {
             if (!data.image || !data.description || !data.name) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Banner.create({
@@ -19,7 +19,7 @@ let createNewBanner = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -34,7 +34,7 @@ let getDetailBanner = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Banner.findOne({
@@ -86,7 +86,7 @@ let updateBanner = (data) => {
             if (!data.id || !data.image || !data.description || !data.name) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let banner = await db.Banner.findOne({
@@ -101,7 +101,7 @@ let updateBanner = (data) => {
                     await banner.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -117,7 +117,7 @@ let deleteBanner = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let banner = await db.Banner.findOne({
@@ -129,7 +129,7 @@ let deleteBanner = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }

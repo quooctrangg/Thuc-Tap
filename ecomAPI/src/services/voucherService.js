@@ -8,7 +8,7 @@ let createNewTypeVoucher = (data) => {
             if (!data.typeVoucher || !data.value || !data.maxValue || !data.minValue) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.TypeVoucher.create({
@@ -19,7 +19,7 @@ let createNewTypeVoucher = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -34,7 +34,7 @@ let getDetailTypeVoucherById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.TypeVoucher.findOne({
@@ -87,7 +87,7 @@ let updateTypeVoucher = (data) => {
             if (!data.id || !data.typeVoucher || !data.value || !data.maxValue || !data.minValue) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let typevoucher = await db.TypeVoucher.findOne({
@@ -102,7 +102,7 @@ let updateTypeVoucher = (data) => {
                     await typevoucher.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -118,7 +118,7 @@ let deleteTypeVoucher = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let typevoucher = await db.TypeVoucher.findOne({
@@ -130,7 +130,7 @@ let deleteTypeVoucher = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -167,7 +167,7 @@ let createNewVoucher = (data) => {
             if (!data.fromDate || !data.toDate || !data.typeVoucherId || !data.amount || !data.codeVoucher) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Voucher.create({
@@ -179,7 +179,7 @@ let createNewVoucher = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -193,7 +193,7 @@ let getDetailVoucherById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Voucher.findOne({
@@ -259,7 +259,7 @@ let updateVoucher = (data) => {
             if (!data.id || !data.fromDate || !data.toDate || !data.typeVoucherId || !data.amount || !data.codeVoucher) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let voucher = await db.Voucher.findOne({
@@ -275,7 +275,7 @@ let updateVoucher = (data) => {
                     await voucher.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -291,7 +291,7 @@ let deleteVoucher = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let voucher = await db.Voucher.findOne({
@@ -303,7 +303,7 @@ let deleteVoucher = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -319,7 +319,7 @@ let saveUserVoucher = (data) => {
             if (!data.voucherId || !data.userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let voucherused = await db.VoucherUsed.findOne({
@@ -329,7 +329,7 @@ let saveUserVoucher = (data) => {
                 if (voucherused) {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Đã lưu voucher này trong kho!'
+                        errMessage: 'Đã lưu voucher này trong kho'
                     })
                 } else {
                     await db.VoucherUsed.create({
@@ -341,7 +341,7 @@ let saveUserVoucher = (data) => {
                     await voucher.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -357,7 +357,7 @@ let getAllVoucherByUserId = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let objectFilter = {

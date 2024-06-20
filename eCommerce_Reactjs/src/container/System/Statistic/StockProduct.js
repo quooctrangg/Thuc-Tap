@@ -75,7 +75,7 @@ const StockProduct = () => {
                                     <th>STT</th>
                                     <th>Tên sản phẩm</th>
                                     <th>Danh mục</th>
-                                    <th>nhãn hàng</th>
+                                    <th>Nhãn hàng</th>
                                     <th>Chất liệu</th>
                                     <th>Số lượng tồn</th>
                                 </tr>

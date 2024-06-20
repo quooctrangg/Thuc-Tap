@@ -36,7 +36,7 @@ let createNewProduct = (data) => {
             if (!data.categoryId || !data.brandId || !data.image || !data.nameDetail) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let product = await db.Product.create({
@@ -73,7 +73,7 @@ let createNewProduct = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -194,7 +194,7 @@ let UnactiveProduct = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let product = await db.Product.findOne({
@@ -204,14 +204,14 @@ let UnactiveProduct = (data) => {
                 if (!product) {
                     resolve({
                         errCode: 2,
-                        errMessage: `The product isn't exist`
+                        errMessage: `Sản phẩm không tồn tại`
                     })
                 } else {
                     product.statusId = 'S2';
                     await product.save();
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -227,7 +227,7 @@ let ActiveProduct = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let product = await db.Product.findOne({
@@ -237,14 +237,14 @@ let ActiveProduct = (data) => {
                 if (!product) {
                     resolve({
                         errCode: 2,
-                        errMessage: `The product isn't exist`
+                        errMessage: `Sản phẩm không tồn tại`
                     })
                 } else {
                     product.statusId = 'S1';
                     await product.save();
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -259,7 +259,7 @@ let getDetailProductById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Product.findOne({
@@ -327,7 +327,7 @@ let updateProduct = (data) => {
             if (!data.id || !data.categoryId || !data.brandId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let product = await db.Product.findOne({
@@ -361,7 +361,7 @@ let getAllProductDetailById = (data) => {
             if (!data.id || !data.limit || !data.offset) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productdetail = await db.ProductDetail.findAndCountAll({
@@ -404,7 +404,7 @@ let getAllProductDetailImageById = (data) => {
             if (!data.id || !data.limit || !data.offset) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productImage = await db.ProductImage.findAndCountAll({
@@ -433,7 +433,7 @@ let createNewProductDetail = (data) => {
             if (!data.image || !data.nameDetail || !data.originalPrice || !data.discountPrice || !data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productdetail = await db.ProductDetail.create({
@@ -459,7 +459,7 @@ let createNewProductDetail = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -474,7 +474,7 @@ let updateProductDetail = (data) => {
             if (!data.nameDetail || !data.originalPrice || !data.discountPrice || !data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productDetail = await db.ProductDetail.findOne({
@@ -489,12 +489,12 @@ let updateProductDetail = (data) => {
                     await productDetail.save();
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Product not found!'
+                        errMessage: 'Không tìm thấy sản phẩm'
                     })
                 }
             }
@@ -510,7 +510,7 @@ let getDetailProductDetailById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productdetail = await db.ProductDetail.findOne({
@@ -534,7 +534,7 @@ let createNewProductDetailImage = (data) => {
             if (!data.image || !data.caption || !data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.ProductImage.create({
@@ -544,7 +544,7 @@ let createNewProductDetailImage = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -559,7 +559,7 @@ let getDetailProductImageById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productdetailImage = await db.ProductImage.findOne({
@@ -585,7 +585,7 @@ let updateProductDetailImage = (data) => {
             if (!data.id || !data.caption || !data.image) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productImage = await db.ProductImage.findOne({
@@ -598,12 +598,12 @@ let updateProductDetailImage = (data) => {
                     await productImage.save();
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Product Image not found!'
+                        errMessage: 'Không tìm thấy hình ảnh sản phẩm'
                     })
                 }
 
@@ -620,7 +620,7 @@ let deleteProductDetailImage = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productImage = await db.ProductImage.findOne({
@@ -633,12 +633,12 @@ let deleteProductDetailImage = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Product Image not found!'
+                        errMessage: 'Không tìm thấy hình ảnh sản phẩm'
                     })
                 }
 
@@ -655,7 +655,7 @@ let deleteProductDetail = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productDetail = await db.ProductDetail.findOne({
@@ -683,12 +683,12 @@ let deleteProductDetail = (data) => {
                     }
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Product Image not found!'
+                        errMessage: 'Không tìm thấy hình ảnh sản phẩm'
                     })
                 }
             }
@@ -704,7 +704,7 @@ let getAllProductDetailSizeById = (data) => {
             if (!data.id || !data.limit || !data.offset) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let productsize = await db.ProductDetailSize.findAndCountAll({
@@ -753,7 +753,7 @@ let createNewProductDetailSize = (data) => {
             if (!productdetailId || !sizeId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 const data = await db.ProductDetailSize.findOne({
@@ -778,7 +778,7 @@ let createNewProductDetailSize = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -793,7 +793,7 @@ let getDetailProductDetailSizeById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.ProductDetailSize.findOne({
@@ -816,7 +816,7 @@ let updateProductDetailSize = (data) => {
             if (!data.id || !data.sizeId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.ProductDetailSize.findOne({
@@ -844,12 +844,12 @@ let updateProductDetailSize = (data) => {
                     await res.save();
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Product Image not found!'
+                        errMessage: 'Không tìm thấy hình ảnh sản phẩm'
                     })
                 }
             }
@@ -865,7 +865,7 @@ let deleteProductDetailSize = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.ProductDetailSize.findOne({
@@ -878,12 +878,12 @@ let deleteProductDetailSize = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Product Image not found!'
+                        errMessage: 'Không tìm thấy hình ảnh sản phẩm'
                     })
                 }
 
@@ -979,7 +979,7 @@ let getProductShopCart = (data) => {
             if (!data.userId && !data.limit) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let shopcart = await db.ShopCart.findAll({ where: { userId: data.userId } })
@@ -1036,7 +1036,7 @@ let getProductRecommend = (data) => {
             if (!data.categoryId && !data.limit) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter!'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 productArr = await db.Product.findAll({

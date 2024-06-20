@@ -7,7 +7,7 @@ let createNewReview = (data) => {
             if (!data.content || !data.productId || !data.userId || !data.star, !data.orderDetailId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Comment.create({
@@ -26,7 +26,7 @@ let createNewReview = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -41,7 +41,7 @@ let getAllReviewByProductId = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Comment.findAll({
@@ -82,7 +82,7 @@ let ReplyReview = (data) => {
             if (!data.content || !data.productId || !data.userId || !data.parentId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Comment.create({
@@ -93,7 +93,7 @@ let ReplyReview = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -108,7 +108,7 @@ let deleteReview = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let review = await db.Comment.findOne({
@@ -120,7 +120,7 @@ let deleteReview = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -137,7 +137,7 @@ let createNewComment = (data) => {
             if (!data.content || !data.blogId || !data.userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Comment.create({
@@ -148,7 +148,7 @@ let createNewComment = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -163,7 +163,7 @@ let getAllCommentByBlogId = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Comment.findAll({
@@ -205,7 +205,7 @@ let ReplyComment = (data) => {
             if (!data.content || !data.blogId || !data.userId || !data.parentId) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Comment.create({
@@ -216,7 +216,7 @@ let ReplyComment = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -230,7 +230,7 @@ let deleteComment = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let comment = await db.Comment.findOne({
@@ -242,7 +242,7 @@ let deleteComment = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }

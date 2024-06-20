@@ -8,7 +8,7 @@ let createNewSupplier = (data) => {
             if (!data.name || !data.address || !data.phonenumber || !data.email) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 await db.Supplier.create({
@@ -19,7 +19,7 @@ let createNewSupplier = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -34,7 +34,7 @@ let getDetailSupplierById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Supplier.findOne({
@@ -78,7 +78,7 @@ let updateSupplier = (data) => {
             if (!data.id || !data.name || !data.address || !data.phonenumber || !data.email) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let supplier = await db.Supplier.findOne({
@@ -95,7 +95,7 @@ let updateSupplier = (data) => {
                     await supplier.save()
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }
@@ -111,7 +111,7 @@ let deleteSupplier = (data) => {
             if (!data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameter !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let supplier = await db.Supplier.findOne({
@@ -123,7 +123,7 @@ let deleteSupplier = (data) => {
                     })
                     resolve({
                         errCode: 0,
-                        errMessage: 'ok'
+                        errMessage: 'Thành công'
                     })
                 }
             }

@@ -7,7 +7,7 @@ let handleCreateNewAllCode = (data) => {
             if (!data.type || !data.value || !data.code) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Allcode.findOne({
@@ -27,7 +27,7 @@ let handleCreateNewAllCode = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -42,7 +42,7 @@ let getAllCodeService = (typeInput) => {
             if (!typeInput) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let where = {
@@ -73,7 +73,7 @@ let handleUpdateAllCode = (data) => {
             if (!data.value || !data.code || !data.id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let res = await db.Allcode.findOne({
@@ -89,7 +89,7 @@ let handleUpdateAllCode = (data) => {
                 }
                 resolve({
                     errCode: 0,
-                    errMessage: 'ok'
+                    errMessage: 'Thành công'
                 })
             }
         } catch (error) {
@@ -104,7 +104,7 @@ let getDetailAllCodeById = (id) => {
             if (!id) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let data = await db.Allcode.findOne({
@@ -127,7 +127,7 @@ let handleDeleteAllCode = (allcodeId) => {
             if (!allcodeId) {
                 resolve({
                     errCode: 1,
-                    errMessage: `Missing required parameters !`
+                    errMessage: `Thiếu tham số bắt buộc`
                 })
             } else {
                 let foundAllCode = await db.Allcode.findOne({
@@ -136,7 +136,7 @@ let handleDeleteAllCode = (allcodeId) => {
                 if (!foundAllCode) {
                     resolve({
                         errCode: 2,
-                        errMessage: `The allCode isn't exist`
+                        errMessage: `allCode không tồn tại`
                     })
                 }
                 await db.Allcode.destroy({
@@ -144,7 +144,7 @@ let handleDeleteAllCode = (allcodeId) => {
                 })
                 resolve({
                     errCode: 0,
-                    message: `The allCode is deleted`
+                    message: `allCode đã bị xóa`
                 })
             }
 
@@ -183,7 +183,7 @@ let getAllCategoryBlog = (typeInput) => {
             if (!typeInput) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
 

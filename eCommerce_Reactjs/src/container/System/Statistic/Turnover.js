@@ -153,9 +153,8 @@ const Turnover = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataOrder && dataOrder.length > 0 &&
+                                {dataOrder && dataOrder.length > 0 ?
                                     dataOrder.map((item, index) => {
-
                                         return (
                                             <tr key={index}>
                                                 <td>{item.id}</td>
@@ -172,6 +171,12 @@ const Turnover = (props) => {
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <td colSpan={9} className='text-center text-red'>
+                                            Không có dữ liệu
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
