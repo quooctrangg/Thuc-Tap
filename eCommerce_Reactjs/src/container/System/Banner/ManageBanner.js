@@ -137,10 +137,15 @@ const ManageBanner = () => {
                                                 <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.name}</td>
                                                 <td style={{ width: '30%' }} ><div onClick={() => openPreviewImage(item.image)} className="box-img-preview" style={{ backgroundImage: `url(${item.image})`, width: '100%' }}></div></td>
-                                                <td style={{ width: '20%' }}>
-                                                    <Link to={`/admin/edit-banner/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteBanner(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/edit-banner/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    <button className='btn btn-danger' onClick={() => handleDeleteBanner(item.id)} >
+                                                        Xóa
+                                                    </button>
                                                 </td>
                                             </tr>
                                         )

@@ -96,12 +96,18 @@ const ManageProductDetail = () => {
                                                 <td>{item.nameDetail}</td>
                                                 <td>{CommonUtils.formatter.format(item.originalPrice)}</td>
                                                 <td>{CommonUtils.formatter.format(item.discountPrice)}</td>
-                                                <td>
-                                                    <Link to={`/admin/list-product-detail-image/${item.id}`}>Xem</Link>
-                                                    &nbsp; &nbsp;
-                                                    <Link to={`/admin/update-product-detail/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteProductDetail(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/list-product-detail-image/${item.id}`}>
+                                                        <button className='btn btn-primary'>
+                                                            Xem
+                                                        </button>
+                                                    </Link>
+                                                    <Link to={`/admin/update-product-detail/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    <button className='btn btn-danger' onClick={() => handleDeleteProductDetail(item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
                                         )

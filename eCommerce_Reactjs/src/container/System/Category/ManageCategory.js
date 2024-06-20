@@ -122,9 +122,13 @@ const ManageCategory = () => {
                                                 <td>{item.value}</td>
                                                 <td>{item.code}</td>
                                                 <td>
-                                                    <Link to={`/admin/edit-category/${item.id}`}>Sửa</Link>
+                                                    <Link to={`/admin/edit-category/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
                                                     &nbsp; &nbsp;
-                                                    <a href="#" onClick={(event) => handleDeleteCategory(event, item.id)} >Xóa</a>
+                                                    <button className='btn btn-danger' onClick={(event) => handleDeleteCategory(event, item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
                                         )

@@ -88,8 +88,11 @@ const ManageReceipt = () => {
                                                 <td>{item.supplierData.phonenumber}</td>
                                                 <td>{item.userData.firstName + " " + item.userData.lastName}</td>
                                                 <td>
-                                                    <Link to={`/admin/detail-receipt/${item.id}`}>Xem</Link>
-                                                    &nbsp; &nbsp;
+                                                    <Link to={`/admin/detail-receipt/${item.id}`}>
+                                                        <button className='btn btn-primary'>
+                                                            Xem
+                                                        </button>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )

@@ -166,7 +166,11 @@ const Turnover = (props) => {
                                                 <td>{item.statusOrderData.value}</td>
                                                 <td>{CommonUtils.formatter.format(item.totalpriceProduct)}</td>
                                                 <td>
-                                                    <Link to={`/admin/order-detail/${item.id}`}>Xem chi tiết</Link>
+                                                    <Link to={`/admin/order-detail/${item.id}`}>
+                                                        <button className='btn btn-primary'>
+                                                            Xem chi tiết
+                                                        </button>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )

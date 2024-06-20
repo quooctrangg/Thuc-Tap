@@ -114,10 +114,13 @@ const ManageVoucher = () => {
                                                 <td>{item.usedAmount}</td>
                                                 <td>{moment.unix(item.fromDate / 1000).format('DD/MM/YYYY')}</td>
                                                 <td>{moment.unix(item.toDate / 1000).format('DD/MM/YYYY')}</td>
-                                                <td>
-                                                    <Link to={`/admin/edit-voucher/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteVoucher(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/edit-voucher/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    <button className='btn btn-danger' onClick={() => handleDeleteVoucher(item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
                                         )

@@ -120,10 +120,13 @@ const ManageTypeShip = () => {
                                                 <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.type}</td>
                                                 <td>{CommonUtils.formatter.format(item.price)}</td>
-                                                <td>
-                                                    <Link to={`/admin/edit-typeship/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteTypeShip(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/edit-typeship/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    <button className='btn btn-danger' onClick={() => handleDeleteTypeShip(item.id)}>Xóa</button>
                                                 </td>
                                             </tr>
                                         )
@@ -160,7 +163,7 @@ const ManageTypeShip = () => {
                     onPageChange={handleChangePage}
                 />
             }
-        </div>
+        </div >
     )
 }
 

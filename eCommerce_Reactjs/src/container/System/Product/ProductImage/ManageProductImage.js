@@ -275,11 +275,14 @@ const ManageProductImage = () => {
                                                 <tr key={index}>
                                                     <td>{(numberPage * 10) + index + 1}</td>
                                                     <td>{item.caption}</td>
-                                                    <td ><div onClick={() => openPreviewImage(item.image)} className="box-image" style={{ backgroundImage: `url(${item.image})` }}></div></td>
                                                     <td>
-                                                        <span onClick={() => handleEditProductImage(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Sửa</span>
-                                                        &nbsp; &nbsp;
-                                                        <span onClick={() => handleDeleteProductImage(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
+                                                        <div onClick={() => openPreviewImage(item.image)} className="box-image" style={{ backgroundImage: `url(${item.image})` }}></div>
+                                                    </td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <button className='btn btn-warning' onClick={() => handleEditProductImage(item.id)} >
+                                                            Sửa
+                                                        </button>
+                                                        <button className='btn btn-danger' onClick={() => handleDeleteProductImage(item.id)} >Xóa</button>
                                                     </td>
                                                 </tr>
                                             )
@@ -355,10 +358,9 @@ const ManageProductImage = () => {
                                                     <td>{item.height}</td>
                                                     <td>{item.weight}</td>
                                                     <td>{item.stock}</td>
-                                                    <td>
-                                                        <span onClick={() => handleEditProductSize(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Sửa</span>
-                                                        &nbsp; &nbsp;
-                                                        <span onClick={() => handleDeleteProductSize(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <button className='btn btn-warning' onClick={() => handleEditProductSize(item.id)} >Sửa</button>
+                                                        <button className='btn btn-danger' onClick={() => handleDeleteProductSize(item.id)} >Xóa</button>
                                                     </td>
                                                 </tr>
                                             )

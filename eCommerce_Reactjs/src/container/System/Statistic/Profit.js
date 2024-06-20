@@ -169,7 +169,11 @@ const Profit = (props) => {
                                                 <td>{CommonUtils.formatter.format(item.importPrice)}</td>
                                                 <td>{CommonUtils.formatter.format(item.profitPrice)}</td>
                                                 <td>
-                                                    <Link to={`/admin/order-detail/${item.id}`}>Xem chi tiết</Link>
+                                                    <Link to={`/admin/order-detail/${item.id}`}>
+                                                        <button className='btn btn-primary'>
+                                                            Xem chi tiết
+                                                        </button>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )

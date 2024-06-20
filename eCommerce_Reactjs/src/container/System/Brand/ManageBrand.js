@@ -127,10 +127,13 @@ const ManageBrand = () => {
                                                 <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.value}</td>
                                                 <td>{item.code}</td>
-                                                <td>
-                                                    <Link to={`/admin/edit-Brand/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    <a href="#" onClick={(event) => handleDeleteBrand(event, item.id)} >Xóa</a>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/edit-Brand/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    <button className='btn btn-danger' onClick={(event) => handleDeleteBrand(event, item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
                                         )

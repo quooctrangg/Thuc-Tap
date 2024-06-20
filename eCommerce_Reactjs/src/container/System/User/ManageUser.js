@@ -143,13 +143,12 @@ const ManageUser = () => {
                                                             </p>
                                                     }
                                                 </td>
-                                                <td>
+                                                <td style={{ display: 'flex', gap: 2 }}>
                                                     <Link to={{ pathname: `/admin/edit-user/${item.id}`, currentPage: numberPage }}>
-                                                        <button className='btn btn-primary'>
+                                                        <button className='btn btn-warning'>
                                                             Sửa
                                                         </button>
                                                     </Link>
-                                                    &nbsp; &nbsp;
                                                     {/* <a href="#" onClick={(event) => handleBanUser(event, item.id)} >Delete</a> */}
                                                     {
                                                         item.statusId == 'S1' ?

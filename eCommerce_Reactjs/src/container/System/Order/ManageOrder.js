@@ -124,7 +124,11 @@ const ManageOrder = () => {
                                                 <td>{item.statusOrderData.value}</td>
                                                 {/* <td>{item.shipperData && item.shipperData.firstName + " " + item.shipperData.lastName + " - " + item.shipperData.phonenumber}</td> */}
                                                 <td>
-                                                    <Link to={`/admin/order-detail/${item.id}`}>Xem chi tiết</Link>
+                                                    <Link to={`/admin/order-detail/${item.id}`}>
+                                                        <button className='btn btn-primary'>
+                                                            Xem chi tiết
+                                                        </button>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )

@@ -105,10 +105,13 @@ const ManageTypeShip = () => {
                                                 <td>{item.typeVoucher == "percent" ? item.value + "%" : CommonUtils.formatter.format(item.value)}</td>
                                                 <td>{CommonUtils.formatter.format(item.minValue)}</td>
                                                 <td>{CommonUtils.formatter.format(item.maxValue)}</td>
-                                                <td>
-                                                    <Link to={`/admin/edit-typevoucher/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    <span onClick={() => handleDeleteTypeVoucher(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}>Xóa</span>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/edit-typevoucher/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    <button className='btn btn-danger' onClick={() => handleDeleteTypeVoucher(item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
                                         )

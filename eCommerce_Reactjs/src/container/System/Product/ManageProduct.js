@@ -161,14 +161,22 @@ const ManageProduct = () => {
                                                 <td>{item.madeby}</td>
                                                 <td>{item.view ? item.view : 0}</td>
                                                 <td>{item.statusData.value}</td>
-                                                <td style={{ width: '12%' }}>
-                                                    <Link to={`/admin/list-product-detail/${item.id}`}>Xem</Link>
-                                                    &nbsp; &nbsp;
-                                                    <Link to={`/admin/edit-product/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    {item.statusData.code === 'S1' ?
-                                                        <span onClick={() => handleBanProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }} >Ẩn</span>
-                                                        : <span onClick={() => handleActiveProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Hiện</span>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/list-product-detail/${item.id}`}>
+                                                        <button className='btn btn-primary'>
+                                                            Xem
+                                                        </button>
+                                                    </Link>
+                                                    <Link to={`/admin/edit-product/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    {
+                                                        item.statusData.code === 'S1' ?
+                                                            <button className='btn btn-danger' onClick={() => handleBanProduct(item.id)}>Ẩn</button>
+                                                            :
+                                                            <span className='btn btn-success' onClick={() => handleActiveProduct(item.id)}>Hiện</span>
                                                     }
                                                 </td>
                                             </tr>

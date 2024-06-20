@@ -130,10 +130,13 @@ const ManageSupplier = () => {
                                                 <td>{item.phonenumber}</td>
                                                 <td>{item.email}</td>
                                                 <td>{item.address}</td>
-                                                <td>
-                                                    <Link to={`/admin/edit-Supplier/${item.id}`}>Sửa</Link>
-                                                    &nbsp; &nbsp;
-                                                    <a href="#" onClick={(event) => handleDeleteSupplier(event, item.id)}>Xóa</a>
+                                                <td style={{ display: 'flex', gap: 2 }}>
+                                                    <Link to={`/admin/edit-Supplier/${item.id}`}>
+                                                        <button className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                    </Link>
+                                                    <button className='btn btn-danger' onClick={(event) => handleDeleteSupplier(event, item.id)}>Xóa</button>
                                                 </td>
                                             </tr>
                                         )
