@@ -120,14 +120,14 @@ const Header = props => {
                                 <div className="col-lg-3 pr-0">
                                     {user && user.id ?
                                         <ul className="nav navbar-nav navbar-right right_nav pull-right">
-                                            {/* <li className="nav-item">
+                                            <li className="nav-item">
                                                 <Link to={"/user/messenger"} className="icons">
                                                     <i className="fa-brands fa-facebook-messenger"></i>
                                                 </Link>
                                                 {quantityMessage > 0 &&
                                                     <span className="box-message-quantity">{quantityMessage}</span>
                                                 }
-                                            </li> */}
+                                            </li>
                                             <li className="nav-item">
                                                 <Link to={"/shopcart"} className="icons">
                                                     <i className="ti-shopping-cart position-relative p-1" >

@@ -60,14 +60,21 @@ function ChatWindow(props) {
         }
     }
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            sendMessage()
+        }
+    }
+
     return (
         <div className="ks-messages ks-messenger__messages">
             <div className="ks-header">
                 <div className="ks-description">
-                    <div className="ks-name">Chat name</div>
-                    <div className="ks-amount">2 members</div>
+                    <div className="ks-name">{props.name}</div>
+                    {/* <div className="ks-amount">2 members</div> */}
                 </div>
-                <div className="ks-controls">
+                {/* <div className="ks-controls">
                     <div className="dropdown">
                         <button className="btn btn-primary-outline ks-light ks-no-text ks-no-arrow" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span className="la la-ellipsis-h ks-icon" />
@@ -99,12 +106,12 @@ function ChatWindow(props) {
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
-            <div className="ks-body ks-scrollable jspScrollable" data-auto-height data-reduce-height=".ks-footer" data-fix-height={32} style={{ height: '480px', overflow: 'hidden', padding: '0px', width: '701px' }} tabIndex={0}>
-                <div className="jspContainer" style={{ width: '701px', height: '481px' }}>
-                    <div className="jspPane" style={{ padding: '0px', top: '0px', width: '691px' }}>
-                        <ul id="box-chat" className="ks-items" style={{ overflowY: 'scroll', maxHeight: '479px' }}>
+            <div className="ks-body ks-scrollable jspScrollable" data-auto-height data-reduce-height=".ks-footer" data-fix-height={32} style={{ height: '480px', overflow: 'hidden', padding: '0px' }} tabIndex={0}>
+                <div className="jspContainer" >
+                    <div className="jspPane" style={{ padding: '0px', top: '0px' }}>
+                        <ul id="box-chat" className="ks-items" style={{ overflowY: 'auto', maxHeight: '479px' }}>
                             {mess && mess.length > 0 &&
                                 mess.map((item, index) => {
                                     if (item.userData) {
@@ -115,7 +122,7 @@ function ChatWindow(props) {
                                                 </span>
                                                 <div className="ks-body">
                                                     <div className="ks-header">
-                                                        <span className="ks-name">{item.userData.firstName + " " + item.userData.lastName}</span>
+                                                        <span className="ks-name">{item.userData.firstName ? item.userData.firstName : '' + " " + item.userData.lastName ? item.userData.lastName : ''}</span>
                                                         <span className="ks-datetime">{moment(item.createdAt).fromNow()}</span>
                                                     </div>
                                                     <div className="ks-message">{item.text}</div>
@@ -140,9 +147,9 @@ function ChatWindow(props) {
                 </div>
             </div>
             <div className="ks-footer">
-                <textarea onChange={(e) => setMessage(e.target.value)} value={message} className="form-control" placeholder="Type something..." defaultValue={""} />
+                <textarea onChange={(e) => setMessage(e.target.value)} onKeyDown={handleKeyDown} value={message} className="form-control" placeholder="Nhập tin nhắn..." defaultValue={""} />
                 <div className="ks-controls">
-                    <button onClick={() => sendMessage()} className="btn btn-primary">Send</button>
+                    <button onClick={() => sendMessage()} className="btn btn-primary">Gửi</button>
                 </div>
             </div>
         </div>

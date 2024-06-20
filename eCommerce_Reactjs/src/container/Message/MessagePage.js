@@ -13,6 +13,7 @@ function MessagePage(props) {
     const host = process.env.REACT_APP_BACKEND_URL;
     const socketRef = useRef();
     const [setId] = useState();
+    const [name, setName] = useState('')
 
     useEffect(() => {
         socketRef.current = socketIOClient.connect(host)
@@ -38,14 +39,16 @@ function MessagePage(props) {
             socketRef.current.on('loadRoomServer', dataGot => {
                 fetchListRoom(userData.id)
             })
+            // console.log(userData);
             return () => {
                 socketRef.current.disconnect();
             };
         }
     }, [])
 
-    let handleClickRoom = (roomId) => {
+    let handleClickRoom = (roomId, nameUser) => {
         socketRef.current.emit('loadRoomClient')
+        setName(nameUser)
         setselectedRoom(roomId)
     }
 
@@ -62,7 +65,7 @@ function MessagePage(props) {
                 <div className="ks-page-content-body">
                     <div className="ks-messenger">
                         <MessageDisscution userId={dataUser.id} isAdmin={false} handleClickRoom={handleClickRoom} data={dataRoom} />
-                        {selectedRoom ? <ChatWindow userId={dataUser.id} roomId={selectedRoom} />
+                        {selectedRoom ? <ChatWindow userId={dataUser.id} roomId={selectedRoom} name={name} />
                             : <div>
                                 <span className='title'>Chưa chọn phòng</span>
                             </div>

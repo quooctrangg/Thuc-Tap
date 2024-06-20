@@ -205,7 +205,7 @@ function HomePageAdmin(props) {
                                     <StockProduct />
                                 </Route>
                             </main>
-                            <Footer />
+                            {/* <Footer /> */}
                         </div>
                     </div>
                 </div>

@@ -13,6 +13,7 @@ const Message = () => {
     const host = process.env.REACT_APP_BACKEND_URL;
     const socketRef = useRef();
     const [setId] = useState();
+    const [name, setName] = useState('')
 
     useEffect(() => {
         socketRef.current = socketIOClient.connect(host)
@@ -33,8 +34,9 @@ const Message = () => {
         };
     }, [])
 
-    let handleClickRoom = (roomId) => {
+    let handleClickRoom = (roomId, nameUser) => {
         socketRef.current.emit('loadRoomClient')
+        setName(nameUser)
         setselectedRoom(roomId)
     }
     let fetchListRoom = async () => {
@@ -50,7 +52,7 @@ const Message = () => {
                 <div className="ks-page-content-body">
                     <div className="ks-messenger">
                         <MessageDisscution userId={dataUser.id} isAdmin={true} handleClickRoom={handleClickRoom} data={dataRoom} />
-                        {selectedRoom ? <ChatWindow userId={dataUser.id} roomId={selectedRoom} />
+                        {selectedRoom ? <ChatWindow userId={dataUser.id} roomId={selectedRoom} name={name} />
                             : <div>
                                 <span className='title'>Chưa chọn phòng</span>
                             </div>

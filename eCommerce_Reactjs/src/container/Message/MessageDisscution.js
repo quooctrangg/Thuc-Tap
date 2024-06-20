@@ -12,8 +12,9 @@ function MessageDisscution(props) {
         }
     }, [props.data])
 
-    let handleClickRoom = (roomId) => {
-        props.handleClickRoom(roomId)
+    let handleClickRoom = (roomId, firstName, lastName) => {
+        // console.log(lastName);
+        props.handleClickRoom(roomId, firstName ? firstName : '' + ' ' + lastName ? lastName : '')
     }
 
     let loadRoom = async (data) => {
@@ -61,7 +62,8 @@ function MessageDisscution(props) {
                     </span>
                 </div>
             </div>
-            <div className="ks-body ks-scrollable jspScrollable" data-auto-height style={{ height: '400px', overflowY: 'auto', padding: '0px', width: '339px' }} tabIndex={0}>
+            {/* <div className="ks-body ks-scrollable jspScrollable" data-auto-height style={{ height: '400px', overflowY: 'auto', padding: '0px', width: '339px' }} tabIndex={0}> */}
+            <div className="ks-body ks-scrollable jspScrollable" data-auto-height tabIndex={0}>
                 <div className="jspContainer" style={{ width: '339px', height: '550px' }}>
                     <div className="jspPane" style={{ padding: '0px', top: '0px', width: '329px' }}>
                         <ul className="ks-items">
@@ -75,7 +77,7 @@ function MessageDisscution(props) {
                                             count = count + 1;
                                     });
                                     return (
-                                        <li onClick={() => handleClickRoom(item.id)} key={index} className="ks-item">
+                                        <li onClick={() => handleClickRoom(item.id, userData?.firstName, userData?.lastName)} key={index} className="ks-item">
                                             <a href="#">
                                                 <span className="ks-avatar">
                                                     <img src={userData?.image} width={36} height={36} />
@@ -83,7 +85,7 @@ function MessageDisscution(props) {
                                                 </span>
                                                 <div className="ks-body">
                                                     <div className="ks-name">
-                                                        {userData?.firstName + " " + userData?.lastName}
+                                                        {userData?.firstName ? userData?.firstName : '' + " " + userData?.lastName ? userData.lastName : ''}
                                                         <span className="ks-datetime">{item.messageData && item.messageData.length > 0 ? moment(item.messageData[item.messageData.length - 1].createdAt).fromNow() : ''}</span>
                                                     </div>
                                                     <div className="ks-message">{item.messageData && item.messageData.length > 0 ? item.messageData[item.messageData.length - 1].text : 'Chưa có tin nhắn'}</div>
@@ -95,7 +97,7 @@ function MessageDisscution(props) {
                             }
                         </ul>
                     </div>
-                    <div className="jspVerticalBar">
+                    {/* <div className="jspVerticalBar">
                         <div className="jspCap jspCapTop" />
                         <div className="jspTrack" style={{ height: '550px' }}>
                             <div className="jspDrag" style={{ height: '261px' }}>
@@ -104,7 +106,7 @@ function MessageDisscution(props) {
                             </div>
                         </div>
                         <div className="jspCap jspCapBottom" />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

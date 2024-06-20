@@ -201,6 +201,12 @@ const SideBar = () => {
                                 Quản lý đơn hàng
                             </Link>
                         </div>
+                        <div>
+                            <Link to={'/admin/chat'} className="nav-link flex gap-2">
+                                <div className="sb-nav-link-icon"><i class="fa-brands fa-facebook-messenger"></i></div>
+                                Quản lý tin nhắn
+                            </Link>
+                        </div>
                         {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrder" aria-expanded="false" aria-controls="collapseLayouts">
                             <div className="sb-nav-link-icon"><i class="fa-brands fa-facebook-messenger"></i></div>
                             Quản lý tin nhắn
