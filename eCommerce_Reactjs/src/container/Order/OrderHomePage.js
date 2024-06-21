@@ -385,11 +385,11 @@ function OrderHomePage(props) {
                             </div>
                             <div className="box-flex">
                                 <div className="head">Tổng giảm giá</div>
-                                <div >{dataVoucher && dataVoucher.voucherData ? CommonUtils.formatter.format(price - totalPriceDiscount(price, dataVoucher)) : CommonUtils.formatter.format(0)}</div>
+                                <div className='text-red'>-{dataVoucher && dataVoucher.voucherData ? CommonUtils.formatter.format(price - totalPriceDiscount(price, dataVoucher)) : CommonUtils.formatter.format(0)}</div>
                             </div>
                             <div className="box-flex">
                                 <div className="head">Phí vận chuyển</div>
-                                <div >{CommonUtils.formatter.format(priceShip)}</div>
+                                <div className='text-primary'>+{CommonUtils.formatter.format(priceShip)}</div>
                             </div>
                             <div className="box-flex">
                                 <div className="head">Tổng thanh toán:</div>

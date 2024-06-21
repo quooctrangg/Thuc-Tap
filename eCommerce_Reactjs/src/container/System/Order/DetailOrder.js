@@ -223,11 +223,11 @@ function DetailOrder(props) {
                             </div>
                             <div className="box-flex">
                                 <div className="head">Tổng giảm giá</div>
-                                <div >{DataOrder && DataOrder.voucherData && DataOrder.voucherId ? CommonUtils.formatter.format(price - totalPriceDiscount(price, DataOrder.voucherData)) : CommonUtils.formatter.format(0)}</div>
+                                <div className='text-red'>-{DataOrder && DataOrder.voucherData && DataOrder.voucherId ? CommonUtils.formatter.format(price - totalPriceDiscount(price, DataOrder.voucherData)) : CommonUtils.formatter.format(0)}</div>
                             </div>
                             <div className="box-flex">
                                 <div className="head">Phí vận chuyển</div>
-                                <div >{CommonUtils.formatter.format(priceShip)}</div>
+                                <div className='text-primary'>+{CommonUtils.formatter.format(priceShip)}</div>
                             </div>
                             <div className="box-flex">
                                 <div className="head">Tổng thanh toán:</div>

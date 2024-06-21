@@ -1,5 +1,5 @@
 import React from 'react';
-import logoVoucher from '../../../src/resources/img/logoVoucher.png'
+// import logoVoucher from '../../../src/resources/img/logoVoucher.png'
 import CommonUtils from '../../utils/CommonUtils';
 import './VoucherItem.scss'
 
@@ -12,8 +12,8 @@ function VoucherItem(props) {
         <div>
             <div style={{ width: props.width }} className="box-voucher">
                 <div className="content-left">
-                    <img src={logoVoucher}></img>
-                    <span>{props.name}</span>
+                    <img src='favicon.ico'></img>
+                    <span className='text-red'>{props.name}</span>
                 </div>
                 <div className="border-center"> </div>
                 <div className="content-right">

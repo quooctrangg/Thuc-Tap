@@ -364,6 +364,7 @@ let getStatisticProfit = (data) => {
 let getStatisticOverturn = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
+            // console.log(data);
             if (!data.oneDate && !data.twoDate) {
                 resolve({
                     errCode: 1,

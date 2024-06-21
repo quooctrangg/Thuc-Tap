@@ -1,5 +1,5 @@
 .box-voucher {
-    color: rgb(238, 77, 45);
+    color: rgb(255, 190, 93);
 
     border: 1px solid #c4c4c4;
     border-left: 0;
@@ -70,13 +70,13 @@
                     .percent {
 
                         height: 100%;
-                        background: linear-gradient(270deg, rgb(238, 77, 45) 0%, rgb(238, 77, 45) 100%);
+                        background: linear-gradient(270deg, rgb(255, 190, 93) 0%, rgb(255, 190, 93) 100%);
 
                     }
                 }
 
                 .used-percent {
-                    color: rgb(255, 66, 79);
+                    color: rgb(255, 190, 93);
                     font-size: 1.55rem;
                     margin-left: 0.5rem;
                     line-height: 1.5rem;
@@ -88,7 +88,7 @@
                 outline: none;
                 height: 4.8125rem;
                 border-radius: .375rem;
-                background-color: rgb(238, 77, 45);
+                background-color: rgb(255, 190, 93);
                 font-size: 2rem;
                 color: #fff;
                 margin-top: 30px;

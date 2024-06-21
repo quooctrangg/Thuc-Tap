@@ -104,7 +104,7 @@ const ManageCategory = () => {
                         </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -121,13 +121,12 @@ const ManageCategory = () => {
                                                 <td>{index + 1}</td>
                                                 <td>{item.value}</td>
                                                 <td>{item.code}</td>
-                                                <td>
+                                                <td style={{ display: 'flex', gap: 2 }}>
                                                     <Link to={`/admin/edit-category/${item.id}`}>
                                                         <button className='btn btn-warning'>
                                                             Sửa
                                                         </button>
                                                     </Link>
-                                                    &nbsp; &nbsp;
                                                     <button className='btn btn-danger' onClick={(event) => handleDeleteCategory(event, item.id)} >Xóa</button>
                                                 </td>
                                             </tr>

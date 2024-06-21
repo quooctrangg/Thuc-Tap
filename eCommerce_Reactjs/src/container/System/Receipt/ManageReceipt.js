@@ -66,7 +66,7 @@ const ManageReceipt = () => {
                         </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>

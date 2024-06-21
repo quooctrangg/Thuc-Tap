@@ -1,8 +1,7 @@
 import React from 'react';
-import logoVoucher from '../../../src/resources/img/logoVoucher.png'
-import './VoucherItemSmall.scss';
 import { useDispatch } from 'react-redux';
 import { ChooseVoucherStart } from '../../action/ShopCartAction';
+import './VoucherItemSmall.scss';
 
 function VoucherItemSmall(props) {
     const dispatch = useDispatch()
@@ -18,8 +17,8 @@ function VoucherItemSmall(props) {
     return (
         <div className="box-voucher-small">
             <div className="content-left">
-                <img src={logoVoucher}></img>
-                <span>{props.name}</span>
+                <img src='http://localhost:5000/favicon.ico'></img>
+                <span className='text-red'>{props.name}</span>
             </div>
             <div className="border-center">
             </div>

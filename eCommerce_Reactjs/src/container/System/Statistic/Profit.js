@@ -11,24 +11,23 @@ const Profit = (props) => {
     const [dataOrder, setdataOrder] = useState([])
     const [dataExport, setdataExport] = useState([])
     const [sumPrice, setsumPrice] = useState(0)
-    const [type, settype] = useState('day')
-    const [dateRange, setDateRange] = useState([null, null]);
-    const [startDate, endDate] = dateRange;
+    const [type, settype] = useState('month')
+    const [startDate, setStartDate] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
     const [DateTime, setDateTime] = useState(new Date());
 
     useEffect(() => {
-        setDateRange([new Date(), new Date()])
         handleOnclick()
     }, [])
 
     useEffect(() => {
         handleOnclick()
-    }, [type])
+    }, [type, DateTime, startDate, endDate])
 
     let handleOnclick = async () => {
         let res = await getStatisticProfit({
-            oneDate: type == 'day' ? startDate : DateTime,
-            twoDate: endDate,
+            oneDate: type == 'day' ? moment(startDate).toISOString() : moment(DateTime).toISOString(),
+            twoDate: moment(endDate).toISOString(),
             type: type
         })
         let sumPrice = 0;
@@ -69,65 +68,60 @@ const Profit = (props) => {
                 </div>
                 <div className="card-body">
                     <form>
-                        <div className="form-row">
-                            <div className="form-group col-md-2">
-                                <label htmlFor="inputZip">Loại thống kê</label>
-                                <select value={type} name="type" onChange={(event) => settype(event.target.value)} id="inputState" className="form-control">
-                                    <option value="day">Ngày</option>
-                                    <option value="month">Tháng</option>
-                                    <option value="year">Năm</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="form-row">
+                        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                            <label htmlFor="type" >Thống kê theo</label>
+                            <select value={type} name="type" onChange={(event) => settype(event.target.value)} id="type" style={{ width: 'auto' }} className="form-control">
+                                <option value="day">Ngày</option>
+                                <option value="month">Tháng</option>
+                                <option value="year">Năm</option>
+                            </select>
                             {type == "day" &&
-                                <>
-                                    <div className="form-group col-md-2">
-                                        <DatePicker
-                                            showMonthDropdown
-                                            showYearDropdown
-                                            selectsRange={true}
-                                            startDate={startDate}
-                                            endDate={endDate}
-                                            onChange={(update) => {
-                                                setDateRange(update);
-                                            }}
-                                            className="form-control"
-                                            isClearable={true}
-                                        />
-                                    </div>
-                                </>
+                                <div style={{ display: 'flex', gap: 5, alignItems: 'center', width: 'auto' }}>
+                                    <label htmlFor="startDate">Từ</label>
+                                    <DatePicker
+                                        id='startDate'
+                                        selected={startDate}
+                                        onChange={(update) => {
+                                            setStartDate(update);
+                                        }}
+                                        className="form-control"
+                                        isClearable={true}
+                                    />
+                                    <label htmlFor="endDate">đến</label>
+                                    <DatePicker
+                                        id='endDate'
+                                        selected={endDate}
+                                        onChange={(update) => {
+                                            setEndDate(update);
+                                        }}
+                                        className="form-control"
+                                        isClearable={true}
+                                    />
+                                </div>
                             }
                             {type == "month" &&
-                                <>
-                                    <div className="form-group col-md-2">
-                                        <label htmlFor="inputCity">Chọn tháng</label>
-                                        <DatePicker
-                                            selected={DateTime}
-                                            onChange={(date) => setDateTime(date)}
-                                            dateFormat="MM/yyyy"
-                                            showMonthYearPicker
-                                            className='form-control'
-                                        />
-                                    </div>
-                                </>
+                                <div style={{ with: 'auto' }}>
+                                    <DatePicker
+                                        selected={DateTime}
+                                        onChange={(date) => setDateTime(date)}
+                                        dateFormat="MM/yyyy"
+                                        showMonthYearPicker
+                                        className='form-control'
+                                    />
+                                </div>
                             }
                             {type == "year" &&
-                                <>
-                                    <div className="form-group col-md-2">
-                                        <label htmlFor="inputCity">Chọn năm</label>
-                                        <DatePicker
-                                            selected={DateTime}
-                                            onChange={(date) => setDateTime(date)}
-                                            dateFormat="yyyy"
-                                            showYearPicker
-                                            className='form-control'
-                                        />
-                                    </div>
-                                </>
+                                <div style={{ with: 'auto' }}>
+                                    <DatePicker
+                                        selected={DateTime}
+                                        onChange={(date) => setDateTime(date)}
+                                        dateFormat="yyyy"
+                                        showYearPicker
+                                        className='form-control'
+                                    />
+                                </div>
                             }
                         </div>
-                        <button type="button" onClick={() => handleOnclick()} className="btn btn-primary">Lọc</button>
                     </form>
                 </div>
                 <div className="card-body">
@@ -137,17 +131,15 @@ const Profit = (props) => {
                         </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
                             <thead>
                                 <tr>
                                     <th>Mã đơn</th>
                                     <th>Ngày đặt</th>
-                                    <th>Ngày cập nhật</th>
-                                    <th>Loại ship</th>
-                                    <th>Mã voucher</th>
+                                    <th>Ngày nhận hàng</th>
                                     <th>Hình thức</th>
-                                    <th>Trạng thái</th>
                                     <th>Tổng tiền</th>
+                                    <th>Giảm giá</th>
                                     <th>Tiền nhập hàng</th>
                                     <th>Lợi nhuận</th>
                                     <th>Thao tác</th>
@@ -156,16 +148,28 @@ const Profit = (props) => {
                             <tbody>
                                 {dataOrder && dataOrder.length > 0 ?
                                     dataOrder.map((item, index) => {
+                                        let totalPriceProduct = 0
+                                        item.orderDetail.forEach(e => {
+                                            totalPriceProduct += e.realPrice
+                                        })
+                                        totalPriceProduct += item.typeShipData.price
+                                        totalPriceProduct -= item.totalpriceProduct
                                         return (
                                             <tr key={index}>
                                                 <td>{item.id}</td>
                                                 <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
                                                 <td>{moment.utc(item.updatedAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                <td>{item.typeShipData.type}</td>
-                                                <td>{item.voucherData.codeVoucher}</td>
                                                 <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
-                                                <td>{item.statusOrderData.value}</td>
                                                 <td>{CommonUtils.formatter.format(item.totalpriceProduct)}</td>
+                                                <td>
+                                                    {
+                                                        item.voucherData.codeVoucher &&
+                                                        <div>
+                                                            <p className='text-red'>-{CommonUtils.formatter.format(totalPriceProduct)}</p>
+                                                            <p>({item.voucherData.codeVoucher})</p>
+                                                        </div>
+                                                    }
+                                                </td>
                                                 <td>{CommonUtils.formatter.format(item.importPrice)}</td>
                                                 <td>{CommonUtils.formatter.format(item.profitPrice)}</td>
                                                 <td>

@@ -190,7 +190,7 @@ const LoginWebPage = () => {
                                                 <a style={{ cursor: 'pointer', }} className="switch">Tài khoản mới</a>
                                             </div>
                                             <hr></hr>
-                                            <h5 class="text-center">hoặc</h5>
+                                            <h5 className="text-center">hoặc</h5>
                                             {/* <FacebookLoginButton text="Đăng nhập với Facebook" iconSize="25px" style={{ width: "350px", height: "40px", fontSize: "16px", marginTop: "20px", marginBottom: "10px" }} onClick={() => signInwithFacebook()} /> */}
                                             <GoogleLoginButton text="Đăng nhập với Google" iconSize="25px" style={{ width: "350px", height: "40px", fontSize: "16px" }} onClick={() => signInwithGoogle()} />
                                         </form>

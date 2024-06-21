@@ -73,7 +73,7 @@ const ManageOrder = () => {
                     <i className="fas fa-table me-1" />
                     Danh sách đơn đặt hàng
                 </div>
-                <select onChange={(event) => handleOnchangeStatus(event)} class="form-select col-3 ml-3 mt-3">
+                <select onChange={(event) => handleOnchangeStatus(event)} className="form-select col-3 ml-3 mt-3">
                     <option value={'ALL'} selected>Trạng thái đơn hàng</option>
                     {
                         dataStatusOrder && dataStatusOrder.length > 0 &&
@@ -91,7 +91,7 @@ const ManageOrder = () => {
                         </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>

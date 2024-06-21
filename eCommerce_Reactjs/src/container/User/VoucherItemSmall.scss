@@ -1,5 +1,5 @@
 .box-voucher-small {
-    color: rgb(238, 77, 45);
+    color: rgb(255, 190, 93);
     width: 460px;
     height: 118px;
     border: 1px solid #c4c4c4;
@@ -56,7 +56,7 @@
                 position: absolute;
                 top: 3px;
                 right: 18px;
-                color: rgb(238, 77, 45);
+                color: rgb(255, 66, 79);
                 font-size: 14px;
                 font-weight: 600;
 
@@ -101,9 +101,8 @@
                     margin-top: 4px;
 
                     .percent {
-
                         height: 100%;
-                        background: linear-gradient(270deg, rgb(238, 77, 45) 0%, rgb(238, 77, 45) 100%);
+                        background: linear-gradient(270deg, rgb(255, 190, 93) 0%, rgb(255, 190, 93) 100%);
 
                     }
                 }
@@ -121,7 +120,7 @@
                 outline: none;
                 height: 4.8125rem;
                 border-radius: .375rem;
-                background-color: rgb(238, 77, 45);
+                background-color: rgb(255, 190, 93);
                 font-size: 2rem;
                 color: #fff;
                 margin-top: 30px;

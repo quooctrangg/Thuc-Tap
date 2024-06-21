@@ -259,7 +259,7 @@ const ManageProductImage = () => {
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
-                            <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
+                            <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
@@ -335,7 +335,7 @@ const ManageProductImage = () => {
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
-                            <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
+                            <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
