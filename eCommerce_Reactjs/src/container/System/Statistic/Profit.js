@@ -139,6 +139,7 @@ const Profit = (props) => {
                                     <th>Ngày nhận hàng</th>
                                     <th>Hình thức</th>
                                     <th>Tổng tiền</th>
+                                    <th>Vận chuyển</th>
                                     <th>Giảm giá</th>
                                     <th>Tiền nhập hàng</th>
                                     <th>Lợi nhuận</th>
@@ -148,19 +149,21 @@ const Profit = (props) => {
                             <tbody>
                                 {dataOrder && dataOrder.length > 0 ?
                                     dataOrder.map((item, index) => {
+                                        console.log(item);
                                         let totalPriceProduct = 0
                                         item.orderDetail.forEach(e => {
                                             totalPriceProduct += e.realPrice
                                         })
-                                        totalPriceProduct += item.typeShipData.price
+                                        // totalPriceProduct += item.typeShipData.price
                                         totalPriceProduct -= item.totalpriceProduct
                                         return (
                                             <tr key={index}>
                                                 <td>{item.id}</td>
-                                                <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                <td>{moment.utc(item.updatedAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
+                                                <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY')}</td>
+                                                <td>{moment.utc(item.updatedAt).local().format('DD/MM/YYYY')}</td>
                                                 <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
-                                                <td>{CommonUtils.formatter.format(item.totalpriceProduct)}</td>
+                                                <td>{CommonUtils.formatter.format(item.totalpriceProduct + item.typeShipData.price)}</td>
+                                                <td className='text-red'>+{CommonUtils.formatter.format(item.typeShipData.price)}</td>
                                                 <td>
                                                     {
                                                         item.voucherData.codeVoucher &&

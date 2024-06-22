@@ -137,7 +137,7 @@ const Turnover = (props) => {
                                 <tr>
                                     <th>Mã đơn</th>
                                     <th>Ngày đặt</th>
-                                    <th>Ngày cập nhật</th>
+                                    <th>Ngày nhận hàng</th>
                                     <th>Loại ship</th>
                                     <th>Hình thức</th>
                                     <th>Số lượng sản phẩm</th>

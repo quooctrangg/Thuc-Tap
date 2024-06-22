@@ -11,6 +11,7 @@ import AddressUser from './AddressUser';
 import ChangePassword from '../System/User/ChangePassword';
 import OrderUser from './OrderUser';
 import MessagePage from '../Message/MessagePage';
+import DetailOrder from './DetailOrder';
 
 function UserHomePage(props) {
     const [user, setUser] = useState({})
@@ -38,6 +39,9 @@ function UserHomePage(props) {
                     </Route>
                     <Route exact path="/user/order/:id">
                         <OrderUser id={user.id} />
+                    </Route>
+                    <Route exact path="/user/order/:id/:orderId">
+                        <DetailOrder />
                     </Route>
                     <Route exact path="/user/changepassword/:id">
                         <ChangePassword id={user.id} />

@@ -142,10 +142,10 @@ function DetailOrder(props) {
                                         <tbody>
                                             {DataOrder.orderDetail && DataOrder.orderDetail.length > 0 &&
                                                 DataOrder.orderDetail.map((item, index) => {
-                                                    price += item.quantity * item.productDetail.discountPrice
+                                                    price += item.quantity * item.realPrice
                                                     let name = `${item.product.name} - ${item.productDetail.nameDetail} - ${item.productDetailSize.sizeData.value}`
                                                     return (
-                                                        <ShopCartItem isOrder={true} id={item.id} productdetailsizeId={item.productDetailSize.id} key={index} name={name} price={item.productDetail.discountPrice} quantity={item.quantity} image={item.productImage[0].image} />
+                                                        <ShopCartItem isOrder={true} id={item.id} productdetailsizeId={item.productDetailSize.id} key={index} name={name} price={item.realPrice} quantity={item.quantity} image={item.productImage[0].image} />
                                                     )
                                                 })
                                             }

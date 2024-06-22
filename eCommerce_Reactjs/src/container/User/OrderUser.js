@@ -6,6 +6,7 @@ import { getAllOrdersByUser, updateStatusOrderService } from '../../services/use
 import CommonUtils from '../../utils/CommonUtils';
 import moment from 'moment'
 import RateModal from '../../container/User/RateModal'
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 function OrderUser(props) {
     const { id } = useParams();
@@ -14,16 +15,42 @@ function OrderUser(props) {
     const [productId, setProductId] = useState()
     const [productName, setProductName] = useState()
     const [orderDetailId, setOderDetailId] = useState()
+    const [typeOrder, setTypeOrder] = useState('all')
+    const [data, setData] = useState([])
     let price = 0;
 
     useEffect(async () => {
         await loadDataOrder()
     }, [])
 
+    useEffect(() => {
+        switch (typeOrder) {
+            case 'all':
+                setData(DataOrder)
+                break;
+            case 'S3':
+                setData(DataOrder.filter(e => e.statusId == 'S3'))
+                break;
+            case 'S4':
+                setData(DataOrder.filter(e => e.statusId == 'S4'))
+                break;
+            case 'S5':
+                setData(DataOrder.filter(e => e.statusId == 'S5'))
+                break;
+            case 'S6':
+                setData(DataOrder.filter(e => e.statusId == 'S6'))
+                break;
+            case 'S7':
+                setData(DataOrder.filter(e => e.statusId == 'S7'))
+                break;
+        }
+    }, [typeOrder])
+
     let loadDataOrder = async () => {
         if (id) {
             let order = await getAllOrdersByUser(id)
             setDataOrder(order.data)
+            setData(order.data)
         }
     }
 
@@ -71,7 +98,6 @@ function OrderUser(props) {
         setProductName(name)
         setOderDetailId(orderId)
         setisOpenModalRate(true)
-        console.log(DataOrder);
     }
 
     return (
@@ -79,24 +105,39 @@ function OrderUser(props) {
             <div className="row">
                 <div className="col-md-12">
                     <div className="box-nav-order">
-                        <a className='nav-item-order active'>
+                        <button onClick={() => setTypeOrder('all')} className={typeOrder == 'all' ? 'nav-item-order active' : 'nav-item-order'}>
                             <span>Tất cả</span>
-                        </a>
+                        </button>
+                        <button onClick={() => setTypeOrder('S3')} className={typeOrder == 'S3' ? 'nav-item-order active' : 'nav-item-order'}>
+                            <span>Chờ xác nhận</span>
+                        </button>
+                        <button onClick={() => setTypeOrder('S4')} className={typeOrder == 'S4' ? 'nav-item-order active' : 'nav-item-order'}>
+                            <span>Chờ lấy hàng</span>
+                        </button>
+                        <button onClick={() => setTypeOrder('S5')} className={typeOrder == 'S5' ? 'nav-item-order active' : 'nav-item-order'}>
+                            <span>Đang giao hàng</span>
+                        </button>
+                        <button onClick={() => setTypeOrder('S6')} className={typeOrder == 'S6' ? 'nav-item-order active' : 'nav-item-order'}>
+                            <span>Đã giao hàng</span>
+                        </button>
+                        <button onClick={() => setTypeOrder('S7')} className={typeOrder == 'S7' ? 'nav-item-order active' : 'nav-item-order'}>
+                            <span>Hủy đơn</span>
+                        </button>
                     </div>
                     {/* <div className='box-search-order'>
                         <i className="fas fa-search"></i>
                         <input autoComplete='off' placeholder='Tìm kiếm theo ID đơn hàng hoặc Tên Sản phẩm' type={"text"} />
                     </div> */}
-                    {DataOrder && DataOrder.length > 0 &&
-                        DataOrder.map((item, index) => {
+                    {data && data.length > 0 ?
+                        data.map((item, index) => {
                             return (
                                 <div key={index}>
                                     <div className='box-list-order'>
-                                        <div className='content-top'>
+                                        <Link to={`/user/order/${id}/${item.id}`} className='content-top'>
                                             <div className='content-left'>
-                                                <div className='label-favorite'>
+                                                {/* <div className='label-favorite'>
                                                     Yêu thích
-                                                </div>
+                                                </div> */}
                                                 <span className='label-name-shop'>Jolido shop</span>
                                                 {/* <div className='view-shop'>
                                                     <i className="fas fa-store"></i>
@@ -106,7 +147,7 @@ function OrderUser(props) {
                                             <div className='content-right'>
                                                 {item.statusOrderData && item.statusOrderData.value} {item.isPaymentOnlien == 1 && ' | Đã thanh toán'}
                                             </div>
-                                        </div>
+                                        </Link>
                                         {item.orderDetail && item.orderDetail.length > 0 &&
                                             item.orderDetail.map((element, index) => {
                                                 price += element.quantity * element.realPrice
@@ -168,17 +209,21 @@ function OrderUser(props) {
                                                     Hủy đơn
                                                 </div>
                                             }
-                                            {
+                                            {/* {
                                                 item.statusId == 'S5' &&
                                                 <div className='btn-buy' onClick={() => handleReceivedOrder(item.id)} >
                                                     Đã nhận hàng
                                                 </div>
-                                            }
+                                            } */}
                                         </div>
                                     </div>
                                 </div>
                             )
                         })
+                        :
+                        <div className='text-center text-red'>
+                            Không có đơn hàng.
+                        </div>
                     }
                 </div>
             </div>

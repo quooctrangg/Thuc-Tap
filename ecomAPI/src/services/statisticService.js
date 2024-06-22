@@ -316,11 +316,10 @@ let getStatisticProfit = (data) => {
                     }
                     orderProduct[i].importPrice = importPrice
                     if (orderProduct[i].voucherId) {
-                        orderProduct[i].totalpriceProduct = totalPriceDiscount(totalprice, orderProduct[i]) + orderProduct[i].typeShipData.price
+                        orderProduct[i].totalpriceProduct = totalPriceDiscount(totalprice, orderProduct[i])
                         orderProduct[i].profitPrice = totalPriceDiscount(totalprice, orderProduct[i]) + orderProduct[i].typeShipData.price - importPrice
-
                     } else {
-                        orderProduct[i].totalpriceProduct = totalprice + orderProduct[i].typeShipData.price
+                        orderProduct[i].totalpriceProduct = totalprice
                         orderProduct[i].profitPrice = (totalprice + orderProduct[i].typeShipData.price) - importPrice
                     }
                 }
@@ -328,7 +327,6 @@ let getStatisticProfit = (data) => {
                     if (data.type == "day") {
                         let updatedAt = moment.utc(item.updatedAt).local().format('DD/MM/YYYY').split('/')
                         updatedAt = Number(updatedAt[2] + updatedAt[1] + updatedAt[0])
-
                         let twoDate = moment(data.twoDate).format("DD/MM/YYYY").split('/')
                         twoDate = Number(twoDate[2] + twoDate[1] + twoDate[0])
                         let oneDate = moment(data.oneDate).format("DD/MM/YYYY").split('/')
