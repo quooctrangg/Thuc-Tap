@@ -244,7 +244,7 @@ function DetailOrder(props) {
                                     <>
                                         <a onClick={() => handleSuccessShip()} className="main_btn">Đã giao hàng</a>
                                         <a onClick={() => handleCancelOrder(DataOrder)} style={{ marginLeft: '30px', background: '#cd2b14', border: '1px solid #cd2b14', width: '213px' }} className="main_btn">
-                                            Hủy đơn hàng
+                                            Không nhận hàng
                                         </a>
                                     </>
                                 }

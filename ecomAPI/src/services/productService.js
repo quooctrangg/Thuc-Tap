@@ -43,7 +43,7 @@ let createNewProduct = (data) => {
                     name: data.name,
                     contentHTML: data.contentHTML,
                     contentMarkdown: data.contentMarkdown,
-                    statusId: 'S1',
+                    statusId: 'S2',
                     categoryId: data.categoryId,
                     madeby: data.madeby,
                     material: data.material,

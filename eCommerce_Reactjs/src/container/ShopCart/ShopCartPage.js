@@ -176,14 +176,16 @@ function ShopCartPage(props) {
                                     <span className="name-easier">Jolido voucher</span>
                                     <span onClick={() => handleOpenModal()} className="choose-voucher">Chọn Hoặc Nhập Mã</span>
                                     {dataVoucher && dataVoucher.voucherData &&
-                                        <span className="choose-voucher">Mã voucher: {dataVoucher.voucherData.codeVoucher}</span>
+                                        <span className="choose-voucher">Mã voucher: {dataVoucher.voucherData.codeVoucher + `(-${CommonUtils.formatter.format(price - totalPriceDiscount(price, dataVoucher))})`}</span>
                                     }
                                 </div>
                             </div>
                             <div className="content-right">
                                 <div className="wrap-price">
                                     <span className="text-total">Tổng thanh toán ({dataCart && dataCart.length} sản phẩm): </span>
-                                    <span className="text-price">{dataVoucher && dataVoucher.voucherData ? CommonUtils.formatter.format(totalPriceDiscount(price, dataVoucher) + priceShip) : CommonUtils.formatter.format(price + (+priceShip))}</span>
+                                    <span className="text-price">
+                                        {dataVoucher && dataVoucher.voucherData ? CommonUtils.formatter.format(totalPriceDiscount(price, dataVoucher) + priceShip) : CommonUtils.formatter.format(price + (+priceShip))}
+                                    </span>
                                 </div>
                                 <div className="checkout_btn_inner">
                                     <p onClick={() => handleOpenAddressUserModal()} className="main_btn" >Đi đến thanh toán</p>
