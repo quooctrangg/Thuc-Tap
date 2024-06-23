@@ -6,11 +6,14 @@ import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
+import AddReceiptModal from './AddReceiptModal'
 
 const ManageReceipt = () => {
     const [dataReceipt, setdataReceipt] = useState([])
     const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState(0)
+    const [isOpenModalReceipt, setIsOpenModalReceipt] = useState(false)
+
     useEffect(() => {
         try {
             fetchData();
@@ -51,6 +54,14 @@ const ManageReceipt = () => {
         }
     }
 
+    const handleOpenReceiptModal = () => {
+        setIsOpenModalReceipt(true)
+    }
+
+    const handleCloseReceiptModal = () => {
+        setIsOpenModalReceipt(false)
+    }
+
     return (
         <div className="container-fluid px-4">
             <h1 className="mt-4">Quản lý nhập hàng</h1>
@@ -60,9 +71,10 @@ const ManageReceipt = () => {
                     Danh sách nhập hàng
                 </div>
                 <div className="card-body">
-                    <div className='row'>
-                        <div className='col-12'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success mb-2" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                    <div style={{ width: '100%' }} className='' >
+                        <div className='d-flex gap-2 justify-content-between'>
+                            <button onClick={() => handleOpenReceiptModal()} className="btn btn-success mb-2" >Thêm hóa đơn <i class="fa-solid fa-file-invoice"></i></button>
+                            <button onClick={() => handleOnClickExport()} className="btn btn-success mb-2" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -70,10 +82,9 @@ const ManageReceipt = () => {
                             <thead>
                                 <tr>
                                     <th>STT</th>
+                                    <th>Số hóa đơn</th>
                                     <th>Ngày nhập hàng</th>
                                     <th>Tên nhà cung cấp</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Tên nhân viên</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -83,10 +94,9 @@ const ManageReceipt = () => {
                                         return (
                                             <tr key={index}>
                                                 <td>{(numberPage * 10) + index + 1}</td>
+                                                <td>{item.billNumber}</td>
                                                 <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
                                                 <td>{item.supplierData.name}</td>
-                                                <td>{item.supplierData.phonenumber}</td>
-                                                <td>{item.userData.firstName + " " + item.userData.lastName}</td>
                                                 <td>
                                                     <Link to={`/admin/detail-receipt/${item.id}`}>
                                                         <button className='btn btn-primary'>
@@ -129,7 +139,9 @@ const ManageReceipt = () => {
                     onPageChange={handleChangePage}
                 />
             }
-        </div>
+
+            <AddReceiptModal handleCloseReceiptModal={handleCloseReceiptModal} isOpenModalReceipt={isOpenModalReceipt} fetchData={fetchData} />
+        </div >
     )
 }
 

@@ -1,36 +1,52 @@
 import db from "../models/index";
 require('dotenv').config();
-const { Op } = require("sequelize");
 
 let createNewReceipt = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.userId || !data.supplierId || !data.productDetailSizeId || !data.quantity
-                || !data.price
-            ) {
+            // !data.userId || !data.supplierId || !data.productDetailSizeId || !data.quantity|| !data.price
+            if (!data.userId || !data.supplierId || !data.billNumber) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
-
+                let isReceipt = await db.Receipt.findOne({
+                    where: {
+                        billNumber: data.billNumber
+                    }
+                })
+                if (isReceipt) {
+                    resolve({
+                        errCode: 1,
+                        errMessage: 'Số hóa đơn đã tồn tại'
+                    })
+                    return
+                }
                 let receipt = await db.Receipt.create({
                     userId: data.userId,
-                    supplierId: data.supplierId
-
+                    supplierId: data.supplierId,
+                    billNumber: data.billNumber
                 })
+                // if (receipt) {
+                //     await db.ReceiptDetail.create({
+                //         receiptId: receipt.id,
+                //         productDetailSizeId: data.productDetailSizeId,
+                //         quantity: data.quantity,
+                //         price: data.price,
+                //     }
+                //     )
+                // }
                 if (receipt) {
-                    await db.ReceiptDetail.create({
-                        receiptId: receipt.id,
-                        productDetailSizeId: data.productDetailSizeId,
-                        quantity: data.quantity,
-                        price: data.price,
-                    }
-                    )
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thành công'
+                    })
+                    return
                 }
                 resolve({
-                    errCode: 0,
-                    errMessage: 'Thành công'
+                    errCode: 1,
+                    errMessage: 'Thất bại'
                 })
             }
         } catch (error) {
@@ -42,23 +58,29 @@ let createNewReceipt = (data) => {
 let createNewReceiptDetail = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.receiptId || !data.productDetailSizeId || !data.quantity
-                || !data.price
-            ) {
+            if (!data.receiptId || !data.productDetailSizeId || !data.quantity || !data.price || !data.lotNumber) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
-                await db.ReceiptDetail.create({
+                const isReceiptDetail = await db.ReceiptDetail.create({
                     receiptId: data.receiptId,
                     productDetailSizeId: data.productDetailSizeId,
                     quantity: data.quantity,
                     price: data.price,
+                    lotNumber: data.lotNumber
                 })
+                if (isReceiptDetail) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thành công'
+                    })
+                    return
+                }
                 resolve({
-                    errCode: 0,
-                    errMessage: 'Thành công'
+                    errCode: 1,
+                    errMessage: 'Thất bại'
                 })
             }
         } catch (error) {
@@ -82,7 +104,6 @@ let getDetailReceiptById = (id) => {
                 res.receiptDetail = await db.ReceiptDetail.findAll({ where: { receiptId: id } })
                 if (res.receiptDetail && res.receiptDetail.length > 0) {
                     for (let i = 0; i < res.receiptDetail.length; i++) {
-
                         let productDetailSize = await db.ProductDetailSize.findOne({
                             where: { id: res.receiptDetail[i].productDetailSizeId },
                             include: [
@@ -110,7 +131,9 @@ let getDetailReceiptById = (id) => {
 let getAllReceipt = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let objectFilter = {}
+            let objectFilter = {
+                order: [['createdAt', 'DESC']]
+            }
             if (data.limit && data.offset) {
                 objectFilter.limit = +data.limit
                 objectFilter.offset = +data.offset

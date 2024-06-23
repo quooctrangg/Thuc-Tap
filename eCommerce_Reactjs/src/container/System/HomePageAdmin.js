@@ -111,9 +111,9 @@ function HomePageAdmin(props) {
                                 <Route exact path="/admin/list-supplier">
                                     <ManageSupplier />
                                 </Route>
-                                <Route exact path="/admin/add-receipt">
+                                {/* <Route exact path="/admin/add-receipt">
                                     <AddReceipt />
-                                </Route>
+                                </Route> */}
                                 <Route exact path="/admin/list-receipt">
                                     <ManageReceipt />
                                 </Route>

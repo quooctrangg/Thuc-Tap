@@ -183,7 +183,7 @@ const SideBar = () => {
                                 <Link to={'/admin/add-supplier'} className="nav-link" >Thêm Nhà cung cấp</Link>
                             </nav>
                         </div>
-                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReceipt" aria-expanded="false" aria-controls="collapseLayouts">
+                        {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReceipt" aria-expanded="false" aria-controls="collapseLayouts">
                             <div className="sb-nav-link-icon">
                                 <i className="fa-solid fa-file-import"></i>
                             </div>
@@ -197,6 +197,12 @@ const SideBar = () => {
                                 <Link to={'/admin/list-receipt'} className="nav-link" >Danh sách nhập hàng</Link>
                                 <Link to={'/admin/add-receipt'} className="nav-link" >Thêm nhập hàng</Link>
                             </nav>
+                        </div> */}
+                        <div >
+                            <Link to={'/admin/list-receipt'} className="nav-link flex gap-2" >
+                                <i className="fas fa-cart-plus"></i>
+                                Quản lý nhập hàng
+                            </Link>
                         </div>
                         <div >
                             <Link to={'/admin/list-order'} className="nav-link flex gap-2" >

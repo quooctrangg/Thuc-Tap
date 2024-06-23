@@ -23,6 +23,9 @@ module.exports = {
             price: {
                 type: Sequelize.BIGINT
             },
+            lotNumber: {
+                type: Sequelize.STRING
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

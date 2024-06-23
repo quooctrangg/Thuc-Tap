@@ -10,14 +10,14 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-           
+
 
         }
     };
     Receipt.init({
         userId: DataTypes.INTEGER,
-        supplierId: DataTypes.INTEGER
-       
+        supplierId: DataTypes.INTEGER,
+        billNumber: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'Receipt',

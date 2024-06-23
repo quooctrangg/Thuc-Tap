@@ -10,15 +10,16 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-           
+
 
         }
     };
     ReceiptDetail.init({
         receiptId: DataTypes.INTEGER,
-        productDetailSizeId:DataTypes.INTEGER,
-        quantity:DataTypes.INTEGER,
-        price:DataTypes.BIGINT
+        productDetailSizeId: DataTypes.INTEGER,
+        quantity: DataTypes.INTEGER,
+        price: DataTypes.BIGINT,
+        lotNumber: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'ReceiptDetail',
