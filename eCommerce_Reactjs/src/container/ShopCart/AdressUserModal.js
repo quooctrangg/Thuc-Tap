@@ -2,6 +2,8 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { getDetailAddressUserByIdService } from '../../services/userService';
 import { Modal, ModalFooter, ModalBody, Button } from 'reactstrap';
+import CommonUtils from '../../utils/CommonUtils';
+import { toast } from 'react-toastify';
 
 const AddressUsersModal = (props) => {
     const [inputValues, setInputValues] = useState({
@@ -38,6 +40,10 @@ const AddressUsersModal = (props) => {
     }
 
     let handleSaveInfor = () => {
+        if (!CommonUtils.isValidPhoneNumber(inputValues.shipPhonenumber)) {
+            toast.error("Số điện thoại không hợp lệ")
+            return
+        }
         props.sendDataFromModalAddress({
             shipName: inputValues.shipName,
             shipAdress: inputValues.shipAdress,

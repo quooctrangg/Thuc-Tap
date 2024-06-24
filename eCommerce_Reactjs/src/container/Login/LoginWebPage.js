@@ -2,12 +2,13 @@ import React from "react";
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import './LoginWebPage.css';
-import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import { GoogleLoginButton } from "react-social-login-buttons";
 import { handleLoginService, checkPhonenumberEmail, createNewUser } from '../../services/userService';
 import Otp from "./Otp";
 import { authentication } from "../../utils/firebase";
 import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth'
 import axios from "axios";
+import CommonUtils from "../../utils/CommonUtils";
 const LoginWebPage = () => {
     const [inputValues, setInputValues] = useState({
         email: '', password: 'passwordsecrect', lastName: '', phonenumber: '', isOpen: false, dataUser: {}
@@ -67,6 +68,10 @@ const LoginWebPage = () => {
     }
 
     let handleSaveUser = async () => {
+        if (!CommonUtils.isValidPhoneNumber(inputValues.phonenumber)) {
+            toast.error("Số điện thoại không hợp lệ")
+            return
+        }
         const element = document.querySelector('form');
         element.addEventListener('submit', event => {
             event.preventDefault();
@@ -117,6 +122,10 @@ const LoginWebPage = () => {
     }
 
     let LoginWithSocial = async (re) => {
+        if (!CommonUtils.isValidPhoneNumber(inputValues.phonenumber)) {
+            toast.error("Số điện thoại không hợp lệ")
+            return
+        }
         let res = await checkPhonenumberEmail({
             phonenumber: re.user.providerData[0].phoneNumber,
             email: re.user.providerData[0].email
@@ -134,7 +143,6 @@ const LoginWebPage = () => {
                 lastName: re.user.providerData[0].displayName,
                 phonenumber: re.user.providerData[0].phoneNumber,
                 avatar: null,
-                roleId: "R2",
                 password: inputValues.password
             })
             if (res && res.errCode === 0) {

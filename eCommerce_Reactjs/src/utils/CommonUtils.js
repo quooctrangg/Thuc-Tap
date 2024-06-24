@@ -25,6 +25,12 @@ class CommonUtils {
         currency: 'VND',
         minimumFractionDigits: PREFIX_CURRENCY.minimumFractionDigits
     })
+
+    static isValidPhoneNumber(phoneNumber) {
+        const pattern = /^0\d{9}$/;
+        return pattern.test(phoneNumber);
+    }
+
 }
 
 export default CommonUtils;

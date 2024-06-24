@@ -151,7 +151,6 @@ const Profit = (props) => {
                             <tbody>
                                 {dataOrder && dataOrder.length > 0 ?
                                     dataOrder.map((item, index) => {
-                                        console.log(item);
                                         let totalPriceProduct = 0
                                         item.orderDetail.forEach(e => {
                                             totalPriceProduct += e.realPrice

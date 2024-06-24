@@ -1,31 +1,24 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { getAllUsers, banUserService, unBanUserService } from '../../../services/userService';
-import moment from 'moment';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../../utils/CommonUtils';
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormSearch from '../../../component/Search/FormSearch';
+import AddUserModal from './AddUserModal';
 
 const ManageUser = () => {
-    const location = useLocation();
     const [dataUser, setdataUser] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null)
     const [count, setCount] = useState('')
-    const [numberPage, setnumberPage] = useState(0)
+    const [numberPage, setNumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
+    const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false)
 
     useEffect(async () => {
         await fetchAllUser(keyword, numberPage)
-    }, [numberPage])
-
-    useEffect(() => {
-        if (location.currentPage == 0 || location.currentPage) {
-            handleChangePage({ selected: location.currentPage })
-            location.currentPage = null
-        }
-    })
+    }, [numberPage, isOpenAddUserModal])
 
     let fetchAllUser = async (keyword, page) => {
         let res = await getAllUsers({
@@ -62,7 +55,7 @@ const ManageUser = () => {
     }
 
     let handleChangePage = async (number) => {
-        setnumberPage(number.selected)
+        setNumberPage(number.selected)
     }
 
     let handleSearchUser = (keyword) => {
@@ -77,15 +70,13 @@ const ManageUser = () => {
         }
     }
 
-    let handleOnClickExport = async () => {
-        let res = await getAllUsers({
-            limit: '',
-            offset: '',
-            keyword: ''
-        })
-        if (res && res.errCode == 0) {
-            await CommonUtils.exportExcel(res.data, "Danh sách người dùng", "ListUser")
-        }
+    const handleShowAddUserModal = () => {
+        setIsOpenAddUserModal(true)
+    }
+
+    const handleCloseAddUserModal = () => {
+        setIsOpenAddUserModal(false)
+        setCurrentUser(null)
     }
 
     return (
@@ -102,7 +93,10 @@ const ManageUser = () => {
                             <FormSearch title={"số điện thoại"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchUser} />
                         </div>
                         <div className='col-8'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleShowAddUserModal()} className="btn btn-success" >
+                                <i class="fa-solid fa-plus"></i>
+                                Thêm
+                            </button>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -114,7 +108,6 @@ const ManageUser = () => {
                                     <th>Họ và tên</th>
                                     <th>Số điện thoại</th>
                                     <th>Giới tính</th>
-                                    <th>Quyền</th>
                                     <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
@@ -122,7 +115,6 @@ const ManageUser = () => {
                             <tbody>
                                 {dataUser && dataUser.length > 0 ?
                                     dataUser.map((item, index) => {
-                                        console.log(item);
                                         return (
                                             <tr key={index}>
                                                 <td>{(numberPage * 10) + index + 1}</td>
@@ -130,7 +122,6 @@ const ManageUser = () => {
                                                 <td>{`${item.firstName ? item.firstName : ''} ${item.lastName ? item.lastName : ''}`}</td>
                                                 <td>{item.phonenumber}</td>
                                                 <td>{item.genderData.value}</td>
-                                                <td>{item.roleData.value}</td>
                                                 <td>
                                                     {
                                                         item.statusId == 'S1' ?
@@ -144,11 +135,12 @@ const ManageUser = () => {
                                                     }
                                                 </td>
                                                 <td style={{ display: 'flex', gap: 2 }}>
-                                                    <Link to={{ pathname: `/admin/edit-user/${item.id}`, currentPage: numberPage }}>
-                                                        <button className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                    </Link>
+                                                    <button onClick={() => {
+                                                        setCurrentUser(item.id)
+                                                        handleShowAddUserModal()
+                                                    }} className='btn btn-warning'>
+                                                        Sửa
+                                                    </button>
                                                     {/* <a href="#" onClick={(event) => handleBanUser(event, item.id)} >Delete</a> */}
                                                     {
                                                         item.statusId == 'S1' ?
@@ -198,6 +190,7 @@ const ManageUser = () => {
                     forcePage={numberPage}
                 />
             }
+            <AddUserModal id={currentUser} handleCloseAddUserModal={handleCloseAddUserModal} isOpenAddUserModal={isOpenAddUserModal} />
         </div>
     )
 }

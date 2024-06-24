@@ -41,20 +41,11 @@ const SideBar = () => {
                         }
                         {user && user.roleId === "R1" &&
                             <>
-                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon">
+                                <div >
+                                    <Link to={'/admin/list-user'} className="nav-link flex gap-2" >
                                         <i className="fas fa-users"></i>
-                                    </div>
-                                    Quản lý người dùng
-                                    <div className="sb-sidenav-collapse-arrow">
-                                        <i className="fas fa-angle-down" />
-                                    </div>
-                                </a>
-                                <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-user'} className="nav-link" >Danh sách người dùng</Link>
-                                        <Link to={'/admin/add-user'} className="nav-link" >Thêm người dùng</Link>
-                                    </nav>
+                                        Quản lý người dùng
+                                    </Link>
                                 </div>
                                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div className="sb-nav-link-icon">

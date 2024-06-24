@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DatePicker from '../../component/input/DatePicker';
+import DatePicker from "react-datepicker";
 import moment from 'moment'
 import { getDetailUserById, UpdateUserService, handleSendVerifyEmail } from '../../services/userService';
 import { useFetchAllcode } from '../../container/customize/fetch';
@@ -15,41 +15,36 @@ import './DetailUserPage.scss';
 function DetailUserPage(props) {
     const { id } = useParams();
     const { data: dataGender } = useFetchAllcode('GENDER')
-    const [birthday, setbirthday] = useState('');
-    const [isChangeDate, setisChangeDate] = useState(false)
     const [inputValues, setInputValues] = useState({
-        firstName: '', lastName: '', address: '', phonenumber: '', genderId: '', dob: '', roleId: '', email: '', image: '', isActiveEmail: '', imageReview: '', isOpen: false
+        firstName: '', lastName: '', address: '', phonenumber: '', genderId: '', dob: new Date(), email: '', image: '', imageReview: '', isOpen: false
     });
     if (dataGender && dataGender.length > 0 && inputValues.genderId === null) {
         setInputValues({ ...inputValues, ["genderId"]: dataGender[0].code })
     }
 
     useEffect(() => {
-        let fetchUser = async () => {
-            let res = await getDetailUserById(id)
-            if (res && res.errCode === 0) {
-                setStateUser(res.data)
-            }
-        }
-        fetchUser();
+        fetchUser(id);
     }, [id])
+
+    const fetchUser = async (userId) => {
+        let res = await getDetailUserById(userId)
+        if (res && res.errCode === 0) {
+            setStateUser(res.data)
+        }
+    }
 
     let setStateUser = (data) => {
         setInputValues({
-            ...inputValues,
             ["firstName"]: data.firstName,
             ["lastName"]: data.lastName,
             ["address"]: data.address,
             ["phonenumber"]: data.phonenumber,
             ["genderId"]: data.genderId,
-            ["roleId"]: data.roleId,
             ["email"]: data.email,
             ["id"]: data.id,
-            ["dob"]: data.dob,
+            ["dob"]: new Date(data.dob),
             ["image"]: data.image ? data.image : "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg",
-            ["isActiveEmail"]: data.isActiveEmail
         })
-        setbirthday(moment.unix(+data.dob / 1000).locale('vi').format('DD/MM/YYYY'))
     }
 
     const handleOnChange = event => {
@@ -57,13 +52,11 @@ function DetailUserPage(props) {
         setInputValues({ ...inputValues, [name]: value });
     };
 
-    let handleOnChangeDatePicker = (date) => {
-        setbirthday(date[0])
-        setisChangeDate(true)
-    }
-
     let handleSaveInfor = async () => {
-        console.log(inputValues.image)
+        if (!CommonUtils.isValidPhoneNumber(inputValues.phonenumber)) {
+            toast.error("Số điện thoại không hợp lệ")
+            return
+        }
         let res = await UpdateUserService({
             id: id,
             firstName: inputValues.firstName,
@@ -72,7 +65,7 @@ function DetailUserPage(props) {
             roleId: inputValues.roleId,
             genderId: inputValues.genderId,
             phonenumber: inputValues.phonenumber,
-            dob: isChangeDate === false ? inputValues.dob : new Date(birthday).getTime(),
+            dob: moment(inputValues.dob).format('MM/DD/YYYY'),
             image: inputValues.image
         })
         if (res && res.errCode === 0) {
@@ -164,7 +157,19 @@ function DetailUserPage(props) {
                             </select></div>
                             <div className="col-md-6">
                                 <label className="labels">Ngày sinh</label>
-                                <DatePicker className="form-control" onChange={handleOnChangeDatePicker} value={birthday} />
+                                <DatePicker
+                                    id='birthday'
+                                    selected={inputValues.dob}
+                                    onChange={(update) => {
+                                        setInputValues({
+                                            ...inputValues,
+                                            ["dob"]: update
+                                        })
+                                    }}
+                                    className="form-control"
+                                    isClearable={true}
+                                    dateFormat="dd/MM/yyyy"
+                                />
                             </div>
                         </div>
                         <div className="row mt-2">

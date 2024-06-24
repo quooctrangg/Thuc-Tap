@@ -23,8 +23,6 @@ function AddressUser(props) {
     }, [])
 
     let sendDataFromModalAddress = async (data) => {
-        setisOpenModalAddressUser(false)
-        setaddressUserId('')
         if (data.isActionUpdate === false) {
             let res = await createNewAddressUserrService({
                 shipName: data.shipName,
@@ -39,6 +37,8 @@ function AddressUser(props) {
                 if (res && res.errCode === 0) {
                     setdataAddressUser(res.data)
                 }
+                setaddressUserId('')
+                setisOpenModalAddressUser(false)
             } else {
                 toast.error(res.errMessage)
             }
@@ -57,6 +57,8 @@ function AddressUser(props) {
                 if (res && res.errCode === 0) {
                     setdataAddressUser(res.data)
                 }
+                setaddressUserId('')
+                setisOpenModalAddressUser(false)
             } else {
                 toast.error(res.errMessage)
             }

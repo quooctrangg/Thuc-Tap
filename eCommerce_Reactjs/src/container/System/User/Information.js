@@ -3,18 +3,17 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DatePicker from '../../../component/input/DatePicker';
+import DatePicker from "react-datepicker";
 import moment from 'moment'
 import { getDetailUserById, UpdateUserService, handleSendVerifyEmail } from '../../../services/userService';
 import { useFetchAllcode } from '../../customize/fetch';
 import CommonUtils from '../../../utils/CommonUtils';
 import 'react-image-lightbox/style.css';
+
 const Information = () => {
     const { id } = useParams();
-    const [birthday, setbirthday] = useState('');
-    const [isChangeDate, setisChangeDate] = useState(false)
     const [inputValues, setInputValues] = useState({
-        firstName: '', lastName: '', address: '', phonenumber: '', genderId: '', dob: '', roleId: '', email: '', image: '', isActiveEmail: '', imageReview: ''
+        firstName: '', lastName: '', address: '', phonenumber: '', genderId: '', dob: new Date(), roleId: '', email: '', image: '', isActiveEmail: '', imageReview: ''
     });
     const { data: dataGender } = useFetchAllcode('GENDER');
 
@@ -36,14 +35,11 @@ const Information = () => {
             ["address"]: data.address,
             ["phonenumber"]: data.phonenumber,
             ["genderId"]: data.genderId,
-            ["roleId"]: data.roleId,
             ["email"]: data.email,
             ["id"]: data.id,
-            ["dob"]: data.dob,
+            ["dob"]: new Date(data.dob),
             ["image"]: data.image ? data.image : "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg",
-            ["isActiveEmail"]: data.isActiveEmail
         })
-        setbirthday(moment.unix(+data.dob / 1000).locale('vi').format('DD/MM/YYYY'))
     }
 
     const handleOnChange = event => {
@@ -51,13 +47,11 @@ const Information = () => {
         setInputValues({ ...inputValues, [name]: value });
     };
 
-    let handleOnChangeDatePicker = (date) => {
-        setbirthday(date[0])
-        setisChangeDate(true)
-    }
-
     let handleSaveInfor = async () => {
-        console.log(inputValues.image)
+        if (!CommonUtils.isValidPhoneNumber(inputValues.phonenumber)) {
+            toast.error("Số điện thoại không hợp lệ")
+            return
+        }
         let res = await UpdateUserService({
             id: id,
             firstName: inputValues.firstName,
@@ -66,7 +60,7 @@ const Information = () => {
             roleId: inputValues.roleId,
             genderId: inputValues.genderId,
             phonenumber: inputValues.phonenumber,
-            dob: isChangeDate === false ? inputValues.dob : new Date(birthday).getTime(),
+            dob: moment(inputValues.dob).format('MM/DD/YYYY'),
             image: inputValues.image
         })
         if (res && res.errCode === 0) {
@@ -161,7 +155,20 @@ const Information = () => {
                             </div>
                             <div className="col-md-6">
                                 <label className="labels">Ngày sinh</label>
-                                <DatePicker className="form-control" onChange={handleOnChangeDatePicker} value={birthday} /></div>
+                                <DatePicker
+                                    id='birthday'
+                                    selected={inputValues.dob}
+                                    onChange={(update) => {
+                                        setInputValues({
+                                            ...inputValues,
+                                            ["dob"]: update
+                                        })
+                                    }}
+                                    className="form-control"
+                                    isClearable={true}
+                                    dateFormat="dd/MM/yyyy"
+                                />
+                            </div>
                         </div>
                         <div className="row mt-2">
                             <div className="col-md-3">

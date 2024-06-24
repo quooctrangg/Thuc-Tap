@@ -1,10 +1,8 @@
 import React from 'react';
-import Footer from './Footer';
 import Header from './Header';
 import SideBar from './SideBar';
 import Home from './Home';
 import ManageUser from './User/ManageUser';
-import Adduser from './User/Adduser';
 import {
     BrowserRouter as Router,
     Switch,
@@ -40,7 +38,6 @@ import DetailOrder from './Order/DetailOrder';
 import Message from './Message/Message';
 import AddSupplier from './Supplier/AddSupplier';
 import ManageSupplier from './Supplier/ManageSupplier';
-import AddReceipt from './Receipt/AddReceipt';
 import ManageReceipt from './Receipt/ManageReceipt';
 import DetailReceipt from './Receipt/DetailReceipt';
 import Turnover from './Statistic/Turnover';
@@ -62,12 +59,6 @@ function HomePageAdmin(props) {
                                 </Route>
                                 <Route exact path="/admin/list-user">
                                     <ManageUser />
-                                </Route>
-                                <Route exact path="/admin/add-user">
-                                    <Adduser />
-                                </Route>
-                                <Route exact path="/admin/edit-user/:id">
-                                    <Adduser />
                                 </Route>
                                 <Route exact path="/admin/list-category">
                                     <ManageCategory />
@@ -111,9 +102,6 @@ function HomePageAdmin(props) {
                                 <Route exact path="/admin/list-supplier">
                                     <ManageSupplier />
                                 </Route>
-                                {/* <Route exact path="/admin/add-receipt">
-                                    <AddReceipt />
-                                </Route> */}
                                 <Route exact path="/admin/list-receipt">
                                     <ManageReceipt />
                                 </Route>

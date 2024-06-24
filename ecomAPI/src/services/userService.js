@@ -46,14 +46,14 @@ let handleCreateNewUser = (data) => {
             if (!data.email || !data.lastName) {
                 resolve({
                     errCode: 2,
-                    errMessage: 'Missing required parameters !'
+                    errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
                 let check = await checkUserEmail(data.email);
                 if (check === true) {
                     resolve({
                         errCode: 1,
-                        errMessage: 'Your email is already in used, Plz try another email!'
+                        errMessage: 'Email của bạn đã được sử dụng, vui lòng thử email khác'
                     })
                 } else {
                     let hashPassword = await hashUserPasswordFromBcrypt(data.password);
@@ -63,7 +63,7 @@ let handleCreateNewUser = (data) => {
                         firstName: data.firstName,
                         lastName: data.lastName,
                         address: data.address,
-                        roleId: data.roleId,
+                        roleId: 'R2',
                         genderId: data.genderId,
                         phonenumber: data.phonenumber,
                         image: data.avatar,
@@ -90,7 +90,7 @@ let unBanUser = (userId) => {
             if (!userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: `Missing required parameters !`
+                    errMessage: `Thiếu tham số bắt buộc`
                 })
             } else {
                 let foundUser = await db.User.findOne({
@@ -100,14 +100,14 @@ let unBanUser = (userId) => {
                 if (!foundUser) {
                     resolve({
                         errCode: 2,
-                        errMessage: `The user isn't exist`
+                        errMessage: `Người dùng không tồn tại`
                     })
                 }
                 foundUser.statusId = 'S1'
                 await foundUser.save()
                 resolve({
                     errCode: 0,
-                    message: `The user is deleted`
+                    message: `Mở khóa người dùng thành công`
                 })
             }
         } catch (error) {
@@ -122,7 +122,7 @@ let banUser = (userId) => {
             if (!userId) {
                 resolve({
                     errCode: 1,
-                    errMessage: `Missing required parameters !`
+                    errMessage: `Thiếu tham số bắt buộc`
                 })
             } else {
                 let foundUser = await db.User.findOne({
@@ -132,14 +132,14 @@ let banUser = (userId) => {
                 if (!foundUser) {
                     resolve({
                         errCode: 2,
-                        errMessage: `The user isn't exist`
+                        errMessage: `Tài khoản không tồn tại`
                     })
                 }
                 foundUser.statusId = 'S2'
                 await foundUser.save()
                 resolve({
                     errCode: 0,
-                    message: `The user is deleted`
+                    message: `Khóa tài khoản thành công`
                 })
             }
         } catch (error) {
@@ -154,7 +154,7 @@ let updateUserData = (data) => {
             if (!data.id || !data.genderId) {
                 resolve({
                     errCode: 2,
-                    errMessage: `Missing required parameters`
+                    errMessage: `Thiếu tham số bắt buộc`
                 })
             } else {
                 let user = await db.User.findOne({
@@ -165,7 +165,6 @@ let updateUserData = (data) => {
                     user.firstName = data.firstName
                     user.lastName = data.lastName
                     user.address = data.address
-                    user.roleId = data.roleId
                     user.genderId = data.genderId
                     user.phonenumber = data.phonenumber
                     user.dob = data.dob
@@ -175,7 +174,7 @@ let updateUserData = (data) => {
                     await user.save();
                     resolve({
                         errCode: 0,
-                        errMessage: 'Update the user succeeds!'
+                        errMessage: 'Cập nhật thành công tài khoản'
                     })
                 } else {
                     resolve({
@@ -213,13 +212,13 @@ let handleLogin = (data) => {
                             let check = await bcrypt.compareSync(data.password, user.password);
                             if (check) {
                                 userData.errCode = 0;
-                                userData.errMessage = 'Ok';
+                                userData.errMessage = 'Thành công';
                                 delete user.password;
                                 userData.user = user;
                                 userData.accessToken = CommonUtils.encodeToken(user.id)
                             } else {
                                 userData.errCode = 3;
-                                userData.errMessage = 'Wrong password';
+                                userData.errMessage = 'Sai mật khẩu';
                             }
                         } else {
                             userData.errCode = 1
@@ -294,6 +293,7 @@ let getAllUser = (data, userId) => {
                     { model: db.Allcode, as: 'roleData', attributes: ['value', 'code'] },
                     { model: db.Allcode, as: 'genderData', attributes: ['value', 'code'] },
                 ],
+                order: [['createdAt', 'ASC']],
                 raw: true,
                 nest: true
             }
