@@ -348,6 +348,7 @@ let getStatisticProfit = (data) => {
                         }
                     }
                 })
+                orderProduct.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt))
                 resolve({
                     errCode: 0,
                     data: orderProduct
@@ -362,7 +363,6 @@ let getStatisticProfit = (data) => {
 let getStatisticOverturn = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            // console.log(data);
             if (!data.oneDate && !data.twoDate) {
                 resolve({
                     errCode: 1,
@@ -422,6 +422,7 @@ let getStatisticOverturn = (data) => {
                         }
                     }
                 })
+                orderProduct.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt))
                 resolve({
                     errCode: 0,
                     data: orderProduct,

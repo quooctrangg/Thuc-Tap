@@ -86,6 +86,7 @@ const Profit = (props) => {
                                         }}
                                         className="form-control"
                                         isClearable={true}
+                                        dateFormat="dd/MM/yyyy"
                                     />
                                     <label htmlFor="endDate">đến</label>
                                     <DatePicker
@@ -96,6 +97,7 @@ const Profit = (props) => {
                                         }}
                                         className="form-control"
                                         isClearable={true}
+                                        dateFormat="dd/MM/yyyy"
                                     />
                                 </div>
                             }

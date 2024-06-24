@@ -50,15 +50,15 @@ const Home = () => {
     const [CountStatusOrder, setCountStatusOrder] = useState({})
     const [StatisticOrderByMonth, setStatisticOrderByMonth] = useState({})
     const [StatisticOrderByDay, setStatisticOrderByDay] = useState({})
-    const [dateRange, setDateRange] = useState([null, null]);
-    const [startDate, endDate] = dateRange;
+    const [startDate, setStartDate] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
+
     const [DateTime, setDateTime] = useState(new Date());
     const [type, settype] = useState('month')
     const [month, setmonth] = useState(new Date());
     const [year, setyear] = useState(new Date());
 
     useEffect(() => {
-        setDateRange([new Date(), new Date()])
         loadCountCard()
         loadStatusOrder()
         loadStatisticOrderByMonth(moment(year).format("YYYY"))
@@ -66,8 +66,8 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        handleOnclick()
-    }, [type])
+        loadStatusOrder()
+    }, [type, startDate, endDate, DateTime])
 
     const dataPie = {
         labels: CountStatusOrder.arrayLable,
@@ -125,17 +125,13 @@ const Home = () => {
 
     let loadStatusOrder = async () => {
         let res = await getCountStatusOrder({
-            oneDate: type == 'day' ? startDate : DateTime,
-            twoDate: endDate,
+            oneDate: type == 'day' ? moment(startDate).toISOString() : moment(DateTime).toISOString(),
+            twoDate: moment(endDate).toISOString(),
             type: type
         })
         if (res && res.errCode == 0) {
             setCountStatusOrder(res.data)
         }
-    }
-
-    let handleOnclick = () => {
-        loadStatusOrder()
     }
 
     let loadStatisticOrderByMonth = async (year) => {
@@ -232,53 +228,56 @@ const Home = () => {
                         </div>
                         <div className="form-row">
                             {type == "day" &&
-                                <>
-                                    <div className="form-group col-md-8">
-                                        <DatePicker
-                                            showMonthDropdown
-                                            showYearDropdown
-                                            selectsRange={true}
-                                            startDate={startDate}
-                                            endDate={endDate}
-                                            onChange={(update) => {
-                                                setDateRange(update);
-                                            }}
-                                            className="form-control"
-                                            isClearable={true}
-                                        />
-                                    </div>
-                                </>
+                                <div style={{ display: 'flex', gap: 5, alignItems: 'center', width: 'auto' }}>
+                                    <label htmlFor="startDate">Từ</label>
+                                    <DatePicker
+                                        id='startDate'
+                                        selected={startDate}
+                                        onChange={(update) => {
+                                            setStartDate(update);
+                                        }}
+                                        className="form-control"
+                                        isClearable={true}
+                                        dateFormat="dd/MM/yyyy"
+                                    />
+                                    <label htmlFor="endDate">đến</label>
+                                    <DatePicker
+                                        id='endDate'
+                                        selected={endDate}
+                                        onChange={(update) => {
+                                            setEndDate(update);
+                                        }}
+                                        dateFormat="dd/MM/yyyy"
+                                        className="form-control"
+                                        isClearable={true}
+                                    />
+                                </div>
                             }
                             {type == "month" &&
-                                <>
-                                    <div className="form-group col-md-8">
-                                        <label htmlFor="inputCity">Chọn tháng</label>
-                                        <DatePicker
-                                            selected={DateTime}
-                                            onChange={(date) => setDateTime(date)}
-                                            dateFormat="MM/yyyy"
-                                            showMonthYearPicker
-                                            className='form-control'
-                                        />
-                                    </div>
-                                </>
+                                <div className="form-group col-md-8">
+                                    <label htmlFor="inputCity">Chọn tháng</label>
+                                    <DatePicker
+                                        selected={DateTime}
+                                        onChange={(date) => setDateTime(date)}
+                                        dateFormat="MM/yyyy"
+                                        showMonthYearPicker
+                                        className='form-control'
+                                    />
+                                </div>
                             }
                             {type == "year" &&
-                                <>
-                                    <div className="form-group col-md-8">
-                                        <label htmlFor="inputCity">Chọn năm</label>
-                                        <DatePicker
-                                            selected={DateTime}
-                                            onChange={(date) => setDateTime(date)}
-                                            dateFormat="yyyy"
-                                            showYearPicker
-                                            className='form-control'
-                                        />
-                                    </div>
-                                </>
+                                <div className="form-group col-md-8">
+                                    <label htmlFor="inputCity">Chọn năm</label>
+                                    <DatePicker
+                                        selected={DateTime}
+                                        onChange={(date) => setDateTime(date)}
+                                        dateFormat="yyyy"
+                                        showYearPicker
+                                        className='form-control'
+                                    />
+                                </div>
                             }
                         </div>
-                        <button type="button" onClick={() => handleOnclick()} className="btn btn-primary">Lọc</button>
                     </form>
                     <Pie data={dataPie} options={getOptions('Thống kê trạng thái đơn hàng')} />;
                 </div>
