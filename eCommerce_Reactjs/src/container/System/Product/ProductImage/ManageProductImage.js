@@ -2,8 +2,8 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import {
     getAllProductDetailImageByIdService, createNewProductImageService, UpdateProductDetailImageService,
-    DeleteProductDetailImageService, getAllProductDetailSizeByIdService, createNewProductSizeService,
-    UpdateProductDetailSizeService, DeleteProductDetailSizeService
+    DeleteProductDetailImageService, getAllProductDetailSizeByIdService,
+    DeleteProductDetailSizeService
 } from '../../../../services/userService';
 import { toast } from 'react-toastify';
 import './ManageProductImage.scss';
@@ -14,42 +14,39 @@ import ReactPaginate from 'react-paginate';
 import { useParams } from "react-router-dom";
 import AddImageModal from './AddImageModal';
 import AddSizeModal from './AddSizeModal';
+
 const ManageProductImage = () => {
     const { id } = useParams()
     const [dataProductDetailImage, setdataProductDetailImage] = useState([])
     const [dataProductDetailSize, setdataProductDetailSize] = useState([])
     const [isOpen, setisOpen] = useState(false)
-    const [isOpenModal, setisOpenModal] = useState(false)
-    const [isOpenModalSize, setisOpenModalSize] = useState(false)
+    const [isOpenImageModal, setIsOpenImageModal] = useState(false)
+    const [isOpenSizeModal, setisOpenSizeModal] = useState(false)
     const [imgPreview, setimgPreview] = useState('')
-    const [productImageId, setproductImageId] = useState('')
-    const [productSizeId, setproductSizeId] = useState('')
-    const [count, setCount] = useState(0)
-    const [countSize, setcountSizes] = useState('')
-    const [numberPage, setnumberPage] = useState(0)
+    const [productImageId, setproductImageId] = useState(null)
+    const [productSizeId, setProductSizeId] = useState(null)
+    const [countImage, setCountImage] = useState(0)
+    const [countSize, setCountSizes] = useState(0)
+    const [numberPageImage, setNumberPageImage] = useState(0)
+    const [numberPageSize, setNumberSizePage] = useState(0)
 
     useEffect(() => {
-        let fetchProductDetailImage = async () => {
-            await loadProductDetailImage()
-        }
+        loadProductDetailImage()
+    }, [numberPageImage])
 
-        let fetchProductSize = async () => {
-            await loadProductDetailSize()
-        }
-
-        fetchProductDetailImage()
-        fetchProductSize()
-    }, [])
+    useEffect(() => {
+        loadProductDetailSize()
+    }, [numberPageSize])
 
     let loadProductDetailImage = async () => {
         let arrData = await getAllProductDetailImageByIdService({
             id: id,
             limit: PAGINATION.pagerow,
-            offset: 0
+            offset: numberPageImage * PAGINATION.pagerow
         })
         if (arrData && arrData.errCode === 0) {
             setdataProductDetailImage(arrData.data)
-            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
+            setCountImage(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
     }
 
@@ -57,11 +54,11 @@ const ManageProductImage = () => {
         let arrSize = await getAllProductDetailSizeByIdService({
             id: id,
             limit: PAGINATION.pagerow,
-            offset: 0
+            offset: numberPageSize * PAGINATION.pagerow
         })
         if (arrSize && arrSize.errCode === 0) {
             setdataProductDetailSize(arrSize.data)
-            setcountSizes(Math.ceil(arrSize.count / PAGINATION.pagerow))
+            setCountSizes(Math.ceil(arrSize.count / PAGINATION.pagerow))
         }
     }
 
@@ -70,103 +67,22 @@ const ManageProductImage = () => {
         setisOpen(true);
     }
 
-    let closeModal = () => {
-        setisOpenModal(false)
-        setproductImageId('')
+    let handleCloseImageModal = () => {
+        setIsOpenImageModal(false)
+        setproductImageId(null)
     }
 
-    let handleOpenModal = () => {
-        setisOpenModal(true)
+    let handleOpenImageModal = () => {
+        setIsOpenImageModal(true)
     }
 
-    let closeModalSize = () => {
-        setisOpenModalSize(false)
-        setproductSizeId('')
+    let handleCloseSizeModal = () => {
+        setisOpenSizeModal(false)
+        setProductSizeId(null)
     }
 
-    let handleOpenModalSize = () => {
-        setisOpenModalSize(true)
-    }
-
-    let sendDataFromModal = async (data) => {
-        if (data.isActionUpdate === false) {
-            let response = await createNewProductImageService({
-                caption: data.caption,
-                image: data.image,
-                id: id
-            })
-            if (response && response.errCode === 0) {
-                toast.success("Thêm hình ảnh thành công !")
-                setisOpenModal(false)
-                await loadProductDetailImage()
-            } else {
-                toast.error("Thêm hình ảnh thất bại !")
-            }
-        } else {
-            let response = await UpdateProductDetailImageService({
-                caption: data.caption,
-                image: data.image,
-                id: data.id
-            })
-            if (response && response.errCode === 0) {
-                setproductImageId('')
-                toast.success("Cập nhật hình ảnh thành công !")
-                setisOpenModal(false)
-                await loadProductDetailImage()
-
-            } else {
-                toast.error("Cập nhật ảnh thất bại !")
-            }
-        }
-    }
-
-    let sendDataFromModalSize = async (data) => {
-        if (data.isActionUpdate === false) {
-            let response = await createNewProductSizeService({
-                productdetailId: id,
-                sizeId: data.sizeId,
-                width: data.width,
-                height: data.height,
-                stock: data.stock,
-                weight: data.weight
-            })
-            if (response && response.errCode === 0) {
-                toast.success("Thêm kích thước thành công !")
-                setisOpenModalSize(false)
-                await loadProductDetailSize()
-
-            } else {
-                toast.error("Thêm kích thước thất bại")
-            }
-        } else {
-            let response = await UpdateProductDetailSizeService({
-                sizeId: data.sizeId,
-                width: data.width,
-                height: data.height,
-                stock: data.stock,
-                id: data.id,
-                weight: data.weight
-            })
-            if (response && response.errCode === 0) {
-                setproductSizeId('')
-                toast.success("Cập nhật kích thước thành công !")
-                setisOpenModalSize(false)
-                await loadProductDetailSize()
-
-            } else {
-                toast.error("Cập nhật kích thước thất bại !")
-            }
-        }
-    }
-
-    let handleEditProductImage = (id) => {
-        setproductImageId(id)
-        setisOpenModal(true)
-    }
-
-    let handleEditProductSize = (id) => {
-        setproductSizeId(id)
-        setisOpenModalSize(true)
+    let handleOpenSizeModal = () => {
+        setisOpenSizeModal(true)
     }
 
     let handleDeleteProductImage = async (productdetailImageId) => {
@@ -175,19 +91,9 @@ const ManageProductImage = () => {
                 id: productdetailImageId
             }
         })
-
         if (response && response.errCode === 0) {
             toast.success("Xóa hình ảnh thành công !")
-            let arrData = await getAllProductDetailImageByIdService({
-                id: id,
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow
-
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataProductDetailImage(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await loadProductDetailImage()
         } else {
             toast.error("Xóa hình ảnh thất bại !")
         }
@@ -201,48 +107,18 @@ const ManageProductImage = () => {
         })
         if (response && response.errCode === 0) {
             toast.success("Xóa kích thước thành công !")
-            let arrData = await getAllProductDetailSizeByIdService({
-
-                id: id,
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow
-
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataProductDetailSize(arrData.data)
-                setcountSizes(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await loadProductDetailSize()
         } else {
             toast.error("Xóa hình ảnh thất bại !")
         }
     }
 
-    let handleChangePage = async (number) => {
-        setnumberPage(number.selected)
-        let arrData = await getAllProductDetailImageByIdService({
-
-            id: id,
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow
-
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataProductDetailImage(arrData.data)
-
-        }
+    let handleChangeImagePage = async (number) => {
+        setNumberPageImage(number.selected)
     }
 
-    let handleChangePageProductSize = async (number) => {
-        setnumberPage(number.selected)
-        let arrSize = await getAllProductDetailSizeByIdService({
-            id: id,
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow
-        })
-        if (arrSize && arrSize.errCode === 0) {
-            setdataProductDetailSize(arrSize.data)
-
-        }
+    let handleChangeSizePage = async (number) => {
+        setNumberSizePage(number.selected)
     }
 
     return (
@@ -253,7 +129,7 @@ const ManageProductImage = () => {
                     <div className="card-header">
                         <i className="fas fa-table me-1" />
                         Danh sách hình ảnh chi tiết sản phẩm
-                        <div onClick={() => handleOpenModal()} className="float-right">
+                        <div onClick={() => handleOpenImageModal()} className="float-right">
                             <i style={{ fontSize: '35px', cursor: 'pointer', color: '#0D6EFD' }} className="fas fa-plus-square"></i>
                         </div>
                     </div>
@@ -273,13 +149,16 @@ const ManageProductImage = () => {
                                         dataProductDetailImage.map((item, index) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{(numberPageImage * 10) + index + 1}</td>
                                                     <td>{item.caption}</td>
                                                     <td>
                                                         <div onClick={() => openPreviewImage(item.image)} className="box-image" style={{ backgroundImage: `url(${item.image})` }}></div>
                                                     </td>
                                                     <td style={{ display: 'flex', gap: 2 }}>
-                                                        <button className='btn btn-warning' onClick={() => handleEditProductImage(item.id)} >
+                                                        <button className='btn btn-warning' onClick={() => {
+                                                            setproductImageId(item.id)
+                                                            handleOpenImageModal()
+                                                        }} >
                                                             Sửa
                                                         </button>
                                                         <button className='btn btn-danger' onClick={() => handleDeleteProductImage(item.id)} >Xóa</button>
@@ -293,10 +172,10 @@ const ManageProductImage = () => {
                         </div>
                     </div>
                     <AddImageModal
-                        isOpenModal={isOpenModal}
-                        closeModal={closeModal}
-                        sendDataFromModal={sendDataFromModal}
+                        isOpenImageModal={isOpenImageModal}
+                        handleCloseImageModal={handleCloseImageModal}
                         productImageId={productImageId}
+                        loadProductDetailImage={loadProductDetailImage}
                     />
                 </div>
                 {
@@ -306,12 +185,12 @@ const ManageProductImage = () => {
                     />
                 }
                 {
-                    count > 1 &&
+                    countImage > 1 &&
                     <ReactPaginate
                         previousLabel={'Quay lại'}
                         nextLabel={'Tiếp'}
                         breakLabel={'...'}
-                        pageCount={count}
+                        pageCount={countImage}
                         marginPagesDisplayed={3}
                         containerClassName={"pagination justify-content-center"}
                         pageClassName={"page-item"}
@@ -322,7 +201,7 @@ const ManageProductImage = () => {
                         breakLinkClassName={"page-link"}
                         breakClassName={"page-item"}
                         activeClassName={"active"}
-                        onPageChange={handleChangePage}
+                        onPageChange={handleChangeImagePage}
                     />
                 }
             </div>
@@ -331,7 +210,7 @@ const ManageProductImage = () => {
                     <div className="card-header">
                         <i className="fas fa-table me-1" />
                         Danh sách kích thước chi tiết sản phẩm
-                        <div onClick={() => handleOpenModalSize()} className="float-right"><i style={{ fontSize: '35px', cursor: 'pointer', color: '#0D6EFD' }} className="fas fa-plus-square"></i></div>
+                        <div onClick={() => handleOpenSizeModal()} className="float-right"><i style={{ fontSize: '35px', cursor: 'pointer', color: '#0D6EFD' }} className="fas fa-plus-square"></i></div>
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
@@ -359,7 +238,12 @@ const ManageProductImage = () => {
                                                     <td>{item.weight}</td>
                                                     <td>{item.stock}</td>
                                                     <td style={{ display: 'flex', gap: 2 }}>
-                                                        <button className='btn btn-warning' onClick={() => handleEditProductSize(item.id)} >Sửa</button>
+                                                        <button className='btn btn-warning' onClick={() => {
+                                                            setProductSizeId(item.id)
+                                                            handleOpenSizeModal()
+                                                        }} >
+                                                            Sửa
+                                                        </button>
                                                         <button className='btn btn-danger' onClick={() => handleDeleteProductSize(item.id)} >Xóa</button>
                                                     </td>
                                                 </tr>
@@ -371,10 +255,11 @@ const ManageProductImage = () => {
                         </div>
                     </div>
                     <AddSizeModal
-                        isOpenModal={isOpenModalSize}
-                        closeModal={closeModalSize}
-                        sendDataFromModalSize={sendDataFromModalSize}
+                        isOpenSizeModal={isOpenSizeModal}
+                        handleCloseSizeModal={handleCloseSizeModal}
                         productSizeId={productSizeId}
+                        loadProductDetailSize={loadProductDetailSize}
+
                     />
                 </div>
                 {
@@ -400,7 +285,7 @@ const ManageProductImage = () => {
                         breakLinkClassName={"page-link"}
                         breakClassName={"page-item"}
                         activeClassName={"active"}
-                        onPageChange={handleChangePageProductSize}
+                        onPageChange={handleChangeSizePage}
                     />
                 }
             </div>

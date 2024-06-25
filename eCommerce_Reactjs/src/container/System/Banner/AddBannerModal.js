@@ -3,8 +3,8 @@ import { Modal, ModalBody } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import { createNewBannerService, getDetailBannerByIdService, updateBannerService } from '../../../services/userService';
 import { toast } from 'react-toastify';
-import './AddBannerModal.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import './AddBannerModal.scss';
 import CommonUtils from '../../../utils/CommonUtils';
 
 const AddBannerModal = props => {

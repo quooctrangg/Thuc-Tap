@@ -9,6 +9,7 @@ import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import { useFetchAllcode } from '../../../customize/fetch';
 import { CreateNewProductDetailService, } from '../../../../services/userService';
+
 const AddProductDetail = (props) => {
     const { data: dataSize } = useFetchAllcode('SIZE')
     const { id } = useParams()

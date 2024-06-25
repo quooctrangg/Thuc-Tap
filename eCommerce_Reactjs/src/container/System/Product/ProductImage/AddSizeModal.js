@@ -3,13 +3,16 @@ import { useEffect, useState } from 'react';
 import 'react-image-lightbox/style.css';
 import { useFetchAllcode } from '../../../customize/fetch';
 import { Modal, ModalFooter, ModalBody, Button } from 'reactstrap';
-import { getProductDetailSizeByIdService } from '../../../../services/userService';
+import { UpdateProductDetailSizeService, createNewProductSizeService, getProductDetailSizeByIdService } from '../../../../services/userService';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from 'react-router-dom';
 
 const AddSizeModal = (props) => {
+    const { id } = useParams()
     const { data: dataSize } = useFetchAllcode('SIZE')
-    const [inputValues, setInputValues] = useState({
-        sizeId: '', width: '', height: '', isActionUpdate: false, id: '', weight: ''
-    });
+    const [inputValues, setInputValues] = useState({ sizeId: '', width: '', height: '', id: '', weight: '' });
+    const [productSizeId, setProductSizeId] = useState(null)
 
     const handleOnChange = event => {
         const { name, value } = event.target;
@@ -21,43 +24,90 @@ const AddSizeModal = (props) => {
     }
 
     useEffect(() => {
-        let id = props.productSizeId
-        if (id) {
-            let fetchDetailProductSize = async () => {
-                let res = await getProductDetailSizeByIdService(id)
-                if (res && res.errCode === 0) {
-                    setInputValues({
-                        ...inputValues, ["isActionUpdate"]: true, ["sizeId"]: res.data.sizeId, ["width"]: res.data.width,
-                        ["height"]: res.data.height, ["weight"]: res.data.weight
-                    })
-                }
-            }
-            fetchDetailProductSize()
+        setProductSizeId(props.productSizeId)
+    })
+
+    useEffect(() => {
+        if (productSizeId) {
+            fetchDetailProductSize(productSizeId)
+        } else {
+            setInputValues({
+                ...inputValues,
+                ["sizeId"]: '',
+                ["width"]: '',
+                ["height"]: '',
+                ["weight"]: ''
+            })
         }
-    }, [props.isOpenModal])
-    let handleSaveInfor = () => {
-        props.sendDataFromModalSize({
+    }, [productSizeId])
+
+    let fetchDetailProductSize = async (id) => {
+        let res = await getProductDetailSizeByIdService(id)
+        if (res && res.errCode === 0) {
+            setInputValues({
+                ...inputValues,
+                ["sizeId"]: res.data.sizeId,
+                ["width"]: res.data.width,
+                ["height"]: res.data.height,
+                ["weight"]: res.data.weight
+            })
+        }
+    }
+
+    const handleAddProductSize = async () => {
+        let response = await createNewProductSizeService({
+            productdetailId: id,
             sizeId: inputValues.sizeId,
             width: inputValues.width,
             height: inputValues.height,
-            isActionUpdate: inputValues.isActionUpdate,
-            id: props.productSizeId,
             weight: inputValues.weight
         })
-        setInputValues({ ...inputValues, ["sizeId"]: '', ["width"]: '', ["height"]: '', ["weight"]: '', ["isActionUpdate"]: false })
+        if (response && response.errCode === 0) {
+            toast.success("Thêm kích thước thành công !")
+            setInputValues({
+                ...inputValues,
+                ["sizeId"]: '',
+                ["width"]: '',
+                ["height"]: '',
+                ["weight"]: ''
+            })
+            props.loadProductDetailSize()
+            props.handleCloseSizeModal()
+        } else {
+            toast.error("Thêm kích thước thất bại")
+        }
     }
 
-    let handleCloseModal = () => {
-        props.closeModal()
-        setInputValues({ ...inputValues, ["sizeId"]: '', ["width"]: '', ["height"]: '', ["weight"]: '', ["isActionUpdate"]: false })
+    const handleUpdateProductSize = async () => {
+        let response = await UpdateProductDetailSizeService({
+            sizeId: inputValues.sizeId,
+            width: inputValues.width,
+            height: inputValues.height,
+            id: productSizeId,
+            weight: inputValues.weight
+        })
+        if (response && response.errCode === 0) {
+            toast.success("Cập nhật kích thước thành công !")
+            props.loadProductDetailSize()
+            props.handleCloseSizeModal()
+        } else {
+            toast.error("Cập nhật kích thước thất bại !")
+        }
     }
 
     return (
         <div className="">
-            <Modal isOpen={props.isOpenModal} className={'booking-modal-container'} size="md" centered >
+            <Modal isOpen={props.isOpenSizeModal} className={'booking-modal-container'} size="md" centered >
                 <div className="modal-header">
-                    <h5 className="modal-title">Thêm kích thước chi tiết sản phẩm</h5>
-                    <button onClick={handleCloseModal} type="button" className="btn btn-time" aria-label="Close">X</button>
+                    <h5 className="modal-title">
+                        {
+                            productSizeId ?
+                                'Cập nhật kích thước chi tiết sản phẩm'
+                                :
+                                'Thêm kích thước chi tiết sản phẩm'
+                        }
+                    </h5>
+                    <button onClick={props.handleCloseSizeModal} type="button" className="btn btn-time" aria-label="Close">X</button>
                 </div>
                 <ModalBody>
                     <div className="row">
@@ -91,11 +141,13 @@ const AddSizeModal = (props) => {
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={handleSaveInfor} >
-                        Lưu thông tin
-                    </Button>
-                    {' '}
-                    <Button onClick={handleCloseModal}>
+                    {
+                        productSizeId ?
+                            <button type="button" onClick={() => handleUpdateProductSize()} className="btn btn-primary">Cập nhật</button>
+                            :
+                            <button type="button" onClick={() => handleAddProductSize()} className="btn btn-primary">Thêm</button>
+                    }
+                    <Button onClick={props.handleCloseSizeModal}>
                         Hủy
                     </Button>
                 </ModalFooter>

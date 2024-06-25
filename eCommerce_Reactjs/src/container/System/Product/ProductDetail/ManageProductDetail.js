@@ -14,17 +14,14 @@ const ManageProductDetail = () => {
     const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
-        let fetchProductDetail = async () => {
-            await loadProductDetail()
-        }
-        fetchProductDetail()
-    }, [])
+        loadProductDetail()
+    }, [numberPage])
 
     let loadProductDetail = async () => {
         let arrData = await getAllProductDetailByIdService({
             id: id,
             limit: PAGINATION.pagerow,
-            offset: 0
+            offset: numberPage * PAGINATION.pagerow
         })
         if (arrData && arrData.errCode === 0) {
             setdataProductDetail(arrData.data)
@@ -40,15 +37,7 @@ const ManageProductDetail = () => {
         })
         if (response && response.errCode === 0) {
             toast.success("Xóa chi tiết sản phẩm thành công !")
-            let arrData = await getAllProductDetailByIdService({
-                id: id,
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataProductDetail(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await loadProductDetail()
         } else {
             toast.error("Xóa sản phẩm thất bại")
         }
@@ -56,14 +45,6 @@ const ManageProductDetail = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllProductDetailByIdService({
-            id: id,
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataProductDetail(arrData.data)
-        }
     }
 
     return (

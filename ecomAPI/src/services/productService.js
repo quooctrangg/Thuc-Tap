@@ -829,7 +829,7 @@ let updateProductDetailSize = (data) => {
                         productdetailId: res.dataValues.productdetailId
                     }
                 })
-                if (sizeProduct) {
+                if (sizeProduct && res.id !== sizeProduct.id) {
                     resolve({
                         errCode: 1,
                         errCode: 'Size đã tồn tại!'
