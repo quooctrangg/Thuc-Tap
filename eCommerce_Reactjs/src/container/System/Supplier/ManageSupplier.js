@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const ManageSupplier = () => {
     const [keyword, setkeyword] = useState('')
     const [dataSupplier, setdataSupplier] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {

@@ -9,7 +9,7 @@ import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
 const ManageOrder = () => {
     const [dataOrder, setdataOrder] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
     const { data: dataStatusOrder } = useFetchAllcode('STATUS-ORDER');
     const [StatusId, setStatusId] = useState('ALL')

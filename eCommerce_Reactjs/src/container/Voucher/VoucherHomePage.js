@@ -16,7 +16,7 @@ import CommonUtils from '../../utils/CommonUtils';
 
 function VoucherHomePage(props) {
     const [dataVoucher, setdataVoucher] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState('')
     const [user, setUser] = useState({})
 

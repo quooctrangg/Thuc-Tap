@@ -10,7 +10,7 @@ import AddReceiptModal from './AddReceiptModal'
 
 const ManageReceipt = () => {
     const [dataReceipt, setdataReceipt] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
     const [isOpenModalReceipt, setIsOpenModalReceipt] = useState(false)
 

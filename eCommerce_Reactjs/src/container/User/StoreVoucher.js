@@ -10,7 +10,7 @@ function StoreVoucher(props) {
         codeVoucher: '', activeBtn: false
     });
     const [dataVoucher, setdataVoucher] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState('')
 
     function compareDates(d1, d2) {

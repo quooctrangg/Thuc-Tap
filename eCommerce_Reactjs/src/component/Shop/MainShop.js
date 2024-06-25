@@ -7,7 +7,7 @@ import FormSearch from '../Search/FormSearch';
 
 function MainShop(props) {
     const [dataProduct, setdataProduct] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState('')
     const [limitPage, setlimitPage] = useState(PAGINATION.pagerow)
     const [sortPrice, setsortPrice] = useState('')

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import FormSearch from '../../../component/Search/FormSearch';
 const ManageSubject = () => {
     const [dataSubject, setdataSubject] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
 

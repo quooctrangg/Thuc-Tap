@@ -9,7 +9,7 @@ import AddCategoryModal from './AddCategoryModal';
 
 const ManageCategory = () => {
     const [dataCategory, setdataCategory] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState('')
     const [keyword, setkeyword] = useState('')
     const [isOpenAddCategoryModal, setIsOpenAddCategoryModal] = useState(false)
@@ -17,7 +17,7 @@ const ManageCategory = () => {
 
     useEffect(() => {
         fetchData();
-    }, [numberPage])
+    }, [numberPage, keyword])
 
     let fetchData = async () => {
         let arrData = await getListAllCodeService({
@@ -64,15 +64,11 @@ const ManageCategory = () => {
     }
 
     let handleSearchCategory = (keyword) => {
-        fetchData(keyword)
-        setkeyword(keyword)
+
     }
 
     let handleOnchangeSearch = (keyword) => {
-        if (keyword === '') {
-            fetchData(keyword)
-            setkeyword(keyword)
-        }
+        setkeyword(keyword)
     }
 
     const handleShowCategoryModal = () => {

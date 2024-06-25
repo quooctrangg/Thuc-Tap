@@ -15,7 +15,7 @@ const ManageBlog = () => {
     const [dataBlog, setdataBlog] = useState([])
     const [imgPreview, setimgPreview] = useState('')
     const [isOpen, setisOpen] = useState(false)
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState('')
     const [keyword, setkeyword] = useState('')
 

@@ -7,7 +7,7 @@ import CommonUtils from '../../../utils/CommonUtils';
 
 const StockProduct = () => {
     const [dataStockProduct, setdataStockProduct] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState('')
 
     useEffect(() => {

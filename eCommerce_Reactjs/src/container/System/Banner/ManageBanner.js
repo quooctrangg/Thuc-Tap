@@ -17,13 +17,14 @@ const ManageBanner = () => {
     const [dataBanner, setdataBanner] = useState([])
     const [imgPreview, setimgPreview] = useState('')
     const [isOpen, setisOpen] = useState(false)
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
     const [isOpenAddBannerModal, setIsOpenAddBannerModal] = useState(false)
     const [current, setCurrent] = useState(null)
+
     useEffect(() => {
         loadBanner()
-    }, [])
+    }, [numberPage, keyword])
 
     let loadBanner = async () => {
         let arrData = await getAllBanner({
@@ -78,15 +79,11 @@ const ManageBanner = () => {
     }
 
     let handleSearchBanner = (keyword) => {
-        loadBanner(keyword)
-        setkeyword(keyword)
+
     }
 
     let handleOnchangeSearch = (keyword) => {
-        if (keyword === '') {
-            loadBanner(keyword)
-            setkeyword(keyword)
-        }
+        setkeyword(keyword)
     }
 
     const handleCloseAddBannerModal = () => {
@@ -96,7 +93,6 @@ const ManageBanner = () => {
 
     const handleShowAddBannerModal = () => {
         setIsOpenAddBannerModal(true)
-
     }
 
     return (

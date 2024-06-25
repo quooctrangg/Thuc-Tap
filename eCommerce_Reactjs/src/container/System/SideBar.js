@@ -102,20 +102,11 @@ const SideBar = () => {
                                         <Link to={'/admin/add-blog'} className="nav-link" >Thêm bài đăng</Link>
                                     </nav>
                                 </div> */}
-                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseShip" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon">
+                                <div >
+                                    <Link to={'/admin/list-typeship'} className="nav-link flex gap-2" >
                                         <i className="fas fa-shipping-fast"></i>
-                                    </div>
-                                    Quản lý loại ship
-                                    <div className="sb-sidenav-collapse-arrow">
-                                        <i className="fas fa-angle-down" />
-                                    </div>
-                                </a>
-                                <div className="collapse" id="collapseShip" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-typeship'} className="nav-link" >DS loại giao hàng</Link>
-                                        <Link to={'/admin/add-typeship'} className="nav-link" >Thêm loại giao hàng</Link>
-                                    </nav>
+                                        Quản lý loại giao hàng
+                                    </Link>
                                 </div>
                                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVoucher" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div className="sb-nav-link-icon"><i className="fas fa-percentage"></i></div>

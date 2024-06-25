@@ -25,7 +25,6 @@ import ManageBlog from './Blog/ManageBlog';
 import ManageSubject from './Subject/ManageSubject';
 import AddSubject from './Subject/AddSubject';
 import ManageTypeShip from './TypeShip/ManageTypeShip';
-import AddTypeShip from './TypeShip/AddTypeShip';
 import AddTypeVoucher from './Voucher/AddTypeVoucher';
 import ManageTypeVoucher from './Voucher/ManageTypeVoucher';
 import AddVoucher from './Voucher/AddVoucher';
@@ -128,12 +127,6 @@ function HomePageAdmin(props) {
                                 </Route>
                                 <Route exact path="/admin/list-typeship">
                                     <ManageTypeShip />
-                                </Route>
-                                <Route exact path="/admin/add-typeship">
-                                    <AddTypeShip />
-                                </Route>
-                                <Route exact path="/admin/edit-typeship/:id">
-                                    <AddTypeShip />
                                 </Route>
                                 <Route exact path="/admin/add-typevoucher">
                                     <AddTypeVoucher />

@@ -24,7 +24,7 @@ const ManageProductImage = () => {
     const [imgPreview, setimgPreview] = useState('')
     const [productImageId, setproductImageId] = useState('')
     const [productSizeId, setproductSizeId] = useState('')
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [countSize, setcountSizes] = useState('')
     const [numberPage, setnumberPage] = useState(0)
 

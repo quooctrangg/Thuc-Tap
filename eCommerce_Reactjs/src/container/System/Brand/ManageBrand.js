@@ -10,18 +10,18 @@ import AddBrandModal from './AddBrandModal';
 const ManageBrand = () => {
     const [keyword, setkeyword] = useState('')
     const [dataBrand, setdataBrand] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
     const [isOpenAddBrandModal, setIsOpenAddBrandModal] = useState(false)
     const [current, setCurrent] = useState(null)
 
     useEffect(() => {
         try {
-            fetchData(keyword);
+            fetchData();
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [numberPage, keyword])
 
     let fetchData = async () => {
         let arrData = await getListAllCodeService({
@@ -68,16 +68,12 @@ const ManageBrand = () => {
         }
     }
 
-    let handleSearchBrand = (keyword) => {
-        fetchData(keyword)
-        setkeyword(keyword)
+    let handleSearchBrand = () => {
+
     }
 
     let handleOnchangeSearch = (keyword) => {
-        if (keyword === '') {
-            fetchData(keyword)
-            setkeyword(keyword)
-        }
+        setkeyword(keyword)
     }
 
     const handleShowAddBrandModal = () => {

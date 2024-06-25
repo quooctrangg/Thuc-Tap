@@ -10,7 +10,7 @@ import { Link, useParams } from "react-router-dom";
 const ManageProductDetail = () => {
     const { id } = useParams()
     const [dataProductDetail, setdataProductDetail] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {

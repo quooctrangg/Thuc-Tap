@@ -10,14 +10,14 @@ import AddUserModal from './AddUserModal';
 const ManageUser = () => {
     const [dataUser, setdataUser] = useState([]);
     const [currentUser, setCurrentUser] = useState(null)
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setNumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
     const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false)
 
     useEffect(async () => {
-        await fetchAllUser(keyword, numberPage)
-    }, [numberPage])
+        await fetchAllUser()
+    }, [numberPage, keyword])
 
     let fetchAllUser = async () => {
         let res = await getAllUsers({
@@ -58,15 +58,10 @@ const ManageUser = () => {
     }
 
     let handleSearchUser = (keyword) => {
-        fetchAllUser(keyword, 0)
-        setkeyword(keyword)
     }
 
     let handleOnchangeSearch = (keyword) => {
-        if (keyword === '') {
-            fetchAllUser(keyword, 0)
-            setkeyword(keyword)
-        }
+        setkeyword(keyword)
     }
 
     const handleShowAddUserModal = () => {

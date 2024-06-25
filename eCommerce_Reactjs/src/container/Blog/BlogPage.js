@@ -11,7 +11,7 @@ function BlogPage(props) {
     const [dataBlog, setdataBlog] = useState([])
     const [dataFeatureBlog, setdataFeatureBlog] = useState([])
     const [dataSubject, setdataSubject] = useState([])
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState('')
     const [subjectId, setsubjectId] = useState('')
     const [keyword, setkeyword] = useState('')
