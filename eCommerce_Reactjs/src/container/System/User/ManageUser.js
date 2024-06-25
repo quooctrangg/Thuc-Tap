@@ -36,7 +36,7 @@ const ManageUser = () => {
         let res = await banUserService(id)
         if (res && res.errCode === 0) {
             toast.success("Khóa người dùng thành công")
-            await fetchAllUser(keyword, numberPage)
+            await fetchAllUser()
         } else {
             toast.error("Khóa người dùng thất bại")
         }
@@ -47,7 +47,7 @@ const ManageUser = () => {
         let res = await unBanUserService(id)
         if (res && res.errCode === 0) {
             toast.success("Mở khóa người dùng thành công")
-            await fetchAllUser(keyword, numberPage)
+            await fetchAllUser()
         } else {
             toast.error("Mở khóa người dùng thất bại")
         }

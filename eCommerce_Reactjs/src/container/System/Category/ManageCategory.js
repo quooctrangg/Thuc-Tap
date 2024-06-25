@@ -37,16 +37,7 @@ const ManageCategory = () => {
         let res = await DeleteAllcodeService(id)
         if (res && res.errCode === 0) {
             toast.success("Xóa danh mục thành công")
-            let arrData = await getListAllCodeService({
-                type: 'CATEGORY',
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow,
-                keyword: keyword
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataCategory(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await fetchData();
         } else toast.error("Xóa danh mục thất bại")
     }
 

@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import FormSearch from '../../../component/Search/FormSearch';
-import { Link } from "react-router-dom";
 import AddSupplierModal from './AddSupplierModal';
 
 const ManageSupplier = () => {
@@ -41,15 +40,7 @@ const ManageSupplier = () => {
         })
         if (res && res.errCode === 0) {
             toast.success("Xóa nhà cung cấp thành công")
-            let arrData = await getAllSupplier({
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow,
-                keyword: keyword
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataSupplier(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await fetchData();
         } else toast.error("Xóa nhà cung cấp thất bại")
     }
 

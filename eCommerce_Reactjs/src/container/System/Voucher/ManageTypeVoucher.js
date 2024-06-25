@@ -12,22 +12,20 @@ const ManageTypeShip = () => {
     const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
-        try {
-            let fetchData = async () => {
-                let arrData = await getAllTypeVoucher({
-                    limit: PAGINATION.pagerow,
-                    offset: 0
-                })
-                if (arrData && arrData.errCode === 0) {
-                    setdataTypeVoucher(arrData.data)
-                    setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-                }
-            }
-            fetchData();
-        } catch (error) {
-            console.log(error)
+        fetchData();
+    }, [numberPage])
+
+    let fetchData = async () => {
+        let arrData = await getAllTypeVoucher({
+            limit: PAGINATION.pagerow,
+            offset: numberPage * PAGINATION.pagerow
+        })
+        if (arrData && arrData.errCode === 0) {
+            setdataTypeVoucher(arrData.data)
+            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
-    }, [])
+    }
+
     let handleDeleteTypeVoucher = async (id) => {
         let res = await deleteTypeVoucherService({
             data: {
@@ -36,27 +34,12 @@ const ManageTypeShip = () => {
         })
         if (res && res.errCode === 0) {
             toast.success("Xóa loại voucher thành công")
-            let arrData = await getAllTypeVoucher({
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataTypeVoucher(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
-
+            await fetchData()
         } else toast.error("Xóa loại voucher thất bại")
     }
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllTypeVoucher({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataTypeVoucher(arrData.data)
-        }
     }
 
     let handleOnClickExport = async () => {

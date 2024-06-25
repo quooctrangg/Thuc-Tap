@@ -41,16 +41,7 @@ const ManageBrand = () => {
         let res = await DeleteAllcodeService(id)
         if (res && res.errCode === 0) {
             toast.success("Xóa nhãn hàng thành công")
-            let arrData = await getListAllCodeService({
-                type: 'BRAND',
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow,
-                keyword: keyword
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataBrand(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await fetchData()
         } else toast.error("Xóa nhãn hàng thất bại")
     }
 

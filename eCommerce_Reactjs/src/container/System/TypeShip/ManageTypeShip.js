@@ -41,15 +41,7 @@ const ManageTypeShip = () => {
         })
         if (res && res.errCode === 0) {
             toast.success("Xóa loại ship thành công")
-            let arrData = await getAllTypeShip({
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow,
-                keyword: keyword
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataTypeShip(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await fetchData();
         } else toast.error("Xóa loại ship thất bại")
     }
 

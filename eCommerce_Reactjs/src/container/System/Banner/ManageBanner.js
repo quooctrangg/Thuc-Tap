@@ -51,15 +51,7 @@ const ManageBanner = () => {
         })
         if (response && response.errCode === 0) {
             toast.success("Xóa băng rôn thành công !")
-            let arrData = await getAllBanner({
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow,
-                keyword: keyword
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataBanner(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await loadBanner()
         } else {
             toast.error("Xóa băng rôn thất bại")
         }

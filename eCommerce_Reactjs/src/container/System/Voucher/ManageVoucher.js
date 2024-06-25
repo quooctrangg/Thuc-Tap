@@ -13,22 +13,20 @@ const ManageVoucher = () => {
     const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
-        try {
-            let fetchData = async () => {
-                let arrData = await getAllVoucher({
-                    limit: PAGINATION.pagerow,
-                    offset: 0
-                })
-                if (arrData && arrData.errCode === 0) {
-                    setdataVoucher(arrData.data)
-                    setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-                }
-            }
-            fetchData();
-        } catch (error) {
-            console.log(error)
+        fetchData();
+    }, [numberPage])
+
+    let fetchData = async () => {
+        let arrData = await getAllVoucher({
+            limit: PAGINATION.pagerow,
+            offset: numberPage * PAGINATION.pagerow
+        })
+        if (arrData && arrData.errCode === 0) {
+            setdataVoucher(arrData.data)
+            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
-    }, [])
+    }
+
     let handleDeleteVoucher = async (id) => {
         let res = await deleteVoucherService({
             data: {
@@ -37,26 +35,12 @@ const ManageVoucher = () => {
         })
         if (res && res.errCode === 0) {
             toast.success("Xóa mã voucher thành công")
-            let arrData = await getAllVoucher({
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataVoucher(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await fetchData();
         } else toast.error("Xóa mã voucher thất bại")
     }
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllVoucher({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataVoucher(arrData.data)
-        }
     }
 
     let handleOnClickExport = async () => {
