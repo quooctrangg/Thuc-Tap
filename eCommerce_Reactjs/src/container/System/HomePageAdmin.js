@@ -25,9 +25,7 @@ import ManageBlog from './Blog/ManageBlog';
 import ManageSubject from './Subject/ManageSubject';
 import AddSubject from './Subject/AddSubject';
 import ManageTypeShip from './TypeShip/ManageTypeShip';
-import AddTypeVoucher from './Voucher/AddTypeVoucher';
 import ManageTypeVoucher from './Voucher/ManageTypeVoucher';
-import AddVoucher from './Voucher/AddVoucher';
 import ManageVoucher from './Voucher/ManageVoucher';
 import ManageOrder from './Order/ManageOrder';
 import DetailOrder from './Order/DetailOrder';
@@ -121,20 +119,8 @@ function HomePageAdmin(props) {
                                 <Route exact path="/admin/list-typeship">
                                     <ManageTypeShip />
                                 </Route>
-                                <Route exact path="/admin/add-typevoucher">
-                                    <AddTypeVoucher />
-                                </Route>
                                 <Route exact path="/admin/list-typevoucher">
                                     <ManageTypeVoucher />
-                                </Route>
-                                <Route exact path="/admin/edit-typevoucher/:id">
-                                    <AddTypeVoucher />
-                                </Route>
-                                <Route exact path="/admin/add-voucher">
-                                    <AddVoucher />
-                                </Route>
-                                <Route exact path="/admin/edit-voucher/:id">
-                                    <AddVoucher />
                                 </Route>
                                 <Route exact path="/admin/list-voucher">
                                     <ManageVoucher />

@@ -6,23 +6,24 @@ import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
-const ManageTypeShip = () => {
+
+const ManageTypeVoucher = () => {
     const [dataTypeVoucher, setdataTypeVoucher] = useState([])
-    const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState(0)
+    const [countTypeVoucher, setCounTypeVouCher] = useState(0)
+    const [numberTypeVoucherPage, setNumberTypeVoucherPage] = useState(0)
 
     useEffect(() => {
-        fetchData();
-    }, [numberPage])
+        fetchTypeVoucherData();
+    }, [numberTypeVoucherPage])
 
-    let fetchData = async () => {
+    let fetchTypeVoucherData = async () => {
         let arrData = await getAllTypeVoucher({
             limit: PAGINATION.pagerow,
-            offset: numberPage * PAGINATION.pagerow
+            offset: numberTypeVoucherPage * PAGINATION.pagerow
         })
         if (arrData && arrData.errCode === 0) {
             setdataTypeVoucher(arrData.data)
-            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
+            setCounTypeVouCher(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
     }
 
@@ -34,22 +35,12 @@ const ManageTypeShip = () => {
         })
         if (res && res.errCode === 0) {
             toast.success("Xóa loại voucher thành công")
-            await fetchData()
+            await fetchTypeVoucherData()
         } else toast.error("Xóa loại voucher thất bại")
     }
 
-    let handleChangePage = async (number) => {
-        setnumberPage(number.selected)
-    }
-
-    let handleOnClickExport = async () => {
-        let res = await getAllTypeVoucher({
-            limit: '',
-            offset: '',
-        })
-        if (res && res.errCode == 0) {
-            await CommonUtils.exportExcel(res.data, "Danh sách loại voucher", "ListTypeVoucher")
-        }
+    let handleChangeTypeVoucherPage = async (number) => {
+        setNumberTypeVoucherPage(number.selected)
     }
 
     return (
@@ -63,7 +54,7 @@ const ManageTypeShip = () => {
                 <div className="card-body">
                     <div className='row'>
                         <div className='col-12 mb-2'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            {/* <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button> */}
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -83,7 +74,7 @@ const ManageTypeShip = () => {
                                     dataTypeVoucher.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
+                                                <td>{(numberTypeVoucherPage * 10) + index + 1}</td>
                                                 <td>{item.typeVoucherData.value}</td>
                                                 <td>{item.typeVoucher == "percent" ? item.value + "%" : CommonUtils.formatter.format(item.value)}</td>
                                                 <td>{CommonUtils.formatter.format(item.minValue)}</td>
@@ -112,12 +103,12 @@ const ManageTypeShip = () => {
                 </div>
             </div>
             {
-                count > 1 &&
+                countTypeVoucher > 1 &&
                 <ReactPaginate
                     previousLabel={'Quay lại'}
                     nextLabel={'Tiếp'}
                     breakLabel={'...'}
-                    pageCount={count}
+                    pageCount={countTypeVoucher}
                     marginPagesDisplayed={3}
                     containerClassName={"pagination justify-content-center"}
                     pageClassName={"page-item"}
@@ -128,11 +119,11 @@ const ManageTypeShip = () => {
                     breakLinkClassName={"page-link"}
                     breakClassName={"page-item"}
                     activeClassName={"active"}
-                    onPageChange={handleChangePage}
+                    onPageChange={handleChangeTypeVoucherPage}
                 />
             }
         </div>
     )
 }
 
-export default ManageTypeShip;
+export default ManageTypeVoucher;

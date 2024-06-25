@@ -64,7 +64,8 @@ let getAllTypeVoucher = (data) => {
                     { model: db.Allcode, as: 'typeVoucherData', attributes: ['value', 'code'] },
                 ],
                 raw: true,
-                nest: true
+                nest: true,
+                order: [['createdAt', 'DESC']]
             }
             if (data.limit && data.offset) {
                 objectFilter.limit = +data.limit
@@ -224,7 +225,8 @@ let getAllVoucher = (data) => {
 
                 ],
                 raw: true,
-                nest: true
+                nest: true,
+                order: [['createdAt', 'DESC']]
             }
             if (data.limit && data.offset) {
                 objectFilter.limit = +data.limit

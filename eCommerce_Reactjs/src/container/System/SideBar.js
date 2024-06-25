@@ -59,20 +59,11 @@ const SideBar = () => {
                                         Quản lý nhãn hàng
                                     </Link>
                                 </div>
-                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon">
+                                <div >
+                                    <Link to={'/admin/list-product'} className="nav-link flex gap-2" >
                                         <i className="fa-solid fa-clock"></i>
-                                    </div>
-                                    Quản lý sản phẩm
-                                    <div className="sb-sidenav-collapse-arrow">
-                                        <i className="fas fa-angle-down" />
-                                    </div>
-                                </a>
-                                <div className="collapse" id="collapseProduct" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-product'} className="nav-link" >Danh sách sản phẩm</Link>
-                                        <Link to={'/admin/add-product'} className="nav-link" >Thêm sản phẩm</Link>
-                                    </nav>
+                                        Quản lý sản phẩm
+                                    </Link>
                                 </div>
                                 <div >
                                     <Link to={'/admin/list-banner'} className="nav-link flex gap-2" >
@@ -108,18 +99,11 @@ const SideBar = () => {
                                         Quản lý loại giao hàng
                                     </Link>
                                 </div>
-                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVoucher" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon"><i className="fas fa-percentage"></i></div>
-                                    Quản lý voucher
-                                    <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down" /></div>
-                                </a>
-                                <div className="collapse" id="collapseVoucher" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-typevoucher'} className="nav-link" >DS loại khuyến mãi</Link>
-                                        <Link to={'/admin/add-typevoucher'} className="nav-link" >Thêm loại khuyến mãi</Link>
-                                        <Link to={'/admin/list-voucher'} className="nav-link" >DS mã khuyến mãi</Link>
-                                        <Link to={'/admin/add-voucher'} className="nav-link" >Thêm mã khuyến mãi</Link>
-                                    </nav>
+                                <div >
+                                    <Link to={'/admin/list-voucher'} className="nav-link flex gap-2" >
+                                        <i className="fas fa-percentage"></i>
+                                        Quản lý khuyến mãi
+                                    </Link>
                                 </div>
                             </>
                         }
