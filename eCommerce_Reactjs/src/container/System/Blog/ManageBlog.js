@@ -4,7 +4,7 @@ import { getAllBlog, deleteBlogService } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import '../Banner/AddBanner.scss';
+// import '../Banner/AddBannerModal.scss';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import CommonUtils from '../../../utils/CommonUtils';

@@ -4,12 +4,13 @@ import { getAllBanner, deleteBannerService } from '../../../services/userService
 import { toast } from 'react-toastify';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import './AddBanner.scss';
+import './AddBannerModal.scss';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
 import FormSearch from '../../../component/Search/FormSearch';
+import AddBannerModal from './AddBannerModal';
 
 const ManageBanner = () => {
     const [keyword, setkeyword] = useState('')
@@ -18,15 +19,16 @@ const ManageBanner = () => {
     const [isOpen, setisOpen] = useState(false)
     const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState(0)
-
+    const [isOpenAddBannerModal, setIsOpenAddBannerModal] = useState(false)
+    const [current, setCurrent] = useState(null)
     useEffect(() => {
-        loadBanner(keyword)
+        loadBanner()
     }, [])
 
-    let loadBanner = async (keyword) => {
+    let loadBanner = async () => {
         let arrData = await getAllBanner({
             limit: PAGINATION.pagerow,
-            offset: 0,
+            offset: numberPage * PAGINATION.pagerow,
             keyword: keyword
         })
         if (arrData && arrData.errCode === 0) {
@@ -46,7 +48,6 @@ const ManageBanner = () => {
                 id: id
             }
         })
-
         if (response && response.errCode === 0) {
             toast.success("Xóa băng rôn thành công !")
             let arrData = await getAllBanner({
@@ -88,18 +89,14 @@ const ManageBanner = () => {
         }
     }
 
-    let handleOnClickExport = async () => {
-        let res = await getAllBanner({
-            limit: '',
-            offset: '',
-            keyword: ''
-        })
-        if (res && res.errCode == 0) {
-            res.data.forEach(element => {
-                element.image = ""
-            })
-            await CommonUtils.exportExcel(res.data, "Danh sách băng rôn", "ListBanner")
-        }
+    const handleCloseAddBannerModal = () => {
+        setIsOpenAddBannerModal(false)
+        setCurrent(null)
+    }
+
+    const handleShowAddBannerModal = () => {
+        setIsOpenAddBannerModal(true)
+
     }
 
     return (
@@ -116,7 +113,10 @@ const ManageBanner = () => {
                             <FormSearch title={"tên băng rôn"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchBanner} />
                         </div>
                         <div className='col-8'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleShowAddBannerModal()} className="btn btn-success" >
+                                <i class="fa-solid fa-plus"></i>
+                                Thêm
+                            </button>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -138,11 +138,12 @@ const ManageBanner = () => {
                                                 <td>{item.name}</td>
                                                 <td style={{ width: '30%' }} ><div onClick={() => openPreviewImage(item.image)} className="box-img-preview" style={{ backgroundImage: `url(${item.image})`, width: '100%' }}></div></td>
                                                 <td style={{ display: 'flex', gap: 2 }}>
-                                                    <Link to={`/admin/edit-banner/${item.id}`}>
-                                                        <button className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                    </Link>
+                                                    <button onClick={() => {
+                                                        setCurrent(item.id)
+                                                        handleShowAddBannerModal()
+                                                    }} className='btn btn-warning'>
+                                                        Sửa
+                                                    </button>
                                                     <button className='btn btn-danger' onClick={() => handleDeleteBanner(item.id)} >
                                                         Xóa
                                                     </button>
@@ -181,6 +182,7 @@ const ManageBanner = () => {
                         onPageChange={handleChangePage}
                     />
                 }
+                <AddBannerModal id={current} handleCloseAddBannerModal={handleCloseAddBannerModal} isOpenAddBannerModal={isOpenAddBannerModal} loadBanner={loadBanner} />
             </div>
             {
                 isOpen === true &&

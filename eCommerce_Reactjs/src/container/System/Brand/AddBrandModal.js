@@ -89,12 +89,12 @@ const AddBrandModal = props => {
             <ModalBody>
                 <div className="">
                     <div className="form-group">
-                        <label htmlFor="inputEmail4">Tên nhãn hàng</label>
-                        <input type="text" value={inputValues.value} name="value" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
+                        <label htmlFor="value">Tên nhãn hàng</label>
+                        <input type="text" value={inputValues.value} name="value" onChange={(event) => handleOnChange(event)} className="form-control" id="value" />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="inputPassword4">Mã code</label>
-                        <input type="text" value={inputValues.code} name="code" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPassword4" />
+                        <label htmlFor="code">Mã code</label>
+                        <input type="text" value={inputValues.code} name="code" onChange={(event) => handleOnChange(event)} className="form-control" id="code" />
                     </div>
                 </div>
                 {

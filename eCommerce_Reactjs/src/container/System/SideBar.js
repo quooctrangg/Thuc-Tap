@@ -74,20 +74,11 @@ const SideBar = () => {
                                         <Link to={'/admin/add-product'} className="nav-link" >Thêm sản phẩm</Link>
                                     </nav>
                                 </div>
-                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBanner" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon">
+                                <div >
+                                    <Link to={'/admin/list-banner'} className="nav-link flex gap-2" >
                                         <i className="fab fa-adversal"></i>
-                                    </div>
-                                    Quản lý băng rôn
-                                    <div className="sb-sidenav-collapse-arrow">
-                                        <i className="fas fa-angle-down" />
-                                    </div>
-                                </a>
-                                <div className="collapse" id="collapseBanner" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-banner'} className="nav-link" >Danh sách băng rôn</Link>
-                                        <Link to={'/admin/add-banner'} className="nav-link" >Thêm băng rôn</Link>
-                                    </nav>
+                                        Quản lý băng rôn
+                                    </Link>
                                 </div>
                                 {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSubject" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div className="sb-nav-link-icon"><i className="fab fa-blogger"></i></div>
