@@ -16,7 +16,7 @@ const ManageBlog = () => {
     const [imgPreview, setimgPreview] = useState('')
     const [isOpen, setisOpen] = useState(false)
     const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
 
     useEffect(() => {

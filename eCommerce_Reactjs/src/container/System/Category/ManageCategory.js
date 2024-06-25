@@ -10,7 +10,7 @@ import AddCategoryModal from './AddCategoryModal';
 const ManageCategory = () => {
     const [dataCategory, setdataCategory] = useState([])
     const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
     const [isOpenAddCategoryModal, setIsOpenAddCategoryModal] = useState(false)
     const [current, setCurrent] = useState(null)

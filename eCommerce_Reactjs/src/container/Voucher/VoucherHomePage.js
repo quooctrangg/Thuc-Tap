@@ -17,7 +17,7 @@ import CommonUtils from '../../utils/CommonUtils';
 function VoucherHomePage(props) {
     const [dataVoucher, setdataVoucher] = useState([])
     const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const [user, setUser] = useState({})
 
     function compareDates(d1, d2) {

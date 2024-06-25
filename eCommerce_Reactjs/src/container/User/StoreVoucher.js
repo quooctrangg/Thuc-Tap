@@ -11,7 +11,7 @@ function StoreVoucher(props) {
     });
     const [dataVoucher, setdataVoucher] = useState([])
     const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
 
     function compareDates(d1, d2) {
         var parts = d1.split('/');

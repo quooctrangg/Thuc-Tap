@@ -8,19 +8,18 @@ import CommonUtils from '../../../utils/CommonUtils';
 const StockProduct = () => {
     const [dataStockProduct, setdataStockProduct] = useState([])
     const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
         loadStockProduct()
-
-    }, [])
+    }, [numberPage])
 
     let loadStockProduct = () => {
         try {
             let fetchData = async () => {
                 let arrData = await getStatisticStockProduct({
                     limit: PAGINATION.pagerow,
-                    offset: 0,
+                    offset: numberPage * PAGINATION.pagerow,
                 })
                 if (arrData && arrData.errCode === 0) {
                     setdataStockProduct(arrData.data)
@@ -35,13 +34,6 @@ const StockProduct = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getStatisticStockProduct({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataStockProduct(arrData.data)
-        }
     }
 
     let handleOnClickExport = async () => {
