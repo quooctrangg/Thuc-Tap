@@ -9,9 +9,7 @@ import {
     Route,
 } from "react-router-dom";
 import ManageCategory from './Category/ManageCategory';
-import AddCategory from './Category/AddCategory';
 import ManageBrand from './Brand/ManageBrand';
-import AddBrand from './Brand/AddBrand';
 import Information from './User/Information';
 import ChangePassword from './User/ChangePassword';
 import AddProduct from './Product/AddProduct';
@@ -63,20 +61,8 @@ function HomePageAdmin(props) {
                                 <Route exact path="/admin/list-category">
                                     <ManageCategory />
                                 </Route>
-                                <Route exact path="/admin/add-category">
-                                    <AddCategory />
-                                </Route>
-                                <Route exact path="/admin/edit-category/:id">
-                                    <AddCategory />
-                                </Route>
                                 <Route exact path="/admin/list-brand">
                                     <ManageBrand />
-                                </Route>
-                                <Route exact path="/admin/add-brand">
-                                    <AddBrand />
-                                </Route>
-                                <Route exact path="/admin/edit-brand/:id">
-                                    <AddBrand />
                                 </Route>
                                 <Route exact path="/admin/infor/:id">
                                     <Information />

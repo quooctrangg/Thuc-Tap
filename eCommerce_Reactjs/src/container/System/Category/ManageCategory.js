@@ -3,26 +3,27 @@ import { useEffect, useState } from 'react';
 import { DeleteAllcodeService, getListAllCodeService } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
-import CommonUtils from '../../../utils/CommonUtils';
-import { Link } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import FormSearch from '../../../component/Search/FormSearch';
+import AddCategoryModal from './AddCategoryModal';
 
 const ManageCategory = () => {
     const [dataCategory, setdataCategory] = useState([])
     const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState('')
     const [keyword, setkeyword] = useState('')
+    const [isOpenAddCategoryModal, setIsOpenAddCategoryModal] = useState(false)
+    const [current, setCurrent] = useState(null)
 
     useEffect(() => {
-        fetchData(keyword);
-    }, [])
+        fetchData();
+    }, [numberPage])
 
-    let fetchData = async (keyword) => {
+    let fetchData = async () => {
         let arrData = await getListAllCodeService({
             type: 'CATEGORY',
             limit: PAGINATION.pagerow,
-            offset: 0,
+            offset: numberPage * PAGINATION.pagerow,
             keyword: keyword
         })
         if (arrData && arrData.errCode === 0) {
@@ -74,16 +75,13 @@ const ManageCategory = () => {
         }
     }
 
-    let handleOnClickExport = async () => {
-        let res = await getListAllCodeService({
-            type: 'CATEGORY',
-            limit: '',
-            offset: '',
-            keyword: ''
-        })
-        if (res && res.errCode == 0) {
-            await CommonUtils.exportExcel(res.data, "Danh sách danh mục", "ListCategory")
-        }
+    const handleShowCategoryModal = () => {
+        setIsOpenAddCategoryModal(true)
+    }
+
+    const handleCloseCategoryModal = () => {
+        setIsOpenAddCategoryModal(false)
+        setCurrent(null)
     }
 
     return (
@@ -100,7 +98,10 @@ const ManageCategory = () => {
                             <FormSearch title={"tên danh mục"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchCategory} />
                         </div>
                         <div className='col-8'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleShowCategoryModal()} className="btn btn-success" >
+                                <i class="fa-solid fa-plus"></i>
+                                Thêm
+                            </button>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -118,15 +119,16 @@ const ManageCategory = () => {
                                     dataCategory.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>{index + 1}</td>
+                                                <td>{(numberPage * 10) + index + 1}</td>
                                                 <td>{item.value}</td>
                                                 <td>{item.code}</td>
                                                 <td style={{ display: 'flex', gap: 2 }}>
-                                                    <Link to={`/admin/edit-category/${item.id}`}>
-                                                        <button className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                    </Link>
+                                                    <button onClick={() => {
+                                                        setCurrent(item.id)
+                                                        handleShowCategoryModal()
+                                                    }} className='btn btn-warning'>
+                                                        Sửa
+                                                    </button>
                                                     <button className='btn btn-danger' onClick={(event) => handleDeleteCategory(event, item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
@@ -164,6 +166,7 @@ const ManageCategory = () => {
                     </div>
                 </div>
             </div>
+            <AddCategoryModal id={current} fetchData={fetchData} isOpenAddCategoryModal={isOpenAddCategoryModal} handleCloseCategoryModal={handleCloseCategoryModal} />
         </div>
     )
 }

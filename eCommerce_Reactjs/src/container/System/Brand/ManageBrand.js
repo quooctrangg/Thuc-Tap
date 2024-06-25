@@ -5,14 +5,15 @@ import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import FormSearch from '../../../component/Search/FormSearch';
-import CommonUtils from '../../../utils/CommonUtils';
-import { Link } from "react-router-dom";
+import AddBrandModal from './AddBrandModal';
 
 const ManageBrand = () => {
     const [keyword, setkeyword] = useState('')
     const [dataBrand, setdataBrand] = useState([])
     const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState(0)
+    const [isOpenAddBrandModal, setIsOpenAddBrandModal] = useState(false)
+    const [current, setCurrent] = useState(null)
 
     useEffect(() => {
         try {
@@ -22,13 +23,12 @@ const ManageBrand = () => {
         }
     }, [])
 
-    let fetchData = async (keyword) => {
+    let fetchData = async () => {
         let arrData = await getListAllCodeService({
             type: 'BRAND',
             limit: PAGINATION.pagerow,
-            offset: 0,
+            offset: numberPage * PAGINATION.pagerow,
             keyword: keyword
-
         })
         if (arrData && arrData.errCode === 0) {
             setdataBrand(arrData.data)
@@ -80,16 +80,13 @@ const ManageBrand = () => {
         }
     }
 
-    let handleOnClickExport = async () => {
-        let res = await getListAllCodeService({
-            type: 'BRAND',
-            limit: '',
-            offset: '',
-            keyword: ''
-        })
-        if (res && res.errCode == 0) {
-            await CommonUtils.exportExcel(res.data, "Danh sách nhãn hàng", "ListBrand")
-        }
+    const handleShowAddBrandModal = () => {
+        setIsOpenAddBrandModal(true)
+    }
+
+    const handleCloseAddBrandModal = () => {
+        setIsOpenAddBrandModal(false)
+        setCurrent(null)
     }
 
     return (
@@ -106,7 +103,10 @@ const ManageBrand = () => {
                             <FormSearch title={"tên nhãn hàng"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchBrand} />
                         </div>
                         <div className='col-8'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleShowAddBrandModal()} className="btn btn-success" >
+                                <i class="fa-solid fa-plus"></i>
+                                Thêm
+                            </button>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -128,11 +128,12 @@ const ManageBrand = () => {
                                                 <td>{item.value}</td>
                                                 <td>{item.code}</td>
                                                 <td style={{ display: 'flex', gap: 2 }}>
-                                                    <Link to={`/admin/edit-Brand/${item.id}`}>
-                                                        <button className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                    </Link>
+                                                    <button onClick={() => {
+                                                        setCurrent(item.id)
+                                                        handleShowAddBrandModal()
+                                                    }} className='btn btn-warning'>
+                                                        Sửa
+                                                    </button>
                                                     <button className='btn btn-danger' onClick={(event) => handleDeleteBrand(event, item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
@@ -170,6 +171,7 @@ const ManageBrand = () => {
                     onPageChange={handleChangePage}
                 />
             }
+            <AddBrandModal isOpenAddBrandModal={isOpenAddBrandModal} handleCloseAddBrandModal={handleCloseAddBrandModal} id={current} fetchData={fetchData} />
         </div>
     )
 }

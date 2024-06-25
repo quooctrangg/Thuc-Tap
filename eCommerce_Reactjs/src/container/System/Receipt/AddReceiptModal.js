@@ -73,8 +73,8 @@ const AddReceiptModal = props => {
                             <input value={inputValues.billNumber} name='billNumber' onChange={(event) => handleOnChange(event)} className="form-control" id='lotNumber'></input>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="inputState">Nhà cung cấp</label>
-                            <select value={inputValues.supplierId} name="supplierId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
+                            <label htmlFor="supplierId">Nhà cung cấp</label>
+                            <select value={inputValues.supplierId} name="supplierId" onChange={(event) => handleOnChange(event)} id="supplierId" className="form-control">
                                 {dataSupplier && dataSupplier.length > 0 &&
                                     dataSupplier.map((item, index) => {
                                         return (

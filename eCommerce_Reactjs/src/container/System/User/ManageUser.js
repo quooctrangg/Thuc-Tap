@@ -4,7 +4,6 @@ import { getAllUsers, banUserService, unBanUserService } from '../../../services
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
-import { Link } from "react-router-dom";
 import FormSearch from '../../../component/Search/FormSearch';
 import AddUserModal from './AddUserModal';
 
@@ -18,12 +17,12 @@ const ManageUser = () => {
 
     useEffect(async () => {
         await fetchAllUser(keyword, numberPage)
-    }, [numberPage, isOpenAddUserModal])
+    }, [numberPage])
 
-    let fetchAllUser = async (keyword, page) => {
+    let fetchAllUser = async () => {
         let res = await getAllUsers({
             limit: PAGINATION.pagerow,
-            offset: page * PAGINATION.pagerow,
+            offset: numberPage * PAGINATION.pagerow,
             keyword: keyword
         })
         if (res && res.errCode === 0) {
@@ -190,7 +189,7 @@ const ManageUser = () => {
                     forcePage={numberPage}
                 />
             }
-            <AddUserModal id={currentUser} handleCloseAddUserModal={handleCloseAddUserModal} isOpenAddUserModal={isOpenAddUserModal} />
+            <AddUserModal fetchAllUser={fetchAllUser} id={currentUser} handleCloseAddUserModal={handleCloseAddUserModal} isOpenAddUserModal={isOpenAddUserModal} />
         </div>
     )
 }

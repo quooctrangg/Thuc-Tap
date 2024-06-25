@@ -47,35 +47,17 @@ const SideBar = () => {
                                         Quản lý người dùng
                                     </Link>
                                 </div>
-                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon">
+                                <div >
+                                    <Link to={'/admin/list-category'} className="nav-link flex gap-2" >
                                         <i className="fas fa-list-ol"></i>
-                                    </div>
-                                    Quản lý danh mục
-                                    <div className="sb-sidenav-collapse-arrow">
-                                        <i className="fas fa-angle-down" />
-                                    </div>
-                                </a>
-                                <div className="collapse" id="collapseCategory" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-category'} className="nav-link" >Danh sách danh mục</Link>
-                                        <Link to={'/admin/add-category'} className="nav-link" >Thêm danh mục</Link>
-                                    </nav>
+                                        Quản lý danh mục
+                                    </Link>
                                 </div>
-                                <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBrand" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon">
+                                <div >
+                                    <Link to={'/admin/list-brand'} className="nav-link flex gap-2" >
                                         <i className="far fa-copyright"></i>
-                                    </div>
-                                    Quản lý nhãn hàng
-                                    <div className="sb-sidenav-collapse-arrow">
-                                        <i className="fas fa-angle-down" />
-                                    </div>
-                                </a>
-                                <div className="collapse" id="collapseBrand" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-brand'} className="nav-link" >Danh sách nhãn hàng</Link>
-                                        <Link to={'/admin/add-brand'} className="nav-link" >Thêm nhãn hàng</Link>
-                                    </nav>
+                                        Quản lý nhãn hàng
+                                    </Link>
                                 </div>
                                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div className="sb-nav-link-icon">

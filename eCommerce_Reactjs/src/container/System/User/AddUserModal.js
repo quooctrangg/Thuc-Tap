@@ -93,6 +93,7 @@ const AddUserModal = props => {
                 ["dob"]: new Date()
             })
             props.handleCloseAddUserModal()
+            props.fetchAllUser()
         } else {
             toast.error(res.errMessage)
         }
@@ -115,6 +116,7 @@ const AddUserModal = props => {
         if (res && res.errCode === 0) {
             toast.success("Cập nhật người dùng thành công")
             props.handleCloseAddUserModal()
+            props.fetchAllUser()
         } else {
             toast.error(res.errMessage)
         }
@@ -124,7 +126,9 @@ const AddUserModal = props => {
         <Modal isOpen={props.isOpenAddUserModal} size={'xl'}>
             <div className="modal-header">
                 <h4 className="modal-title">
-                    Thêm người dùng
+                    {
+                        userId ? 'Cập nhật người dùng' : 'Thêm người dùng'
+                    }
                 </h4>
                 <button onClick={props.handleCloseAddUserModal} type="button" className="btn btn-time" aria-label="Close">X</button>
             </div>
