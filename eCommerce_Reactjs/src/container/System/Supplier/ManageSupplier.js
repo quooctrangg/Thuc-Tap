@@ -5,27 +5,25 @@ import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import FormSearch from '../../../component/Search/FormSearch';
-import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
+import AddSupplierModal from './AddSupplierModal';
 
 const ManageSupplier = () => {
     const [keyword, setkeyword] = useState('')
     const [dataSupplier, setdataSupplier] = useState([])
     const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
+    const [isOpenAddSupplierModal, setIsOpenAddSupplierModal] = useState(false)
+    const [current, setCurrent] = useState(null)
 
     useEffect(() => {
-        try {
-            fetchData(keyword);
-        } catch (error) {
-            console.log(error)
-        }
-    }, [])
+        fetchData();
+    }, [numberPage, keyword])
 
-    let fetchData = async (keyword) => {
+    let fetchData = async () => {
         let arrData = await getAllSupplier({
             limit: PAGINATION.pagerow,
-            offset: 0,
+            offset: numberPage * PAGINATION.pagerow,
             keyword: keyword
         })
         if (arrData && arrData.errCode === 0) {
@@ -57,38 +55,23 @@ const ManageSupplier = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllSupplier({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            keyword: keyword
-
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataSupplier(arrData.data)
-        }
     }
 
     let handleSearchSupplier = (keyword) => {
-        fetchData(keyword)
-        setkeyword(keyword)
+
     }
 
     let handleOnchangeSearch = (keyword) => {
-        if (keyword === '') {
-            fetchData(keyword)
-            setkeyword(keyword)
-        }
+        setkeyword(keyword)
     }
 
-    let handleOnClickExport = async () => {
-        let res = await getAllSupplier({
-            limit: '',
-            offset: '',
-            keyword: ''
-        })
-        if (res && res.errCode == 0) {
-            await CommonUtils.exportExcel(res.data, "Danh sách nhà cung cấp", "ListSupplier")
-        }
+    const handleShowAddSupplierModal = () => {
+        setIsOpenAddSupplierModal(true)
+    }
+
+    const handleCloseAddSupplierModal = () => {
+        setIsOpenAddSupplierModal(false)
+        setCurrent(null)
     }
 
     return (
@@ -105,7 +88,10 @@ const ManageSupplier = () => {
                             <FormSearch title={"tên nhà cung cấp"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchSupplier} />
                         </div>
                         <div className='col-8'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleShowAddSupplierModal()} className="btn btn-success" >
+                                <i class="fa-solid fa-plus"></i>
+                                Thêm
+                            </button>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -131,11 +117,12 @@ const ManageSupplier = () => {
                                                 <td>{item.email}</td>
                                                 <td>{item.address}</td>
                                                 <td style={{ display: 'flex', gap: 2 }}>
-                                                    <Link to={`/admin/edit-Supplier/${item.id}`}>
-                                                        <button className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                    </Link>
+                                                    <button onClick={() => {
+                                                        setCurrent(item.id)
+                                                        handleShowAddSupplierModal()
+                                                    }} className='btn btn-warning'>
+                                                        Sửa
+                                                    </button>
                                                     <button className='btn btn-danger' onClick={(event) => handleDeleteSupplier(event, item.id)}>Xóa</button>
                                                 </td>
                                             </tr>
@@ -173,6 +160,7 @@ const ManageSupplier = () => {
                     onPageChange={handleChangePage}
                 />
             }
+            <AddSupplierModal isOpenAddSupplierModal={isOpenAddSupplierModal} handleCloseAddSupplierModal={handleCloseAddSupplierModal} id={current} fetchData={fetchData} />
         </div>
     )
 }

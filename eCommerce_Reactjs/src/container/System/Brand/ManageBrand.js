@@ -56,16 +56,6 @@ const ManageBrand = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getListAllCodeService({
-            type: 'BRAND',
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            keyword: keyword
-
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataBrand(arrData.data)
-        }
     }
 
     let handleSearchBrand = () => {

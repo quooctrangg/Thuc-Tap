@@ -32,7 +32,6 @@ import ManageVoucher from './Voucher/ManageVoucher';
 import ManageOrder from './Order/ManageOrder';
 import DetailOrder from './Order/DetailOrder';
 import Message from './Message/Message';
-import AddSupplier from './Supplier/AddSupplier';
 import ManageSupplier from './Supplier/ManageSupplier';
 import ManageReceipt from './Receipt/ManageReceipt';
 import DetailReceipt from './Receipt/DetailReceipt';
@@ -76,12 +75,6 @@ function HomePageAdmin(props) {
                                 </Route>
                                 <Route exact path="/admin/list-product">
                                     <ManageProduct />
-                                </Route>
-                                <Route exact path="/admin/add-supplier">
-                                    <AddSupplier />
-                                </Route>
-                                <Route exact path="/admin/edit-supplier/:id">
-                                    <AddSupplier />
                                 </Route>
                                 <Route exact path="/admin/list-supplier">
                                     <ManageSupplier />

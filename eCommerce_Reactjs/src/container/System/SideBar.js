@@ -123,36 +123,12 @@ const SideBar = () => {
                                 </div>
                             </>
                         }
-                        <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSupplier" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div className="sb-nav-link-icon">
+                        <div >
+                            <Link to={'/admin/list-supplier'} className="nav-link flex gap-2" >
                                 <i className="fa-solid fa-person-military-pointing"></i>
-                            </div>
-                            Quản lý Nhà cung cấp
-                            <div className="sb-sidenav-collapse-arrow">
-                                <i className="fas fa-angle-down" />
-                            </div>
-                        </a>
-                        <div className="collapse" id="collapseSupplier" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav className="sb-sidenav-menu-nested nav">
-                                <Link to={'/admin/list-supplier'} className="nav-link" >Danh sách NCC</Link>
-                                <Link to={'/admin/add-supplier'} className="nav-link" >Thêm Nhà cung cấp</Link>
-                            </nav>
+                                Quản lý Nhà cung cấp
+                            </Link>
                         </div>
-                        {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReceipt" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div className="sb-nav-link-icon">
-                                <i className="fa-solid fa-file-import"></i>
-                            </div>
-                            Quản lý nhập hàng
-                            <div className="sb-sidenav-collapse-arrow">
-                                <i className="fas fa-angle-down" />
-                            </div>
-                        </a>
-                        <div className="collapse" id="collapseReceipt" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav className="sb-sidenav-menu-nested nav">
-                                <Link to={'/admin/list-receipt'} className="nav-link" >Danh sách nhập hàng</Link>
-                                <Link to={'/admin/add-receipt'} className="nav-link" >Thêm nhập hàng</Link>
-                            </nav>
-                        </div> */}
                         <div >
                             <Link to={'/admin/list-receipt'} className="nav-link flex gap-2" >
                                 <i className="fas fa-cart-plus"></i>

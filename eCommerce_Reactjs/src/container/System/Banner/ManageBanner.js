@@ -67,15 +67,6 @@ const ManageBanner = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllBanner({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            keyword: keyword
-        })
-
-        if (arrData && arrData.errCode === 0) {
-            setdataBanner(arrData.data)
-        }
     }
 
     let handleSearchBanner = (keyword) => {

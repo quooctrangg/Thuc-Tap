@@ -15,16 +15,13 @@ const ManageReceipt = () => {
     const [isOpenModalReceipt, setIsOpenModalReceipt] = useState(false)
 
     useEffect(() => {
-        try {
-            fetchData();
-        } catch (error) {
-            console.log(error)
-        }
-    }, [])
+        fetchData();
+    }, [numberPage])
+
     let fetchData = async () => {
         let arrData = await getAllReceipt({
             limit: PAGINATION.pagerow,
-            offset: 0,
+            offset: numberPage * PAGINATION.pagerow,
         })
         if (arrData && arrData.errCode === 0) {
             setdataReceipt(arrData.data)
@@ -34,20 +31,12 @@ const ManageReceipt = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllReceipt({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataReceipt(arrData.data)
-        }
     }
 
     let handleOnClickExport = async () => {
         let res = await getAllReceipt({
             limit: '',
             offset: '',
-
         })
         if (res && res.errCode == 0) {
             await CommonUtils.exportExcel(res.data, "Danh sách nhập hàng", "ListReceipt")

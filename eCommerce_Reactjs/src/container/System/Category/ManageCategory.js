@@ -52,15 +52,6 @@ const ManageCategory = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getListAllCodeService({
-            type: 'CATEGORY',
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            keyword: keyword
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataCategory(arrData.data)
-        }
     }
 
     let handleSearchCategory = (keyword) => {

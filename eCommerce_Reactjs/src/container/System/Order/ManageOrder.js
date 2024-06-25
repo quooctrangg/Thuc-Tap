@@ -15,15 +15,15 @@ const ManageOrder = () => {
     const [StatusId, setStatusId] = useState('ALL')
 
     useEffect(() => {
-        loadOrderData('ALL')
-    }, [])
+        loadOrderData(StatusId)
+    }, [numberPage, StatusId])
 
     let loadOrderData = (statusId) => {
         try {
             let fetchData = async () => {
                 let arrData = await getAllOrder({
                     limit: PAGINATION.pagerow,
-                    offset: 0,
+                    offset: numberPage * PAGINATION.pagerow,
                     statusId: statusId
                 })
                 if (arrData && arrData.errCode === 0) {
@@ -44,14 +44,6 @@ const ManageOrder = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllOrder({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            statusId: StatusId
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataOrder(arrData.data)
-        }
     }
 
     let handleOnClickExport = async () => {

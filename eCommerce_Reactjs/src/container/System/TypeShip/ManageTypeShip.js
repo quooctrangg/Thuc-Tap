@@ -55,14 +55,6 @@ const ManageTypeShip = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllTypeShip({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            keyword: keyword
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataTypeShip(arrData.data)
-        }
     }
 
     let handleSearchTypeShip = (keyword) => {
