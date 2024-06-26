@@ -1,5 +1,4 @@
 import React from 'react';
-// import logoVoucher from '../../../src/resources/img/logoVoucher.png'
 import CommonUtils from '../../utils/CommonUtils';
 import './VoucherItem.scss'
 

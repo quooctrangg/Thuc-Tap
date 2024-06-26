@@ -1,18 +1,14 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import bannerPhoto from '../../../src/resources/img/banner-voucher.png'
-import voucherTodayPhoto from '../../../src/resources/img/voucher-today.png'
-import voucherAllPhoto from '../../../src/resources/img/voucher-all.png';
-import applyVoucherPhoto from '../../../src/resources/img/applyVoucher.png';
-import './VoucherHomePage.scss';
-import VoucherItem from './VoucherItem';
 import { getAllVoucher } from '../../services/userService';
-import moment from 'moment';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../utils/constant';
-import ReactPaginate from 'react-paginate';
 import { saveUserVoucherService } from '../../services/userService';
+import VoucherItem from './VoucherItem';
+import moment from 'moment';
+import ReactPaginate from 'react-paginate';
 import CommonUtils from '../../utils/CommonUtils';
+import './VoucherHomePage.scss';
 
 function VoucherHomePage(props) {
     const [dataVoucher, setdataVoucher] = useState([])
@@ -30,19 +26,18 @@ function VoucherHomePage(props) {
     }
 
     useEffect(() => {
-        try {
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            setUser(userData)
-            fetchData();
-        } catch (error) {
-            console.log(error)
-        }
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        setUser(userData)
     }, [])
+
+    useEffect(() => {
+        fetchData();
+    }, [numberPage])
 
     let fetchData = async () => {
         let arrData = await getAllVoucher({
             limit: PAGINATION.pagerow,
-            offset: 0
+            offset: numberPage * PAGINATION.pagerow
         })
         let arrTemp = []
         if (arrData && arrData.errCode === 0) {
@@ -63,13 +58,6 @@ function VoucherHomePage(props) {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllVoucher({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow
-        })
-        if (arrData && arrData.errCode === 0) {
-            setdataVoucher(arrData.data)
-        }
     }
 
     let sendDataFromVoucherItem = async (id) => {
@@ -98,8 +86,8 @@ function VoucherHomePage(props) {
                 <img src={voucherAllPhoto}></img>
                 <img src={applyVoucherPhoto}></img>
             </div> */}
-            <div className="voucher-list">
-                {dataVoucher && dataVoucher.length > 0 &&
+            <div className="voucher-list mt-5">
+                {dataVoucher && dataVoucher.length > 0 ?
                     dataVoucher.map((item, index) => {
                         let percent = ""
                         if (item.typeVoucherOfVoucherData.typeVoucher === "percent") {
@@ -113,6 +101,10 @@ function VoucherHomePage(props) {
                             <VoucherItem sendDataFromVoucherItem={sendDataFromVoucherItem} id={item.id} width="550px" height="330px" key={index} name={item.codeVoucher} widthPercent={item.usedAmount * 100 / item.amount} maxValue={MaxValue} usedAmount={Math.round((item.usedAmount * 100 / item.amount) * 10) / 10} typeVoucher={percent} />
                         )
                     })
+                    :
+                    <div className='w-100'>
+                        <h2 className='text-center text-red'>Không có mã giảm giá.</h2>
+                    </div>
                 }
             </div>
             <div className="box-pagination">

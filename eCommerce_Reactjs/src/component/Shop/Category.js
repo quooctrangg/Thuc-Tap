@@ -5,21 +5,22 @@ function Category(props) {
     const [activeLinkId, setactiveLinkId] = useState('')
 
     useEffect(() => {
-        let fetchCategory = async () => {
-            let arrData = await getAllCodeService('CATEGORY')
-            if (arrData && arrData.errCode === 0) {
-                arrData.data.unshift({
-                    createdAt: null,
-                    code: 'ALL',
-                    type: "CATEGORY",
-                    value: "Tất cả",
-                })
-                setarrCategory(arrData.data)
-            }
-            setactiveLinkId('ALL')
-        }
         fetchCategory()
     }, [])
+
+    let fetchCategory = async () => {
+        let arrData = await getAllCodeService('CATEGORY')
+        if (arrData && arrData.errCode === 0) {
+            arrData.data.unshift({
+                createdAt: null,
+                code: 'ALL',
+                type: "CATEGORY",
+                value: "Tất cả",
+            })
+            setarrCategory(arrData.data)
+        }
+        setactiveLinkId('ALL')
+    }
 
     let handleClickCategory = (code) => {
         props.handleRecevieDataCategory(code)

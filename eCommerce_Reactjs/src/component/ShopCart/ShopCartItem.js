@@ -7,7 +7,6 @@ import DeleteShopCartModal from '../../container/ShopCart/DeleteShopCartModal';
 import CommonUtils from '../../utils/CommonUtils';
 import { Link } from 'react-router-dom';
 
-
 function ShopCartItem(props) {
     const [quantity, setquantity] = useState('')
     const [isOpenModal, setisOpenModal] = useState(false)
@@ -37,7 +36,7 @@ function ShopCartItem(props) {
 
     useEffect(() => {
         setquantity(props.quantity)
-    }, [props.quantity])
+    })
 
     let closeModal = () => {
         setisOpenModal(false)
@@ -61,16 +60,14 @@ function ShopCartItem(props) {
     return (
         <tr>
             <td>
-                < >
-                    <Link className="media" to={`/detail-product/${props.productId}`}>
-                        <div className="d-flex">
-                            <img style={{ width: '147px', height: '100px', objectFit: 'cover' }} src={props.image} alt="" />
-                        </div>
-                        <div className="media-body">
-                            <p className="text-justify">{props.name} </p>
-                        </div>
-                    </Link>
-                </>
+                <Link className="media" to={`/detail-product/${props.productId}`}>
+                    <div className="d-flex">
+                        <img style={{ width: '147px', height: '100px', objectFit: 'cover' }} src={props.image} alt="" />
+                    </div>
+                    <div className="media-body">
+                        <p className="text-justify">{props.name} </p>
+                    </div>
+                </Link>
             </td>
             <td>
                 <h5 >{CommonUtils.formatter.format(props.price)}</h5>

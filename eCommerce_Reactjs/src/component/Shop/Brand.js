@@ -11,21 +11,22 @@ function Brand(props) {
     }
 
     useEffect(() => {
-        let fetchBrand = async () => {
-            let arrData = await getAllCodeService('BRAND')
-            if (arrData && arrData.errCode === 0) {
-                arrData.data.unshift({
-                    createdAt: null,
-                    code: "ALL",
-                    type: "BRAND",
-                    value: "Tất cả",
-                })
-                setarrBrand(arrData.data)
-                setactiveLinkId('ALL')
-            }
-        }
         fetchBrand()
     }, [])
+
+    let fetchBrand = async () => {
+        let arrData = await getAllCodeService('BRAND')
+        if (arrData && arrData.errCode === 0) {
+            arrData.data.unshift({
+                createdAt: null,
+                code: "ALL",
+                type: "BRAND",
+                value: "Tất cả",
+            })
+            setarrBrand(arrData.data)
+            setactiveLinkId('ALL')
+        }
+    }
 
     return (
         <aside className="left_widgets p_filter_widgets">

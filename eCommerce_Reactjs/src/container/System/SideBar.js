@@ -71,28 +71,6 @@ const SideBar = () => {
                                         Quản lý băng rôn
                                     </Link>
                                 </div>
-                                {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSubject" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon"><i className="fab fa-blogger"></i></div>
-                                    Quản lý chủ đề
-                                    <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down" /></div>
-                                </a>
-                                <div className="collapse" id="collapseSubject" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-subject'} className="nav-link" >Danh sách chủ đề</Link>
-                                        <Link to={'/admin/add-subject'} className="nav-link" >Thêm chủ đề</Link>
-                                    </nav>
-                                </div> */}
-                                {/* <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBlog" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div className="sb-nav-link-icon"><i className="fas fa-feather-alt"></i></div>
-                                    Quản lý bài đăng
-                                    <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down" /></div>
-                                </a>
-                                <div className="collapse" id="collapseBlog" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                        <Link to={'/admin/list-blog'} className="nav-link" >Danh sách bài đăng</Link>
-                                        <Link to={'/admin/add-blog'} className="nav-link" >Thêm bài đăng</Link>
-                                    </nav>
-                                </div> */}
                                 <div >
                                     <Link to={'/admin/list-typeship'} className="nav-link flex gap-2" >
                                         <i className="fas fa-shipping-fast"></i>

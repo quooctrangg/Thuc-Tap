@@ -3,11 +3,6 @@ import Header from './Header';
 import SideBar from './SideBar';
 import Home from './Home';
 import ManageUser from './User/ManageUser';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
 import ManageCategory from './Category/ManageCategory';
 import ManageBrand from './Brand/ManageBrand';
 import Information from './User/Information';
@@ -16,10 +11,6 @@ import ManageProduct from './Product/ManageProduct';
 import ManageProductDetail from './Product/ProductDetail/ManageProductDetail';
 import ManageProductImage from './Product/ProductImage/ManageProductImage';
 import ManageBanner from './Banner/ManageBanner';
-import AddBlog from './Blog/AddBlog';
-import ManageBlog from './Blog/ManageBlog';
-import ManageSubject from './Subject/ManageSubject';
-import AddSubject from './Subject/AddSubject';
 import ManageTypeShip from './TypeShip/ManageTypeShip';
 import ManageTypeVoucher from './Voucher/ManageTypeVoucher';
 import ManageVoucher from './Voucher/ManageVoucher';
@@ -32,6 +23,7 @@ import DetailReceipt from './Receipt/DetailReceipt';
 import Turnover from './Statistic/Turnover';
 import Profit from './Statistic/Profit';
 import StockProduct from './Statistic/StockProduct';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function HomePageAdmin(props) {
     return (
@@ -82,24 +74,6 @@ function HomePageAdmin(props) {
                                 <Route exact path="/admin/list-banner">
                                     <ManageBanner />
                                 </Route>
-                                <Route exact path="/admin/add-blog">
-                                    <AddBlog />
-                                </Route>
-                                <Route exact path="/admin/list-blog">
-                                    <ManageBlog />
-                                </Route>
-                                <Route exact path="/admin/edit-blog/:id">
-                                    <AddBlog />
-                                </Route>
-                                <Route exact path="/admin/list-subject">
-                                    <ManageSubject />
-                                </Route>
-                                <Route exact path="/admin/add-subject">
-                                    <AddSubject />
-                                </Route>
-                                <Route exact path="/admin/edit-subject/:id">
-                                    <AddSubject />
-                                </Route>
                                 <Route exact path="/admin/list-typeship">
                                     <ManageTypeShip />
                                 </Route>
@@ -128,7 +102,6 @@ function HomePageAdmin(props) {
                                     <StockProduct />
                                 </Route>
                             </main>
-                            {/* <Footer /> */}
                         </div>
                     </div>
                 </div>

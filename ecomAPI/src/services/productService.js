@@ -9,7 +9,6 @@ function dynamicSort(property) {
         property = property.substr(1);
     }
     return function (a, b) {
-        /// sap xep tang dan
         var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
         return result * sortOrder;
     }
@@ -19,9 +18,6 @@ function dynamicSortMultiple() {
     var props = arguments;
     return function (obj1, obj2) {
         var i = 0, result = 0, numberOfProperties = props.length;
-        /* try getting a different result from 0 (equal)
-         * as long as we have extra properties to compare
-         */
         while (result === 0 && i < numberOfProperties) {
             result = dynamicSort(props[i])(obj1, obj2);
             i++;
@@ -148,16 +144,14 @@ let getAllProductUser = (data) => {
                 objectFilter.limit = +data.limit
                 objectFilter.offset = +data.offset
             }
-            if (data.categoryId && data.categoryId !== 'ALL') objectFilter.where = { categoryId: data.categoryId }
+            if (data.categoryId && data.categoryId !== 'ALL') objectFilter.where = { ...objectFilter.where, categoryId: data.categoryId }
             if (data.brandId && data.brandId !== 'ALL') objectFilter.where = { ...objectFilter.where, brandId: data.brandId }
             if (data.sortName === "true") objectFilter.order = [['name', 'ASC']]
             if (data.keyword !== '') {
                 objectFilter.where = {
                     ...objectFilter.where,
-                    // name: { [Op.like]: `%${data.keyword}%` }
                     name: sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', `%${data.keyword}%`)
                 };
-                // objectFilter.where = { ...objectFilter.where, name: { [Op.substring]: `%${data.keyword}%` } }
             }
             let res = await db.Product.findAndCountAll(objectFilter)
             for (let i = 0; i < res.rows.length; i++) {
@@ -906,7 +900,10 @@ let getProductFeature = (limit) => {
                 limit: +limit,
                 order: [['view', 'DESC']],
                 raw: true,
-                nest: true
+                nest: true,
+                where: {
+                    statusId: 'S1'
+                }
             })
             for (let i = 0; i < res.length; i++) {
                 let objectFilterProductDetail = {
@@ -945,14 +942,16 @@ let getProductNew = (limit) => {
                 limit: +limit,
                 order: [['createdAt', 'DESC']],
                 raw: true,
-                nest: true
+                nest: true,
+                where: {
+                    statusId: 'S1'
+                }
             })
             for (let i = 0; i < res.length; i++) {
                 let objectFilterProductDetail = {
                     where: { productId: res[i].id }, raw: true
                 }
                 res[i].productDetail = await db.ProductDetail.findAll(objectFilterProductDetail)
-
                 for (let j = 0; j < res[i].productDetail.length; j++) {
                     res[i].productDetail[j].productDetailSize = await db.ProductDetailSize.findAll({ where: { productdetailId: res[i].productDetail[j].id }, raw: true })
                     res[i].price = res[i].productDetail[0].discountPrice

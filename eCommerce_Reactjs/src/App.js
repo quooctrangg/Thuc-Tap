@@ -1,21 +1,11 @@
 import React from 'react';
-import './css/App.css';
 import Header from './container/Header/Header';
 import Footer from './container/Footer/Footer';
 import HomePage from './container/Home/HomePage';
 import ShopPage from './container/Shop/ShopPage';
 import DetailProductPage from './container/DetailProduct/DetailProductPage';
 import ShopCartPage from './container/ShopCart/ShopCartPage';
-import BlogPage from './container/Blog/BlogPage';
-import DetailBlog from './container/Blog/DetailBlog';
 import HomePageAdmin from './container/System/HomePageAdmin';
-import { ToastContainer } from 'react-toastify';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
-import { Redirect } from 'react-router';
 import VerifyEmail from './container/System/Email/VerifyEmail';
 import LoginWebPage from './container/Login/LoginWebPage';
 import UserHomePage from './container/User/UseHomePage';
@@ -25,6 +15,11 @@ import TopMenu from './container/Header/TopMenu';
 import PaymentSuccess from './container/User/PaymentSuccess';
 import VnpayPaymentPage from './container/Order/VnpayPaymentPage';
 import VnpayPaymentSuccess from './container/Order/VnpayPaymentSuccess';
+import AboutHomePage from './container/About/AboutHomePage'
+import { ToastContainer } from 'react-toastify';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Redirect } from 'react-router';
+import './css/App.css';
 
 function App() {
     return (
@@ -90,18 +85,9 @@ function App() {
                         <VoucherHomePage />
                         <Footer />
                     </Route>
-                    <Route path="/blog">
-                        <Header />
-                        <BlogPage />
-                        <Footer />
-                    </Route>
-                    <Route path="/blog-detail/:id">
-                        <Header />
-                        <DetailBlog />
-                        <Footer />
-                    </Route>
                     <Route path="/about">
                         <Header />
+                        <AboutHomePage />
                         <Footer />
                     </Route>
                     <Route path="/verify-email">

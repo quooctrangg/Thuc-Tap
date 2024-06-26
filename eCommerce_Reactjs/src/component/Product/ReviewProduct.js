@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './ReviewProduct.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import CommonUtils from '../../utils/CommonUtils';
-import { createNewReviewService, getAllReviewByProductIdService, ReplyReviewService, deleteReviewService } from '../../services/userService';
+import { getAllReviewByProductIdService, ReplyReviewService, deleteReviewService } from '../../services/userService';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import ReviewModal from './ReviewModal';
@@ -46,48 +45,6 @@ function ReviewProduct(props) {
                 },
                 ["content"]: '', ["image"]: '', ["imageReview"]: '', ["activeStar"]: '', ["isOpenModal"]: false
             })
-        }
-    }
-
-    let handleChooseStart = (number) => {
-        setInputValues({ ...inputValues, ["activeStar"]: number })
-    }
-
-    let handleOnChangeImage = async (event) => {
-        let data = event.target.files;
-        let file = data[0];
-        if (file.size > 31312281) {
-            toast.error("Dung lượng file bé hơn 30mb")
-        }
-        else {
-            let base64 = await CommonUtils.getBase64(file);
-            let objectUrl = URL.createObjectURL(file)
-            setInputValues({ ...inputValues, ["image"]: base64, ["imageReview"]: objectUrl })
-        }
-    }
-
-    const handleOnChange = event => {
-        const { name, value } = event.target;
-        setInputValues({ ...inputValues, [name]: value });
-    };
-
-    let handleSaveComment = async () => {
-        if (!inputValues.activeStar) toast.error("Bạn chưa chọn sao !")
-        else if (!inputValues.content) toast.error("Nội dung không được để trống !")
-        else {
-            let response = await createNewReviewService({
-                productId: id,
-                content: inputValues.content,
-                image: inputValues.image,
-                userId: inputValues.user.id,
-                star: inputValues.activeStar
-            })
-            if (response && response.errCode === 0) {
-                toast.success("Đánh giá thành công !")
-                await loadAllReview()
-            } else {
-                toast.error(response.errMessage)
-            }
         }
     }
 
@@ -186,29 +143,6 @@ function ReviewProduct(props) {
                     </div>
                 </div>
                 <div className="review_list">
-                    {/* {inputValues.user &&
-                        <div className="review_item">
-                            <div className="form-group">
-                                <label style={{ color: '#333', fontSize: '16px', fontWeight: '600' }}>Viết đánh giá của bạn</label>
-                                <textarea name="content" value={inputValues.content} onChange={(event) => handleOnChange(event)} rows="3" className="form-control"></textarea>
-                            </div>
-                            <div className="content-review">
-                                <div className="content-left">
-                                    <label style={{ marginBottom: '0', cursor: 'pointer' }} htmlFor="cmtImg"><i className="fas fa-camera" ></i></label>
-                                    <input type="file" id="cmtImg" accept=".jpg,.png" hidden onChange={(event) => handleOnChangeImage(event)} />
-                                    <div className={inputValues.activeStar === 1 ? 'box-star active' : 'box-star'} onClick={() => handleChooseStart(1)}><i className="fa fa-star" /></div>
-                                    <div className={inputValues.activeStar === 2 ? 'box-star active' : 'box-star'} onClick={() => handleChooseStart(2)} ><i className="fa fa-star" /><i className="fa fa-star" /></div>
-                                    <div className={inputValues.activeStar === 3 ? 'box-star active' : 'box-star'} onClick={() => handleChooseStart(3)}><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /></div>
-                                    <div className={inputValues.activeStar === 4 ? 'box-star active' : 'box-star'} onClick={() => handleChooseStart(4)}><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /></div>
-                                    <div className={inputValues.activeStar === 5 ? 'box-star active' : 'box-star'} onClick={() => handleChooseStart(5)}><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /></div>
-                                </div>
-                                <div className="content-right">
-                                    <button onClick={() => handleSaveComment()} className="btn btn-primary"><i className="fas fa-pencil-alt"></i> Share</button>
-                                </div>
-                            </div>
-                            <div style={{ backgroundImage: `url(${inputValues.imageReview})` }} className="preview-cmt-img"></div>
-                        </div>
-                    } */}
                     {inputValues.dataReview && inputValues.dataReview.length > 0 && inputValues.dataReview.map((item, index) => {
                         if (!item.parentId) {
                             let name = `${item.user.firstName ? item.user.firstName : ''} ${item.user.lastName}`
