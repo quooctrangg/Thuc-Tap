@@ -6,12 +6,17 @@ import { PAGINATION } from '../../../../utils/constant';
 import ReactPaginate from 'react-paginate';
 import CommonUtils from '../../../../utils/CommonUtils';
 import { Link, useParams } from "react-router-dom";
+import AddProductDetailModal from './AddProductDetailModal';
+import UpdateProductDetailModal from './UpdateProductDetail';
 
 const ManageProductDetail = () => {
     const { id } = useParams()
     const [dataProductDetail, setdataProductDetail] = useState([])
     const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
+    const [isOpenAddProductDetailModal, setIsOpenAddProductDetailModal] = useState(false)
+    const [isOpenUpdateProductDetailModal, setIsOpenUpdateProductDetailModal] = useState(false)
+    const [current, setCurrent] = useState(false)
 
     useEffect(() => {
         loadProductDetail()
@@ -47,6 +52,23 @@ const ManageProductDetail = () => {
         setnumberPage(number.selected)
     }
 
+    const handShowAddProductDeatailModal = () => {
+        setIsOpenAddProductDetailModal(true)
+    }
+
+    const handleCloseAddProductDetailModal = () => {
+        setIsOpenAddProductDetailModal(false)
+    }
+
+    const handShowUpdateProductDeatailModal = () => {
+        setIsOpenUpdateProductDetailModal(true)
+    }
+
+    const handleCloseUpdateProductDetailModal = () => {
+        setIsOpenUpdateProductDetailModal(false)
+        setCurrent(null)
+    }
+
     return (
         <div className="container-fluid px-4">
             <h1 className="mt-4">Quản lý chi tiết sản phẩm</h1>
@@ -54,7 +76,11 @@ const ManageProductDetail = () => {
                 <div className="card-header">
                     <i className="fas fa-table me-1" />
                     Danh sách chi tiết sản phẩm
-                    <div className="float-right"><Link to={`/admin/add-product-detail/${id}`}><i style={{ fontSize: '35px', cursor: 'pointer', color: '#0D6EFD' }} className="fas fa-plus-square"></i></Link></div>
+                    <div className="float-right">
+                        <button onClick={handShowAddProductDeatailModal} className='btn'>
+                            <i style={{ fontSize: '35px', cursor: 'pointer', color: '#0D6EFD' }} className="fas fa-plus-square"></i>
+                        </button>
+                    </div>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
@@ -83,11 +109,12 @@ const ManageProductDetail = () => {
                                                             Xem
                                                         </button>
                                                     </Link>
-                                                    <Link to={`/admin/update-product-detail/${item.id}`}>
-                                                        <button className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                    </Link>
+                                                    <button onClick={() => {
+                                                        setCurrent(item.id)
+                                                        handShowUpdateProductDeatailModal()
+                                                    }} className='btn btn-warning'>
+                                                        Sửa
+                                                    </button>
                                                     <button className='btn btn-danger' onClick={() => handleDeleteProductDetail(item.id)} >Xóa</button>
                                                 </td>
                                             </tr>
@@ -119,6 +146,8 @@ const ManageProductDetail = () => {
                     onPageChange={handleChangePage}
                 />
             }
+            <AddProductDetailModal isOpenAddProductDetailModal={isOpenAddProductDetailModal} handleCloseAddProductDetailModal={handleCloseAddProductDetailModal} loadProductDetail={loadProductDetail} />
+            <UpdateProductDetailModal isOpenUpdateProductDetailModal={isOpenUpdateProductDetailModal} handleCloseUpdateProductDetailModal={handleCloseUpdateProductDetailModal} loadProductDetail={loadProductDetail} id={current} />
         </div>
     )
 }

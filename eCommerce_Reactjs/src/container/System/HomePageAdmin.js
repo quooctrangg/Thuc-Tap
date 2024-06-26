@@ -15,8 +15,6 @@ import ChangePassword from './User/ChangePassword';
 import ManageProduct from './Product/ManageProduct';
 import ManageProductDetail from './Product/ProductDetail/ManageProductDetail';
 import ManageProductImage from './Product/ProductImage/ManageProductImage';
-import AddProductDetail from './Product/ProductDetail/AddProductDetail';
-import EditProductDetail from './Product/ProductDetail/EditProductDetail';
 import ManageBanner from './Banner/ManageBanner';
 import AddBlog from './Blog/AddBlog';
 import ManageBlog from './Blog/ManageBlog';
@@ -80,12 +78,6 @@ function HomePageAdmin(props) {
                                 </Route>
                                 <Route exact path="/admin/list-product-detail-image/:id">
                                     <ManageProductImage />
-                                </Route>
-                                <Route exact path="/admin/add-product-detail/:id">
-                                    <AddProductDetail />
-                                </Route>
-                                <Route exact path="/admin/update-product-detail/:id">
-                                    <EditProductDetail />
                                 </Route>
                                 <Route exact path="/admin/list-banner">
                                     <ManageBanner />
