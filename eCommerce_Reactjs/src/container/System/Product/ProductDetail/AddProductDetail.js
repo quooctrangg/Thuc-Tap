@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useParams } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import CommonUtils from '../../../../utils/CommonUtils';
-import '../AddProduct.scss';
+import '../Product.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import { useFetchAllcode } from '../../../customize/fetch';

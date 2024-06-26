@@ -4,30 +4,32 @@ import { getAllProductAdmin, handleBanProductService, handleActiveProductService
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
 import FormSearch from '../../../component/Search/FormSearch';
+import AddProductModal from './AddProductModal';
+import UpdateProductModal from './UpdateProductModal';
+
 const ManageProduct = () => {
     const [dataProduct, setdataProduct] = useState([])
     const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
+    const [isOpenAddProductModal, setIsOpenAddProductModal] = useState(false)
+    const [isOpenUpdateProductModal, setIsOpenUpdateProductModal] = useState(false)
+    const [current, setCurrent] = useState(null)
 
     useEffect(() => {
-        let fetchProduct = async () => {
-            await loadProduct(keyword)
-        }
-        fetchProduct()
-    }, [])
+        loadProduct()
+    }, [numberPage, keyword])
 
-    let loadProduct = async (keyword) => {
+    let loadProduct = async () => {
         let arrData = await getAllProductAdmin({
             sortName: '',
             sortPrice: '',
             categoryId: 'ALL',
             brandId: 'ALL',
             limit: PAGINATION.pagerow,
-            offset: 0,
+            offset: numberPage * PAGINATION.pagerow,
             keyword: keyword
         })
         if (arrData && arrData.errCode === 0) {
@@ -42,19 +44,7 @@ const ManageProduct = () => {
         })
         if (data && data.errCode === 0) {
             toast.success("Ẩn sản phẩm thành công!")
-            let arrData = await getAllProductAdmin({
-                sortName: '',
-                sortPrice: '',
-                categoryId: 'ALL',
-                brandId: 'ALL',
-                keyword: '',
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataProduct(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            await loadProduct()
         } else {
             toast.error("Ẩn sản phẩm thất bại!")
         }
@@ -66,7 +56,7 @@ const ManageProduct = () => {
         })
         if (data && data.errCode === 0) {
             toast.success("Hiện sản phẩm thành công!")
-            loadProduct('');
+            loadProduct()
         } else {
             toast.error("Hiện sản phẩm thất bại!")
         }
@@ -74,47 +64,31 @@ const ManageProduct = () => {
 
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllProductAdmin({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            sortName: '',
-            sortPrice: '',
-            categoryId: 'ALL',
-            brandId: 'ALL',
-            keyword: keyword
-        })
-        if (arrData && arrData.errCode === 0) {
-            console.log(arrData.data);
-            setdataProduct(arrData.data)
-
-        }
     }
 
     let handleSearchProduct = (keyword) => {
-        loadProduct(keyword)
-        setkeyword(keyword)
+
     }
 
     let handleOnchangeSearch = (keyword) => {
-        if (keyword === '') {
-            loadProduct(keyword)
-            setkeyword(keyword)
-        }
+        setkeyword(keyword)
     }
 
-    let handleOnClickExport = async () => {
-        let res = await getAllProductAdmin({
-            sortName: '',
-            sortPrice: '',
-            categoryId: 'ALL',
-            brandId: 'ALL',
-            keyword: '',
-            limit: '',
-            offset: ''
-        })
-        if (res && res.errCode == 0) {
-            await CommonUtils.exportExcel(res.data, "Danh sách sản phẩm", "ListProduct")
-        }
+    const handleShowAddProductModal = () => {
+        setIsOpenAddProductModal(true)
+    }
+
+    const handleCloseAddProductModal = () => {
+        setIsOpenAddProductModal(false)
+    }
+
+    const handleShowUpdateProductModal = () => {
+        setIsOpenUpdateProductModal(true)
+    }
+
+    const handleCloseUpdateProductModal = () => {
+        setIsOpenUpdateProductModal(false)
+        setCurrent(null)
     }
 
     return (
@@ -130,7 +104,10 @@ const ManageProduct = () => {
                         <div className='col-4'>
                             <FormSearch title={"tên sản phẩm"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchProduct} />                    </div>
                         <div className='col-8'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleShowAddProductModal()} className="btn btn-success" >
+                                <i class="fa-solid fa-plus"></i>
+                                Thêm
+                            </button>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -167,11 +144,12 @@ const ManageProduct = () => {
                                                             Xem
                                                         </button>
                                                     </Link>
-                                                    <Link to={`/admin/edit-product/${item.id}`}>
-                                                        <button className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                    </Link>
+                                                    <button onClick={() => {
+                                                        setCurrent(item.id)
+                                                        handleShowUpdateProductModal()
+                                                    }} className='btn btn-warning'>
+                                                        Sửa
+                                                    </button>
                                                     {
                                                         item.statusData.code === 'S1' ?
                                                             <button className='btn btn-danger' onClick={() => handleBanProduct(item.id)}>Ẩn</button>
@@ -214,6 +192,8 @@ const ManageProduct = () => {
                     onPageChange={handleChangePage}
                 />
             }
+            <AddProductModal isOpenAddProductModal={isOpenAddProductModal} handleCloseAddProductModal={handleCloseAddProductModal} loadProduct={loadProduct} />
+            <UpdateProductModal isOpenUpdateProductModal={isOpenUpdateProductModal} handleCloseUpdateProductModal={handleCloseUpdateProductModal} loadProduct={loadProduct} id={current} />
         </div>
     )
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
-import '../AddProduct.scss';
+import '../Product.scss';
 import { getProductDetailByIdService, UpdateProductDetailService } from '../../../../services/userService';
 const EditProductDetail = (props) => {
     const [inputValues, setInputValues] = useState({
