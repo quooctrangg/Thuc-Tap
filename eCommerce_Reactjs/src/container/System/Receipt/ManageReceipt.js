@@ -61,9 +61,9 @@ const ManageReceipt = () => {
                 </div>
                 <div className="card-body">
                     <div style={{ width: '100%' }} className='' >
-                        <div className='d-flex gap-2 justify-content-between'>
-                            <button onClick={() => handleOnClickExport()} className="btn btn-info mb-2" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
-                            <button onClick={() => handleOpenReceiptModal()} className="btn btn-success mb-2" >Thêm hóa đơn <i class="fa-solid fa-file-invoice"></i></button>
+                        <div className='d-flex gap-2 justify-content-end mb-2'>
+                            <button onClick={() => handleOnClickExport()} className="btn btn-light" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button onClick={() => handleOpenReceiptModal()} className="btn btn-success" >Thêm hóa đơn <i class="fa-solid fa-file-invoice"></i></button>
                         </div>
                     </div>
                     <div className="table-responsive">

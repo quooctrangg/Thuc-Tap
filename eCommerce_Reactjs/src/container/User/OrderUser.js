@@ -124,10 +124,6 @@ function OrderUser(props) {
                             <span>Hủy đơn</span>
                         </button>
                     </div>
-                    {/* <div className='box-search-order'>
-                        <i className="fas fa-search"></i>
-                        <input autoComplete='off' placeholder='Tìm kiếm theo ID đơn hàng hoặc Tên Sản phẩm' type={"text"} />
-                    </div> */}
                     {data && data.length > 0 ?
                         data.map((item, index) => {
                             return (
@@ -135,14 +131,7 @@ function OrderUser(props) {
                                     <div className='box-list-order'>
                                         <Link to={`/user/order/${id}/${item.id}`} className='content-top'>
                                             <div className='content-left'>
-                                                {/* <div className='label-favorite'>
-                                                    Yêu thích
-                                                </div> */}
                                                 <span className='label-name-shop'>Jolido shop</span>
-                                                {/* <div className='view-shop'>
-                                                    <i className="fas fa-store"></i>
-                                                    <a style={{ color: 'black' }} href='/shop'>Xem shop</a>
-                                                </div> */}
                                             </div>
                                             <div className='content-right'>
                                                 {item.statusOrderData && item.statusOrderData.value} {item.isPaymentOnlien == 1 && ' | Đã thanh toán'}
@@ -209,19 +198,13 @@ function OrderUser(props) {
                                                     Hủy đơn
                                                 </div>
                                             }
-                                            {/* {
-                                                item.statusId == 'S5' &&
-                                                <div className='btn-buy' onClick={() => handleReceivedOrder(item.id)} >
-                                                    Đã nhận hàng
-                                                </div>
-                                            } */}
                                         </div>
                                     </div>
                                 </div>
                             )
                         })
                         :
-                        <div className='text-center text-red'>
+                        <div className='text-center text-red mt-5'>
                             Không có đơn hàng.
                         </div>
                     }
