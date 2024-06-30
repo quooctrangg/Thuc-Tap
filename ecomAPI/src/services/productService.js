@@ -289,7 +289,12 @@ let getDetailProductById = (id) => {
                         res.productDetail[i].productImage[j].image = Buffer.from(res.productDetail[i].productImage[j].image, 'base64').toString('binary')
                     }
                     for (let k = 0; k < res.productDetail[i].productDetailSize.length; k++) {
-                        let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: res.productDetail[i].productDetailSize[k].id } })
+                        let receiptDetail = await db.ReceiptDetail.findAll({
+                            where: {
+                                productDetailSizeId: res.productDetail[i].productDetailSize[k].id,
+                                status: 1
+                            }
+                        })
                         let orderDetail = await db.OrderDetail.findAll({ where: { productId: res.productDetail[i].productDetailSize[k].id } })
                         let quantity = 0
                         for (let g = 0; g < receiptDetail.length; g++) {
@@ -712,7 +717,12 @@ let getAllProductDetailSizeById = (data) => {
                     nest: true
                 })
                 for (let i = 0; i < productsize.rows.length > 0; i++) {
-                    let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: productsize.rows[i].id } })
+                    let receiptDetail = await db.ReceiptDetail.findAll({
+                        where: {
+                            productDetailSizeId: productsize.rows[i].id,
+                            status: 1
+                        }
+                    })
                     let orderDetail = await db.OrderDetail.findAll({ where: { productId: productsize.rows[i].id } })
                     let quantity = 0
                     for (let j = 0; j < receiptDetail.length; j++) {

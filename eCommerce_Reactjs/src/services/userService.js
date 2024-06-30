@@ -509,6 +509,10 @@ const deleteReceiptService = (data) => {
     return axios.delete(`/api/delete-receipt`, data)
 }
 
+const deleteDetailReceiptService = (data) => {
+    return axios.delete('/api/delete-detail-receipt', data)
+}
+
 const getDetailReceiptByIdService = (id) => {
     return axios.get(`/api/get-detail-receipt?id=${id}`)
 }
@@ -549,5 +553,5 @@ export {
     getStatisticByMonth, getStatisticByDay, checkPhonenumberEmail, createNewSupplierService, updateSupplierService, deleteSupplierService, getDetailSupplierByIdService,
     getAllSupplier, createNewReceiptService, getAllReceipt, getDetailReceiptByIdService, deleteReceiptService, updateReceiptService, createNewReceiptDetailService,
     getStatisticOverturn, getStatisticProfit, getProductShopcartService, getDetailUserByEmail, getProductRecommendService,
-    getStatisticStockProduct, getExchangeRate, paymentOrderVnpayService, confirmOrderVnpay, paymentOrderVnpaySuccessService, unBanUserService
+    getStatisticStockProduct, getExchangeRate, paymentOrderVnpayService, confirmOrderVnpay, paymentOrderVnpaySuccessService, unBanUserService, deleteDetailReceiptService
 }

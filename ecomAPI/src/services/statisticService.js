@@ -303,7 +303,12 @@ let getStatisticProfit = (data) => {
                     let totalprice = 0
                     let importPrice = 0
                     for (let j = 0; j < orderProduct[i].orderDetail.length; j++) {
-                        let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: orderProduct[i].orderDetail[j].productId } })
+                        let receiptDetail = await db.ReceiptDetail.findAll({
+                            where: {
+                                productDetailSizeId: orderProduct[i].orderDetail[j].productId,
+                                status: 1
+                            }
+                        })
                         let avgPrice = 0
                         let avgQuantity = 0
                         for (let k = 0; k < receiptDetail.length; k++) {
@@ -444,14 +449,19 @@ let getStatisticStockProduct = (data) => {
                 raw: true,
                 nest: true
             }
-            // if (data.limit && data.offset) {
-            //     objectFilter.limit = +data.limit
-            //     objectFilter.offset = +data.offset
-            // }
             let res = await db.ProductDetailSize.findAndCountAll(objectFilter)
             for (let i = 0; i < res.rows.length; i++) {
-                let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: res.rows[i].id } })
-                let orderDetail = await db.OrderDetail.findAll({ where: { productId: res.rows[i].id } })
+                let receiptDetail = await db.ReceiptDetail.findAll({
+                    where: {
+                        productDetailSizeId: res.rows[i].id,
+                        status: 1
+                    }
+                })
+                let orderDetail = await db.OrderDetail.findAll({
+                    where: {
+                        productId: res.rows[i].id,
+                    }
+                })
                 let quantity = 0
                 res.rows[i].productDetaildData = await db.ProductDetail.findOne({
                     where: { id: res.rows[i].productdetailId }

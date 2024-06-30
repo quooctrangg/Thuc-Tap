@@ -4,7 +4,6 @@ require('dotenv').config();
 let createNewReceipt = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            // !data.userId || !data.supplierId || !data.productDetailSizeId || !data.quantity|| !data.price
             if (!data.userId || !data.supplierId || !data.billNumber) {
                 resolve({
                     errCode: 1,
@@ -28,15 +27,6 @@ let createNewReceipt = (data) => {
                     supplierId: data.supplierId,
                     billNumber: data.billNumber
                 })
-                // if (receipt) {
-                //     await db.ReceiptDetail.create({
-                //         receiptId: receipt.id,
-                //         productDetailSizeId: data.productDetailSizeId,
-                //         quantity: data.quantity,
-                //         price: data.price,
-                //     }
-                //     )
-                // }
                 if (receipt) {
                     resolve({
                         errCode: 0,
@@ -64,6 +54,18 @@ let createNewReceiptDetail = (data) => {
                     errMessage: 'Thiếu tham số bắt buộc'
                 })
             } else {
+                const isLotNumber = await db.ReceiptDetail.findOne({
+                    where: {
+                        lotNumber: data.lotNumber,
+                    }
+                })
+                if (isLotNumber) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Sô lô đã tồn tại'
+                    })
+                    return
+                }
                 const isReceiptDetail = await db.ReceiptDetail.create({
                     receiptId: data.receiptId,
                     productDetailSizeId: data.productDetailSizeId,
@@ -138,7 +140,6 @@ let getAllReceipt = (data) => {
                 objectFilter.limit = +data.limit
                 objectFilter.offset = +data.offset
             }
-            //  if(data.keyword !=='') objectFilter.where = {...objectFilter.where, name: {[Op.substring]: data.keyword  } }
             let res = await db.Receipt.findAndCountAll(objectFilter)
             for (let i = 0; i < res.rows.length; i++) {
                 res.rows[i].userData = await db.User.findOne({ where: { id: res.rows[i].userId } })
@@ -183,6 +184,37 @@ let updateReceipt = (data) => {
     })
 }
 
+const deleteDetailReceipt = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!id) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Thiếu tham số bắt buộc'
+                })
+            } else {
+                let detailReceipt = await db.ReceiptDetail.findOne({
+                    where: {
+                        id: id,
+                        status: 0
+                    }
+                })
+                if (detailReceipt) {
+                    await db.ReceiptDetail.destroy({
+                        where: { id: id }
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thành công'
+                    })
+                }
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 let deleteReceipt = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -193,12 +225,24 @@ let deleteReceipt = (data) => {
                 })
             } else {
                 let receipt = await db.Receipt.findOne({
-                    where: { id: data.id }
+                    where: {
+                        id: data.id,
+                        status: 0
+                    }
                 })
                 if (receipt) {
                     await db.Receipt.destroy({
                         where: { id: data.id }
                     })
+                    const detailReceipt = await db.ReceiptDetail.findAll({
+                        where: {
+                            receiptId: data.id,
+                            status: 0
+                        }
+                    })
+                    detailReceipt.forEach(async element => {
+                        await deleteDetailReceipt(element.id)
+                    });
                     resolve({
                         errCode: 0,
                         errMessage: 'Thành công'
@@ -217,5 +261,6 @@ module.exports = {
     getAllReceipt: getAllReceipt,
     updateReceipt: updateReceipt,
     deleteReceipt: deleteReceipt,
-    createNewReceiptDetail: createNewReceiptDetail
+    createNewReceiptDetail: createNewReceiptDetail,
+    deleteDetailReceipt: deleteDetailReceipt
 }

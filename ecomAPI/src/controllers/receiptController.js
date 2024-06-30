@@ -65,6 +65,19 @@ let deleteReceipt = async (req, res) => {
     }
 }
 
+const deleteDetailReceipt = async (req, res) => {
+    try {
+        let data = await receiptService.deleteDetailReceipt(req.body?.id)
+        return res.status(200).json(data);
+    } catch (error) {
+        console.log(error)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Lỗi từ máy chủ'
+        })
+    }
+}
+
 let createNewReceiptDetail = async (req, res) => {
     try {
         let data = await receiptService.createNewReceiptDetail(req.body);
@@ -84,5 +97,6 @@ module.exports = {
     getAllReceipt: getAllReceipt,
     updateReceipt: updateReceipt,
     deleteReceipt: deleteReceipt,
-    createNewReceiptDetail: createNewReceiptDetail
+    createNewReceiptDetail: createNewReceiptDetail,
+    deleteDetailReceipt: deleteDetailReceipt
 }

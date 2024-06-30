@@ -13,7 +13,12 @@ let addShopCart = (data) => {
                 if (cart) {
                     let res = await db.ProductDetailSize.findOne({ where: { id: data.productdetailsizeId } })
                     if (res) {
-                        let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: res.id } })
+                        let receiptDetail = await db.ReceiptDetail.findAll({
+                            where: {
+                                productDetailSizeId: res.id,
+                                status: 1
+                            }
+                        })
                         let orderDetail = await db.OrderDetail.findAll({ where: { productId: res.id } })
                         let quantity = 0
                         for (let j = 0; j < receiptDetail.length; j++) {
@@ -55,7 +60,12 @@ let addShopCart = (data) => {
                 else {
                     let res = await db.ProductDetailSize.findOne({ where: { id: data.productdetailsizeId } })
                     if (res) {
-                        let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: res.id } })
+                        let receiptDetail = await db.ReceiptDetail.findAll({
+                            where: {
+                                productDetailSizeId: res.id,
+                                status: 1
+                            }
+                        })
                         let orderDetail = await db.OrderDetail.findAll({ where: { productId: res.id } })
                         let quantity = 0
                         for (let j = 0; j < receiptDetail.length; j++) {

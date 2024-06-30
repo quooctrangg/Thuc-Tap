@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     Receipt.init({
         userId: DataTypes.INTEGER,
         supplierId: DataTypes.INTEGER,
-        billNumber: DataTypes.STRING
+        billNumber: DataTypes.STRING,
+        status: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'Receipt',

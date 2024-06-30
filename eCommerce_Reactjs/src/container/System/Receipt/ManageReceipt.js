@@ -4,9 +4,11 @@ import CommonUtils from '../../../utils/CommonUtils';
 import ReactPaginate from 'react-paginate';
 import AddReceiptModal from './AddReceiptModal'
 import { useEffect, useState } from 'react';
-import { getAllReceipt } from '../../../services/userService';
+import { deleteReceiptService, getAllReceipt } from '../../../services/userService';
 import { PAGINATION } from '../../../utils/constant';
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ManageReceipt = () => {
     const [dataReceipt, setdataReceipt] = useState([])
@@ -41,6 +43,18 @@ const ManageReceipt = () => {
         if (res && res.errCode == 0) {
             await CommonUtils.exportExcel(res.data, "Danh sách nhập hàng", "ListReceipt")
         }
+    }
+
+    const handleDeleteReceipt = async (id) => {
+        let res = await deleteReceiptService({
+            data: {
+                id: id
+            }
+        })
+        if (res && res.errCode === 0) {
+            toast.success("Xóa hóa đơn thành công")
+            await fetchData();
+        } else toast.error("Xóa hóa đơn thất bại")
     }
 
     const handleOpenReceiptModal = () => {
@@ -87,12 +101,18 @@ const ManageReceipt = () => {
                                                     <td>{item.billNumber}</td>
                                                     <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
                                                     <td>{item.supplierData.name}</td>
-                                                    <td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
                                                         <Link to={`/admin/detail-receipt/${item.id}`}>
                                                             <button className='btn btn-primary'>
                                                                 Xem
                                                             </button>
                                                         </Link>
+                                                        {
+                                                            !item.status &&
+                                                            <button onClick={() => handleDeleteReceipt(item.id)} className='btn btn-danger'>
+                                                                Xóa
+                                                            </button>
+                                                        }
                                                     </td>
                                                 </tr>
                                             )

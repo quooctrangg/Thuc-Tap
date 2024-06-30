@@ -27,7 +27,12 @@ let createNewOrder = (data) => {
                 let productQuantity = []
                 for (let i = 0; i < data.arrDataShopCart.length; i++) {
                     let quantity = 0
-                    let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: data.arrDataShopCart[i].productId } })
+                    let receiptDetail = await db.ReceiptDetail.findAll({
+                        where: {
+                            productDetailSizeId: data.arrDataShopCart[i].productId,
+                            status: 1
+                        }
+                    })
                     let orderDetail = await db.OrderDetail.findAll({ where: { productId: data.arrDataShopCart[i].productId } })
                     for (let g = 0; g < receiptDetail.length; g++) {
                         quantity = quantity + receiptDetail[g].quantity
@@ -376,7 +381,12 @@ let paymentOrder = (data) => {
             let productQuantity = []
             for (let i = 0; i < data.result.length; i++) {
                 let quantity = 0
-                let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: data.result[i].productId } })
+                let receiptDetail = await db.ReceiptDetail.findAll({
+                    where: {
+                        productDetailSizeId: data.result[i].productId,
+                        status: 1
+                    }
+                })
                 let orderDetail = await db.OrderDetail.findAll({ where: { productId: data.result[i].productId } })
                 for (let g = 0; g < receiptDetail.length; g++) {
                     quantity = quantity + receiptDetail[g].quantity
@@ -634,7 +644,12 @@ let paymentOrderVnpay = (req) => {
             let productQuantity = []
             for (let i = 0; i < req.body?.arrDataShopCart.length; i++) {
                 let quantity = 0
-                let receiptDetail = await db.ReceiptDetail.findAll({ where: { productDetailSizeId: req.body?.arrDataShopCart[i].productId } })
+                let receiptDetail = await db.ReceiptDetail.findAll({
+                    where: {
+                        productDetailSizeId: req.body?.arrDataShopCart[i].productId,
+                        status: 1
+                    }
+                })
                 let orderDetail = await db.OrderDetail.findAll({ where: { productId: req.body?.arrDataShopCart[i].productId } })
                 for (let g = 0; g < receiptDetail.length; g++) {
                     quantity = quantity + receiptDetail[g].quantity

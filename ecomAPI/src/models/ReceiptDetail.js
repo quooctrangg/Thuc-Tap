@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         productDetailSizeId: DataTypes.INTEGER,
         quantity: DataTypes.INTEGER,
         price: DataTypes.BIGINT,
-        lotNumber: DataTypes.STRING
+        lotNumber: DataTypes.STRING,
+        status: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'ReceiptDetail',
