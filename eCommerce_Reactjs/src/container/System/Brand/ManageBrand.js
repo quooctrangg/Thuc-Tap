@@ -1,11 +1,11 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
+import FormSearch from '../../../component/Search/FormSearch';
+import AddBrandModal from './AddBrandModal';
 import { useEffect, useState } from 'react';
 import { DeleteAllcodeService, getListAllCodeService } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import FormSearch from '../../../component/Search/FormSearch';
-import AddBrandModal from './AddBrandModal';
 
 const ManageBrand = () => {
     const [keyword, setkeyword] = useState('')
@@ -16,11 +16,7 @@ const ManageBrand = () => {
     const [current, setCurrent] = useState(null)
 
     useEffect(() => {
-        try {
-            fetchData();
-        } catch (error) {
-            console.log(error)
-        }
+        fetchData();
     }, [numberPage, keyword])
 
     let fetchData = async () => {
@@ -97,31 +93,32 @@ const ManageBrand = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataBrand && dataBrand.length > 0 ?
-                                    dataBrand.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.value}</td>
-                                                <td>{item.code}</td>
-                                                <td style={{ display: 'flex', gap: 2 }}>
-                                                    <button onClick={() => {
-                                                        setCurrent(item.id)
-                                                        handleShowAddBrandModal()
-                                                    }} className='btn btn-warning'>
-                                                        Sửa
-                                                    </button>
-                                                    <button className='btn btn-danger' onClick={(event) => handleDeleteBrand(event, item.id)} >Xóa</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={4} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                {
+                                    dataBrand && dataBrand.length > 0 ?
+                                        dataBrand.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.value}</td>
+                                                    <td>{item.code}</td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <button onClick={() => {
+                                                            setCurrent(item.id)
+                                                            handleShowAddBrandModal()
+                                                        }} className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                        <button className='btn btn-danger' onClick={(event) => handleDeleteBrand(event, item.id)} >Xóa</button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={4} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

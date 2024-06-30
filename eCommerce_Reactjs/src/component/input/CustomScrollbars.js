@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Component } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars';
 import './CustomScrollbars.scss';
 
@@ -39,7 +40,6 @@ class CustomScrollbars extends Component {
                 return;
             }
             scrollbars.scrollTop(originalTop + (targetTop - originalTop) / 30 * iteration);
-
             if (quickScroll && quickScroll === true) {
                 scroll();
             } else {

@@ -1,16 +1,17 @@
 import React from 'react';
+import moment from 'moment';
+import DatePicker from "react-datepicker";
 import { Modal, ModalBody } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import { createNewVoucherService, getDetailVoucherByIdService, getSelectTypeVoucher, updateVoucherService } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import moment from 'moment';
-import DatePicker from "react-datepicker";
 
 const AddVoucherModal = props => {
     const [voucherId, setVoucherId] = useState(null)
     const [dataTypeVoucher, setdataTypeVoucher] = useState([])
     const [inputValues, setInputValues] = useState({ fromDate: '', toDate: '', typeVoucherId: '', amount: '', codeVoucher: '' });
+
     if (dataTypeVoucher && dataTypeVoucher.length > 0 && inputValues.typeVoucherId === '') {
         setInputValues({ ...inputValues, ["typeVoucherId"]: dataTypeVoucher[0].id })
     }
@@ -156,7 +157,8 @@ const AddVoucherModal = props => {
                     <div className="form-group col-md-4">
                         <label htmlFor="typeVoucherId">Loại voucher</label>
                         <select value={inputValues.typeVoucherId} name="typeVoucherId" onChange={(event) => handleOnChange(event)} id="typeVoucherId" className="form-control">
-                            {dataTypeVoucher && dataTypeVoucher.length > 0 &&
+                            {
+                                dataTypeVoucher && dataTypeVoucher.length > 0 &&
                                 dataTypeVoucher.map((item, index) => {
                                     let name = `${item.value} ${item.typeVoucherData.value}`
                                     return (

@@ -1,26 +1,28 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { handleVerifyEmail } from '../../../services/userService';
 import 'react-toastify/dist/ReactToastify.css';
 import './VerifyEmail.scss';
-import { handleVerifyEmail } from '../../../services/userService';
+
 const VerifyEmail = () => {
     const [status, setstatus] = useState(false)
 
     useEffect(() => {
         let token = getParam("token");
         let id = getParam("userId");
-        let fetchVerifyEmail = async () => {
-            let res = await handleVerifyEmail({
-                token: token,
-                id: id
-            })
-            console.log(res.errCode)
-            if (res.errCode === 0) {
-                setstatus(true)
-            }
-        }
-        fetchVerifyEmail()
+        fetchVerifyEmail(id, token)
     })
+
+    let fetchVerifyEmail = async (id, token) => {
+        let res = await handleVerifyEmail({
+            token: token,
+            id: id
+        })
+        console.log(res.errCode)
+        if (res.errCode === 0) {
+            setstatus(true)
+        }
+    }
 
     let getParam = (param) => {
         let url = new URL(window.location.href);

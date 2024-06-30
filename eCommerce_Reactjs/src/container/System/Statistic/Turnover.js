@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { getStatisticOverturn } from '../../../services/userService';
-import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import CommonUtils from '../../../utils/CommonUtils';
-import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
+import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { getStatisticOverturn } from '../../../services/userService';
+import "react-datepicker/dist/react-datepicker.css";
 
 const Turnover = (props) => {
     const [dataOrder, setdataOrder] = useState([])
@@ -76,7 +76,8 @@ const Turnover = (props) => {
                                 <option value="month">Tháng</option>
                                 <option value="year">Năm</option>
                             </select>
-                            {type == "day" &&
+                            {
+                                type == "day" &&
                                 <div style={{ display: 'flex', gap: 5, alignItems: 'center', width: 'auto' }}>
                                     <label htmlFor="startDate">Từ</label>
                                     <DatePicker
@@ -102,7 +103,8 @@ const Turnover = (props) => {
                                     />
                                 </div>
                             }
-                            {type == "month" &&
+                            {
+                                type == "month" &&
                                 <div style={{ with: 'auto' }}>
                                     <DatePicker
                                         selected={DateTime}
@@ -113,7 +115,8 @@ const Turnover = (props) => {
                                     />
                                 </div>
                             }
-                            {type == "year" &&
+                            {
+                                type == "year" &&
                                 <div style={{ with: 'auto' }}>
                                     <DatePicker
                                         selected={DateTime}
@@ -148,37 +151,38 @@ const Turnover = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataOrder && dataOrder.length > 0 ?
-                                    dataOrder.map((item, index) => {
-                                        let totalProduct = 0
-                                        item.orderDetail.forEach(e => {
-                                            totalProduct += e.quantity
+                                {
+                                    dataOrder && dataOrder.length > 0 ?
+                                        dataOrder.map((item, index) => {
+                                            let totalProduct = 0
+                                            item.orderDetail.forEach(e => {
+                                                totalProduct += e.quantity
+                                            })
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{item.id}</td>
+                                                    <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
+                                                    <td>{moment.utc(item.updatedAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
+                                                    <td>{item.typeShipData.type}</td>
+                                                    <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
+                                                    <td>{totalProduct}</td>
+                                                    <td>{CommonUtils.formatter.format(item.totalpriceProduct)}</td>
+                                                    <td>
+                                                        <Link to={`/admin/order-detail/${item.id}`}>
+                                                            <button className='btn btn-primary'>
+                                                                Xem chi tiết
+                                                            </button>
+                                                        </Link>
+                                                    </td>
+                                                </tr>
+                                            )
                                         })
-                                        return (
-                                            <tr key={index}>
-                                                <td>{item.id}</td>
-                                                <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                <td>{moment.utc(item.updatedAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                <td>{item.typeShipData.type}</td>
-                                                <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
-                                                <td>{totalProduct}</td>
-                                                <td>{CommonUtils.formatter.format(item.totalpriceProduct)}</td>
-                                                <td>
-                                                    <Link to={`/admin/order-detail/${item.id}`}>
-                                                        <button className='btn btn-primary'>
-                                                            Xem chi tiết
-                                                        </button>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={9} className='text-center text-red'>
-                                            Không có dữ liệu
-                                        </td>
-                                    </tr>
+                                        :
+                                        <tr>
+                                            <td colSpan={9} className='text-center text-red'>
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

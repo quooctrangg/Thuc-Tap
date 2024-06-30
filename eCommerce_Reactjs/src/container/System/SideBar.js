@@ -22,14 +22,14 @@ const SideBar = () => {
                             Trang chủ
                         </Link>
                         <div className="sb-sidenav-menu-heading">Quản lý</div>
-                        {user && user.roleId === "R1" &&
+                        {
+                            user && user.roleId === "R1" &&
                             <>
                                 <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseStatistic" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div className="sb-nav-link-icon"><i className="fa-solid fa-magnifying-glass-chart"></i></div>
                                     Thống kê
                                     <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down" /></div>
                                 </a>
-
                                 <div className="collapse" id="collapseStatistic" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                     <nav className="sb-sidenav-menu-nested nav">
                                         <Link to={'/admin/turnover'} className="nav-link" >Thống kê doanh thu</Link>
@@ -39,7 +39,8 @@ const SideBar = () => {
                                 </div>
                             </>
                         }
-                        {user && user.roleId === "R1" &&
+                        {
+                            user && user.roleId === "R1" &&
                             <>
                                 <div >
                                     <Link to={'/admin/list-user'} className="nav-link flex gap-2" >

@@ -1,17 +1,21 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import ChatWindow from './ChatWindow';
 import MessageDisscution from './MessageDisscution';
-import './MessagePage.scss';
-import { createNewRoom, listRoomOfUser } from '../../services/userService';
 import socketIOClient from "socket.io-client";
+import { useEffect, useState, useRef } from 'react'
+import { createNewRoom, listRoomOfUser } from '../../services/userService';
+import './MessagePage.scss';
+
 require('dotenv').config();
 
+const host = process.env.REACT_APP_BACKEND_URL;
+
 function MessagePage(props) {
+    const socketRef = useRef();
+
     const [dataRoom, setdataRoom] = useState([])
     const [selectedRoom, setselectedRoom] = useState('')
     const [dataUser, setdataUser] = useState({})
-    const host = process.env.REACT_APP_BACKEND_URL;
-    const socketRef = useRef();
     const [setId] = useState();
     const [name, setName] = useState('')
 
@@ -30,7 +34,7 @@ function MessagePage(props) {
         if (userData) {
             socketRef.current.on('getId', data => {
                 setId(data)
-            }) // phần này đơn giản để gán id cho mỗi phiên kết nối vào page. Mục đích chính là để phân biệt đoạn nào là của mình đang chat.
+            })
             createRoom()
             fetchListRoom(userData.id)
             socketRef.current.on('sendDataServer', dataGot => {
@@ -39,7 +43,6 @@ function MessagePage(props) {
             socketRef.current.on('loadRoomServer', dataGot => {
                 fetchListRoom(userData.id)
             })
-            // console.log(userData);
             return () => {
                 socketRef.current.disconnect();
             };
@@ -65,10 +68,11 @@ function MessagePage(props) {
                 <div className="ks-page-content-body">
                     <div className="ks-messenger">
                         <MessageDisscution userId={dataUser.id} isAdmin={false} handleClickRoom={handleClickRoom} data={dataRoom} />
-                        {selectedRoom ? <ChatWindow userId={dataUser.id} roomId={selectedRoom} name={name} />
-                            : <div>
-                                <span className='title'>Chưa chọn phòng</span>
-                            </div>
+                        {
+                            selectedRoom ? <ChatWindow userId={dataUser.id} roomId={selectedRoom} name={name} />
+                                : <div>
+                                    <span className='title'>Chưa chọn phòng</span>
+                                </div>
                         }
                     </div>
                 </div>

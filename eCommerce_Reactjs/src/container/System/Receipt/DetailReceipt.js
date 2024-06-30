@@ -1,22 +1,22 @@
 import React from 'react';
+import CommonUtils from '../../../utils/CommonUtils';
 import { useEffect, useState } from 'react';
 import { getAllProductAdmin, getDetailReceiptByIdService, createNewReceiptDetailService } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { useParams } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
-import CommonUtils from '../../../utils/CommonUtils';
 
 const DetailReceipt = (props) => {
     const { id } = useParams();
+
     const [dataProduct, setdataProduct] = useState([])
     const [dataProductDetail, setdataProductDetail] = useState([])
     const [dataProductDetailSize, setdataProductDetailSize] = useState([])
     const [productDetailSizeId, setproductDetailSizeId] = useState('')
     const [dataReceiptDetail, setdataReceiptDetail] = useState({})
     const [billNumber, setBillNumber] = useState('')
-    const [inputValues, setInputValues] = useState({
-        quantity: 0, price: 0, productId: '', lotNumber: ''
-    });
+    const [inputValues, setInputValues] = useState({ quantity: 0, price: 0, productId: '', lotNumber: '' });
+
     if (dataProduct && dataProduct.length > 0 && inputValues.productId === '') {
         setInputValues({ ...inputValues, ["productId"]: dataProduct[0].id, })
         setproductDetailSizeId(dataProduct[0].productDetail[0].productDetailSize[0].id)
@@ -118,7 +118,8 @@ const DetailReceipt = (props) => {
                             <div className="form-group col-md-4">
                                 <label htmlFor="productId">Sản phẩm</label>
                                 <select value={inputValues.productId} name="productId" onChange={(event) => handleOnChangeProduct(event)} id="productId" className="form-control">
-                                    {dataProduct && dataProduct.length > 0 &&
+                                    {
+                                        dataProduct && dataProduct.length > 0 &&
                                         dataProduct.map((item, index) => {
                                             return (
                                                 <option key={index} value={item.id}>{item.name}</option>
@@ -130,7 +131,8 @@ const DetailReceipt = (props) => {
                             <div className="form-group col-md-4">
                                 <label htmlFor="productDetail">Màu</label>
                                 <select onChange={(event) => handleOnChangeProductDetail(event)} name='productDetail' id="productDetail" className="form-control">
-                                    {dataProductDetail && dataProductDetail.length > 0 &&
+                                    {
+                                        dataProductDetail && dataProductDetail.length > 0 &&
                                         dataProductDetail.map((item, index) => {
                                             return (
                                                 <option key={index} value={item.id}>{item.nameDetail}</option>
@@ -142,7 +144,8 @@ const DetailReceipt = (props) => {
                             <div className="form-group col-md-4">
                                 <label htmlFor="productDetailSizeId">Size sản phẩm</label>
                                 <select value={productDetailSizeId} name="productDetailSizeId" onChange={(event) => setproductDetailSizeId(event.target.value)} id="productDetailSizeId" className="form-control">
-                                    {dataProductDetailSize && dataProductDetailSize.length > 0 &&
+                                    {
+                                        dataProductDetailSize && dataProductDetailSize.length > 0 &&
                                         dataProductDetailSize.map((item, index) => {
                                             return (
                                                 <option key={index} value={item.id}>{item.sizeId}</option>
@@ -184,26 +187,27 @@ const DetailReceipt = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataReceiptDetail && dataReceiptDetail.length > 0 ?
-                                    dataReceiptDetail.map((item, index) => {
-                                        console.log(item);
-                                        let name = `${item.productData.name} - ${item.productDetailData.nameDetail} - ${item.productDetailSizeData.sizeData.value}`
-                                        return (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{item.lotNumber}</td>
-                                                <td>{name}</td>
-                                                <td>{item.quantity}</td>
-                                                <td>{CommonUtils.formatter.format(item.price)}</td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={5} className='text-center text-red'>
-                                            Không có dữ liệu
-                                        </td>
-                                    </tr>
+                                {
+                                    dataReceiptDetail && dataReceiptDetail.length > 0 ?
+                                        dataReceiptDetail.map((item, index) => {
+                                            console.log(item);
+                                            let name = `${item.productData.name} - ${item.productDetailData.nameDetail} - ${item.productDetailSizeData.sizeData.value}`
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{item.lotNumber}</td>
+                                                    <td>{name}</td>
+                                                    <td>{item.quantity}</td>
+                                                    <td>{CommonUtils.formatter.format(item.price)}</td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={5} className='text-center text-red'>
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

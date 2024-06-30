@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import moment from 'moment';
+import { useEffect, useState } from 'react';
+
 function MessageDisscution(props) {
     const [dataRoom, setdataRoom] = useState([])
     const [textSearch, settextSearch] = useState('')
@@ -13,7 +15,6 @@ function MessageDisscution(props) {
     }, [props.data])
 
     let handleClickRoom = (roomId, firstName, lastName) => {
-        // console.log(lastName);
         props.handleClickRoom(roomId, firstName ? firstName : '' + ' ' + lastName ? lastName : '')
     }
 
@@ -62,12 +63,12 @@ function MessageDisscution(props) {
                     </span>
                 </div>
             </div>
-            {/* <div className="ks-body ks-scrollable jspScrollable" data-auto-height style={{ height: '400px', overflowY: 'auto', padding: '0px', width: '339px' }} tabIndex={0}> */}
             <div className="ks-body ks-scrollable jspScrollable" data-auto-height tabIndex={0}>
                 <div className="jspContainer" style={{ width: '339px', height: '550px' }}>
                     <div className="jspPane" style={{ padding: '0px', top: '0px', width: '329px' }}>
                         <ul className="ks-items">
-                            {roomList && roomList.length > 0 &&
+                            {
+                                roomList && roomList.length > 0 &&
                                 roomList.map((item, index) => {
                                     let userData = {}
                                     count = 0
@@ -97,16 +98,6 @@ function MessageDisscution(props) {
                             }
                         </ul>
                     </div>
-                    {/* <div className="jspVerticalBar">
-                        <div className="jspCap jspCapTop" />
-                        <div className="jspTrack" style={{ height: '550px' }}>
-                            <div className="jspDrag" style={{ height: '261px' }}>
-                                <div className="jspDragTop" />
-                                <div className="jspDragBottom" />
-                            </div>
-                        </div>
-                        <div className="jspCap jspCapBottom" />
-                    </div> */}
                 </div>
             </div>
         </div>

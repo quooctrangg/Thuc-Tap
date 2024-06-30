@@ -1,14 +1,14 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import { deleteTypeVoucherService, deleteVoucherService, getAllTypeVoucher, getAllVoucher } from '../../../services/userService';
 import moment from 'moment';
-import { toast } from 'react-toastify';
-import { PAGINATION } from '../../../utils/constant';
 import ReactPaginate from 'react-paginate';
-import { Link } from "react-router-dom";
 import CommonUtils from '../../../utils/CommonUtils';
 import AddTypeVoucherModal from './AddTypeVoucherModal';
 import AddVoucherModal from './AddVoucherModal';
+import { useEffect, useState } from 'react';
+import { deleteTypeVoucherService, deleteVoucherService, getAllTypeVoucher, getAllVoucher } from '../../../services/userService';
+import { toast } from 'react-toastify';
+import { PAGINATION } from '../../../utils/constant';
+
 const ManageVoucher = () => {
     const [dataVoucher, setdataVoucher] = useState([])
     const [countVoucher, setCountVoucher] = useState(0)
@@ -132,33 +132,34 @@ const ManageVoucher = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataTypeVoucher && dataTypeVoucher.length > 0 ?
-                                        dataTypeVoucher.map((item, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{(numberTypeVoucherPage * 10) + index + 1}</td>
-                                                    <td>{item.typeVoucherData.value}</td>
-                                                    <td>{item.typeVoucher == "percent" ? item.value + "%" : CommonUtils.formatter.format(item.value)}</td>
-                                                    <td>{CommonUtils.formatter.format(item.minValue)}</td>
-                                                    <td>{CommonUtils.formatter.format(item.maxValue)}</td>
-                                                    <td style={{ display: 'flex', gap: 2 }}>
-                                                        <button onClick={() => {
-                                                            setCurrentTypeVoucher(item.id)
-                                                            hanldeShowAddTypeVoucherModal()
-                                                        }} className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                        <button className='btn btn-danger' onClick={() => handleDeleteTypeVoucher(item.id)} >Xóa</button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                        :
-                                        <tr>
-                                            <td colSpan={6} className='text-center text-red'>
-                                                Không có dữ liệu.
-                                            </td>
-                                        </tr>
+                                    {
+                                        dataTypeVoucher && dataTypeVoucher.length > 0 ?
+                                            dataTypeVoucher.map((item, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{(numberTypeVoucherPage * 10) + index + 1}</td>
+                                                        <td>{item.typeVoucherData.value}</td>
+                                                        <td>{item.typeVoucher == "percent" ? item.value + "%" : CommonUtils.formatter.format(item.value)}</td>
+                                                        <td>{CommonUtils.formatter.format(item.minValue)}</td>
+                                                        <td>{CommonUtils.formatter.format(item.maxValue)}</td>
+                                                        <td style={{ display: 'flex', gap: 2 }}>
+                                                            <button onClick={() => {
+                                                                setCurrentTypeVoucher(item.id)
+                                                                hanldeShowAddTypeVoucherModal()
+                                                            }} className='btn btn-warning'>
+                                                                Sửa
+                                                            </button>
+                                                            <button className='btn btn-danger' onClick={() => handleDeleteTypeVoucher(item.id)} >Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
+                                            :
+                                            <tr>
+                                                <td colSpan={6} className='text-center text-red'>
+                                                    Không có dữ liệu.
+                                                </td>
+                                            </tr>
                                     }
                                 </tbody>
                             </table>
@@ -216,36 +217,37 @@ const ManageVoucher = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataVoucher && dataVoucher.length > 0 ?
-                                        dataVoucher.map((item, index) => {
-                                            let name = `${item.typeVoucherOfVoucherData.value} ${item.typeVoucherOfVoucherData.typeVoucherData.value}`
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{(numberVoucherPage * 10) + index + 1}</td>
-                                                    <td>{item.codeVoucher}</td>
-                                                    <td>{name}</td>
-                                                    <td>{item.amount}</td>
-                                                    <td>{item.usedAmount}</td>
-                                                    <td>{moment.unix(item.fromDate / 1000).format('DD/MM/YYYY')}</td>
-                                                    <td>{moment.unix(item.toDate / 1000).format('DD/MM/YYYY')}</td>
-                                                    <td style={{ display: 'flex', gap: 2 }}>
-                                                        <button onClick={() => {
-                                                            setCurrentVoucher(item.id)
-                                                            hanldeShowAddVoucherModal()
-                                                        }} className='btn btn-warning'>
-                                                            Sửa
-                                                        </button>
-                                                        <button className='btn btn-danger' onClick={() => handleDeleteVoucher(item.id)} >Xóa</button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                        :
-                                        <tr>
-                                            <td colSpan={8} className='text-center text-red'>
-                                                Không có dữ liệu.
-                                            </td>
-                                        </tr>
+                                    {
+                                        dataVoucher && dataVoucher.length > 0 ?
+                                            dataVoucher.map((item, index) => {
+                                                let name = `${item.typeVoucherOfVoucherData.value} ${item.typeVoucherOfVoucherData.typeVoucherData.value}`
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{(numberVoucherPage * 10) + index + 1}</td>
+                                                        <td>{item.codeVoucher}</td>
+                                                        <td>{name}</td>
+                                                        <td>{item.amount}</td>
+                                                        <td>{item.usedAmount}</td>
+                                                        <td>{moment.unix(item.fromDate / 1000).format('DD/MM/YYYY')}</td>
+                                                        <td>{moment.unix(item.toDate / 1000).format('DD/MM/YYYY')}</td>
+                                                        <td style={{ display: 'flex', gap: 2 }}>
+                                                            <button onClick={() => {
+                                                                setCurrentVoucher(item.id)
+                                                                hanldeShowAddVoucherModal()
+                                                            }} className='btn btn-warning'>
+                                                                Sửa
+                                                            </button>
+                                                            <button className='btn btn-danger' onClick={() => handleDeleteVoucher(item.id)} >Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
+                                            :
+                                            <tr>
+                                                <td colSpan={8} className='text-center text-red'>
+                                                    Không có dữ liệu.
+                                                </td>
+                                            </tr>
                                     }
                                 </tbody>
                             </table>

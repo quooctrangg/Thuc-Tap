@@ -3,6 +3,7 @@ import CommonUtils from '../../utils/CommonUtils';
 import './VoucherItem.scss'
 
 function VoucherItem(props) {
+
     let handleSaveVoucher = () => {
         props.sendDataFromVoucherItem(props.id)
     }

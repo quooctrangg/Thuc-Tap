@@ -1,16 +1,14 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
+import FormSearch from '../../../component/Search/FormSearch';
+import AddBannerModal from './AddBannerModal';
+import Lightbox from 'react-image-lightbox';
 import { useEffect, useState } from 'react';
 import { getAllBanner, deleteBannerService } from '../../../services/userService';
 import { toast } from 'react-toastify';
-import Lightbox from 'react-image-lightbox';
+import { PAGINATION } from '../../../utils/constant';
 import 'react-image-lightbox/style.css';
 import './AddBannerModal.scss';
-import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../../utils/CommonUtils';
-import { Link } from "react-router-dom";
-import FormSearch from '../../../component/Search/FormSearch';
-import AddBannerModal from './AddBannerModal';
 
 const ManageBanner = () => {
     const [keyword, setkeyword] = useState('')
@@ -109,33 +107,34 @@ const ManageBanner = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataBanner && dataBanner.length > 0 ?
-                                    dataBanner.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.name}</td>
-                                                <td style={{ width: '30%' }} ><div onClick={() => openPreviewImage(item.image)} className="box-img-preview" style={{ backgroundImage: `url(${item.image})`, width: '100%' }}></div></td>
-                                                <td style={{ display: 'flex', gap: 2 }}>
-                                                    <button onClick={() => {
-                                                        setCurrent(item.id)
-                                                        handleShowAddBannerModal()
-                                                    }} className='btn btn-warning'>
-                                                        Sửa
-                                                    </button>
-                                                    <button className='btn btn-danger' onClick={() => handleDeleteBanner(item.id)} >
-                                                        Xóa
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={4} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                {
+                                    dataBanner && dataBanner.length > 0 ?
+                                        dataBanner.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.name}</td>
+                                                    <td style={{ width: '30%' }} ><div onClick={() => openPreviewImage(item.image)} className="box-img-preview" style={{ backgroundImage: `url(${item.image})`, width: '100%' }}></div></td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <button onClick={() => {
+                                                            setCurrent(item.id)
+                                                            handleShowAddBannerModal()
+                                                        }} className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                        <button className='btn btn-danger' onClick={() => handleDeleteBanner(item.id)} >
+                                                            Xóa
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={4} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>
@@ -165,9 +164,7 @@ const ManageBanner = () => {
             </div>
             {
                 isOpen === true &&
-                <Lightbox mainSrc={imgPreview}
-                    onCloseRequest={() => setisOpen(false)}
-                />
+                <Lightbox mainSrc={imgPreview} onCloseRequest={() => setisOpen(false)} />
             }
         </div >
     )

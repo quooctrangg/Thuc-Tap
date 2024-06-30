@@ -5,12 +5,13 @@ import './VoucherItemSmall.scss';
 
 function VoucherItemSmall(props) {
     const dispatch = useDispatch()
+
     let handleClickApplyVoucher = () => {
         try {
             dispatch(ChooseVoucherStart(props.data))
             props.closeModalFromVoucherItem()
         } catch (error) {
-
+            console.log(error);
         }
     }
 

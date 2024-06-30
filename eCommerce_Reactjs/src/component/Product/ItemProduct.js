@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import CommonUtils from '../../utils/CommonUtils';
+import { Link } from 'react-router-dom';
 import './ItemProduct.scss';
 
 function ItemProduct(props) {

@@ -132,7 +132,8 @@ const AddProductModal = props => {
                     <div className="form-group col-md-6">
                         <label htmlFor="inputEmail4">Danh mục sản phẩm</label>
                         <select value={inputValues.categoryId} name="categoryId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                            {dataCategory && dataCategory.length > 0 &&
+                            {
+                                dataCategory && dataCategory.length > 0 &&
                                 dataCategory.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>
@@ -144,7 +145,8 @@ const AddProductModal = props => {
                     <div className="form-group col-md-6">
                         <label htmlFor="inputPassword4">Nhãn hàng</label>
                         <select value={inputValues.brandId} name="brandId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                            {dataBrand && dataBrand.length > 0 &&
+                            {
+                                dataBrand && dataBrand.length > 0 &&
                                 dataBrand.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>
@@ -156,12 +158,7 @@ const AddProductModal = props => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="inputAddress">Mô tả sản phẩm</label>
-                    <MdEditor
-                        style={{ height: '400px' }}
-                        renderHTML={text => mdParser.render(text)}
-                        onChange={handleEditorChange}
-                        value={inputValues.contentMarkdown}
-                    />
+                    <MdEditor style={{ height: '400px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} value={inputValues.contentMarkdown} />
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-4">
@@ -197,7 +194,8 @@ const AddProductModal = props => {
                     <div className="form-group col-md-4">
                         <label htmlFor="inputEmail4">Kích thước</label>
                         <select value={inputValues.sizeId} name="sizeId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                            {dataSize && dataSize.length > 0 &&
+                            {
+                                dataSize && dataSize.length > 0 &&
                                 dataSize.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>
@@ -220,10 +218,9 @@ const AddProductModal = props => {
                 </div>
                 <button onClick={() => handleSaveProduct()} type="button" className="btn btn-primary">Thêm</button>
             </ModalBody>
-            {inputValues.isOpen === true &&
-                <Lightbox mainSrc={inputValues.imageReview}
-                    onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false })}
-                />
+            {
+                inputValues.isOpen === true &&
+                <Lightbox mainSrc={inputValues.imageReview} onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false })} />
             }
         </Modal>
     )

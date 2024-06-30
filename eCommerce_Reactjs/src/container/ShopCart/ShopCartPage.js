@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ShopCartItem from '../../component/ShopCart/ShopCartItem';
-import { useSelector, useDispatch } from 'react-redux';
-import { ChooseTypeShipStart, getItemCartStart } from '../../action/ShopCartAction'
 import storeVoucherLogo from '../../../src/resources/img/storeVoucher.png'
-import { getAllTypeShip, getAllAddressUserByUserIdService, createNewAddressUserrService } from '../../services/userService';
-import './ShopCartPage.scss';
-import VoucherModal from './VoucherModal';
-import { useHistory } from 'react-router-dom';
 import AddressUsersModal from './AdressUserModal';
-import { toast } from 'react-toastify';
+import VoucherModal from './VoucherModal';
 import CommonUtils from '../../utils/CommonUtils';
+import { useEffect, useState } from 'react';
+import { getAllTypeShip, getAllAddressUserByUserIdService, createNewAddressUserrService } from '../../services/userService';
+import { ChooseTypeShipStart, getItemCartStart } from '../../action/ShopCartAction'
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import './ShopCartPage.scss';
 
 function ShopCartPage(props) {
     const dispatch = useDispatch()
-    let history = useHistory();
+    const history = useHistory()
+
+    let dataCart = useSelector(state => state.shopcart.listCartItem)
+    let dataTypeShip = useSelector(state => state.shopcart.dataTypeShip)
+    let dataVoucher = useSelector(state => state.shopcart.dataVoucher)
+
     const [isOpenModal, setisOpenModal] = useState(false)
     const [isOpenModalAddressUser, setisOpenModalAddressUser] = useState(false)
     const [user, setuser] = useState()
     const [typeShip, settypeShip] = useState([])
-    let dataTypeShip = useSelector(state => state.shopcart.dataTypeShip)
-    let dataCart = useSelector(state => state.shopcart.listCartItem)
-    let dataVoucher = useSelector(state => state.shopcart.dataVoucher)
     const [priceShip, setpriceShip] = useState(0)
+
     let price = 0;
 
     useEffect(() => {
@@ -33,35 +37,36 @@ function ShopCartPage(props) {
             toast.error("Hãy đăng nhập để mua hàng")
             return;
         }
-        let fetchTypeShip = async () => {
-            let res = await getAllTypeShip({
-                limit: '',
-                offset: '',
-                keyword: ''
-            })
-            if (res && res.errCode === 0) {
-                settypeShip(res.data)
-            }
-        }
         fetchTypeShip()
         if (dataTypeShip && dataTypeShip.price) {
             setpriceShip(dataTypeShip.price)
         }
     }, [])
 
-    let closeModal = () => {
+    const fetchTypeShip = async () => {
+        let res = await getAllTypeShip({
+            limit: '',
+            offset: '',
+            keyword: ''
+        })
+        if (res && res.errCode === 0) {
+            settypeShip(res.data)
+        }
+    }
+
+    const closeModal = () => {
         setisOpenModal(false)
     }
 
-    let closeModaAddressUser = () => {
+    const closeModaAddressUser = () => {
         setisOpenModalAddressUser(false)
     }
 
-    let handleOpenModal = () => {
+    const handleOpenModal = () => {
         setisOpenModal(true)
     }
 
-    let handleOpenAddressUserModal = async () => {
+    const handleOpenAddressUserModal = async () => {
         if (dataCart.length === 0) return
         if (user && user.id) {
             let res = await getAllAddressUserByUserIdService(user.id)
@@ -75,7 +80,7 @@ function ShopCartPage(props) {
         }
     }
 
-    let totalPriceDiscount = (price, discount) => {
+    const totalPriceDiscount = (price, discount) => {
         if (discount.voucherData.typeVoucherOfVoucherData.typeVoucher === "percent") {
             if (((price * discount.voucherData.typeVoucherOfVoucherData.value) / 100) > discount.voucherData.typeVoucherOfVoucherData.maxValue) {
                 return price - discount.voucherData.typeVoucherOfVoucherData.maxValue
@@ -87,7 +92,7 @@ function ShopCartPage(props) {
         }
     }
 
-    let sendDataFromModalAddress = async (data) => {
+    const sendDataFromModalAddress = async (data) => {
         setisOpenModalAddressUser(false)
         let res = await createNewAddressUserrService({
             shipName: data.shipName,
@@ -104,11 +109,11 @@ function ShopCartPage(props) {
         }
     }
 
-    let closeModalFromVoucherItem = () => {
+    const closeModalFromVoucherItem = () => {
         setisOpenModal(false)
     }
 
-    let hanldeOnChangeTypeShip = (item) => {
+    const hanldeOnChangeTypeShip = (item) => {
         setpriceShip(item.price)
         dispatch(ChooseTypeShipStart(item))
     }
@@ -129,26 +134,28 @@ function ShopCartPage(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataCart && dataCart.length > 0 ?
-                                    dataCart.map((item, index) => {
-                                        price += item.quantity * item.productDetail.discountPrice
-                                        let name = `${item.productData.name} - ${item.productDetail.nameDetail} - ${item.productdetailsizeData.sizeData.value}`
-                                        return (
-                                            <ShopCartItem isOrder={false} productId={item.productData.id} id={item.id} userId={user && user.id} productdetailsizeId={item.productdetailsizeData.id} key={index} name={name} price={item.productDetail.discountPrice} quantity={item.quantity} image={item.productDetailImage[0].image} />
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colspan={5}>
-                                            <h4 className='text-center text-red'>Không có sản phẩm nào.</h4>
-                                        </td>
-                                    </tr>
+                                {
+                                    dataCart && dataCart.length > 0 ?
+                                        dataCart.map((item, index) => {
+                                            price += item.quantity * item.productDetail.discountPrice
+                                            let name = `${item.productData.name} - ${item.productDetail.nameDetail} - ${item.productdetailsizeData.sizeData.value}`
+                                            return (
+                                                <ShopCartItem isOrder={false} productId={item.productData.id} id={item.id} userId={user && user.id} productdetailsizeId={item.productdetailsizeData.id} key={index} name={name} price={item.productDetail.discountPrice} quantity={item.quantity} image={item.productDetailImage[0].image} />
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colspan={5}>
+                                                <h4 className='text-center text-red'>Không có sản phẩm nào.</h4>
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
-                {dataCart && dataCart.length !== 0 &&
+                {
+                    dataCart && dataCart.length !== 0 &&
                     <>
                         <div className="box-shipping">
                             <h6>

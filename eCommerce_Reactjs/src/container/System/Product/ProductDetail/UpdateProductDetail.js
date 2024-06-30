@@ -2,14 +2,19 @@ import React from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { UpdateProductDetailService, getProductDetailByIdService } from '../../../../services/userService';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateProductDetailModal = props => {
     const [productDetailId, setProductDetailId] = useState(null)
     const [inputValues, setInputValues] = useState({
-        originalPrice: '', discountPrice: '',
-        image: '', imageReview: '', isOpen: false, nameDetail: '', description: ''
+        originalPrice: '',
+        discountPrice: '',
+        image: '',
+        imageReview: '',
+        isOpen: false,
+        nameDetail: '',
+        description: ''
     });
 
     useEffect(() => {

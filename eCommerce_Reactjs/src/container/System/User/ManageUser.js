@@ -1,11 +1,11 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
+import FormSearch from '../../../component/Search/FormSearch';
+import AddUserModal from './AddUserModal';
 import { useEffect, useState } from 'react';
 import { getAllUsers, banUserService, unBanUserService } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import FormSearch from '../../../component/Search/FormSearch';
-import AddUserModal from './AddUserModal';
 
 const ManageUser = () => {
     const [dataUser, setdataUser] = useState([]);
@@ -107,56 +107,56 @@ const ManageUser = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataUser && dataUser.length > 0 ?
-                                    dataUser.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.email}</td>
-                                                <td>{`${item.firstName ? item.firstName : ''} ${item.lastName ? item.lastName : ''}`}</td>
-                                                <td>{item.phonenumber}</td>
-                                                <td>{item.genderData.value}</td>
-                                                <td>
-                                                    {
-                                                        item.statusId == 'S1' ?
-                                                            <p className='text-primary'>
-                                                                Hoạt động
-                                                            </p>
-                                                            :
-                                                            <p className='text-red'>
-                                                                Đã khóa
-                                                            </p>
-                                                    }
-                                                </td>
-                                                <td style={{ display: 'flex', gap: 2 }}>
-                                                    <button onClick={() => {
-                                                        setCurrentUser(item.id)
-                                                        handleShowAddUserModal()
-                                                    }} className='btn btn-warning'>
-                                                        Sửa
-                                                    </button>
-                                                    {/* <a href="#" onClick={(event) => handleBanUser(event, item.id)} >Delete</a> */}
-                                                    {
-                                                        item.statusId == 'S1' ?
-                                                            <button onClick={(event) => handleBanUser(event, item.id)} className='btn btn-danger' >
-                                                                Khóa
-                                                            </button>
-                                                            :
-                                                            <button onClick={(event) => handleUnBanUser(event, item.id)} className='btn btn-success' >
-                                                                Mở khóa
-                                                            </button>
+                                {
+                                    dataUser && dataUser.length > 0 ?
+                                        dataUser.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.email}</td>
+                                                    <td>{`${item.firstName ? item.firstName : ''} ${item.lastName ? item.lastName : ''}`}</td>
+                                                    <td>{item.phonenumber}</td>
+                                                    <td>{item.genderData.value}</td>
+                                                    <td>
+                                                        {
+                                                            item.statusId == 'S1' ?
+                                                                <p className='text-primary'>
+                                                                    Hoạt động
+                                                                </p>
+                                                                :
+                                                                <p className='text-red'>
+                                                                    Đã khóa
+                                                                </p>
+                                                        }
+                                                    </td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <button onClick={() => {
+                                                            setCurrentUser(item.id)
+                                                            handleShowAddUserModal()
+                                                        }} className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                        {
+                                                            item.statusId == 'S1' ?
+                                                                <button onClick={(event) => handleBanUser(event, item.id)} className='btn btn-danger' >
+                                                                    Khóa
+                                                                </button>
+                                                                :
+                                                                <button onClick={(event) => handleUnBanUser(event, item.id)} className='btn btn-success' >
+                                                                    Mở khóa
+                                                                </button>
 
-                                                    }
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={8} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={8} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

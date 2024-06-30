@@ -1,19 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import './StoreVoucher.scss';
+import React from 'react';
 import VoucherItemSmall from './VoucherItemSmall';
-import { getAllVoucherByUserIdService } from '../../services/userService';
 import moment from 'moment';
-import { PAGINATION } from '../../utils/constant';
 import CommonUtils from '../../utils/CommonUtils';
-function StoreVoucher(props) {
-    const [inputValues, setInputValues] = useState({
-        codeVoucher: '', activeBtn: false
-    });
-    const [dataVoucher, setdataVoucher] = useState([])
-    const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState(0)
+import { useState, useEffect } from 'react'
+import { getAllVoucherByUserIdService } from '../../services/userService';
+import './StoreVoucher.scss';
 
-    function compareDates(d1, d2) {
+function StoreVoucher(props) {
+    const [dataVoucher, setdataVoucher] = useState([])
+    const [userId, setUserId] = useState(null)
+
+    useEffect(() => {
+        setUserId(props.id)
+    })
+
+    useEffect(() => {
+        if (userId) {
+            fetchData(userId)
+        }
+    }, [userId])
+
+    const fetchData = async (id) => {
+        let arrData = await getAllVoucherByUserIdService({
+            limit: '',
+            offset: '',
+            id: id
+        })
+        let arrTemp = []
+        if (arrData && arrData.errCode === 0) {
+            let nowDate = moment.unix(Date.now() / 1000).format('DD/MM/YYYY')
+            for (let i = 0; i < arrData.data.length; i++) {
+                let fromDate = moment.unix(arrData.data[i].voucherData.fromDate / 1000).format('DD/MM/YYYY')
+                let toDate = moment.unix(arrData.data[i].voucherData.toDate / 1000).format('DD/MM/YYYY')
+                let amount = arrData.data[i].voucherData.amount
+                let usedAmount = arrData.data[i].voucherData.usedAmount
+                if (amount !== usedAmount && compareDates(toDate, nowDate) === false && compareDates(fromDate, nowDate) === true) {
+                    arrTemp[i] = arrData.data[i]
+                }
+            }
+            setdataVoucher(arrTemp)
+        }
+    }
+
+    const compareDates = (d1, d2) => {
         var parts = d1.split('/');
         var d1 = Number(parts[2] + parts[1] + parts[0]);
         parts = d2.split('/');
@@ -21,35 +50,6 @@ function StoreVoucher(props) {
         if (d1 <= d2) return true
         if (d1 >= d2) return false
     }
-    useEffect(() => {
-        let id = props.id
-        if (id) {
-            let fetchData = async () => {
-                let arrData = await getAllVoucherByUserIdService({
-                    limit: PAGINATION.pagerow,
-                    offset: 0,
-                    id: props.id
-                })
-                let arrTemp = []
-                if (arrData && arrData.errCode === 0) {
-                    let nowDate = moment.unix(Date.now() / 1000).format('DD/MM/YYYY')
-
-                    for (let i = 0; i < arrData.data.length; i++) {
-                        let fromDate = moment.unix(arrData.data[i].voucherData.fromDate / 1000).format('DD/MM/YYYY')
-                        let toDate = moment.unix(arrData.data[i].voucherData.toDate / 1000).format('DD/MM/YYYY')
-                        let amount = arrData.data[i].voucherData.amount
-                        let usedAmount = arrData.data[i].voucherData.usedAmount
-                        if (amount !== usedAmount && compareDates(toDate, nowDate) === false && compareDates(fromDate, nowDate) === true) {
-                            arrTemp[i] = arrData.data[i]
-                        }
-                    }
-                    setdataVoucher(arrTemp)
-                    setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-                }
-            }
-            fetchData()
-        }
-    }, [props.id])
 
     return (
         <div className="container rounded bg-white mt-5 mb-5">
@@ -61,7 +61,8 @@ function StoreVoucher(props) {
                         </div>
                     </div>
                     <div className="container-voucher">
-                        {dataVoucher && dataVoucher.length > 0 &&
+                        {
+                            dataVoucher && dataVoucher.length > 0 &&
                             dataVoucher.map((item, index) => {
                                 let percent = ""
                                 if (item.voucherData.typeVoucherOfVoucherData.typeVoucher === "percent") {

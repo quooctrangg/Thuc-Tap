@@ -1,9 +1,9 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
+import CommonUtils from '../../../utils/CommonUtils';
 import { useEffect, useState } from 'react';
 import { getStatisticStockProduct } from '../../../services/userService';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../../utils/CommonUtils';
 
 const StockProduct = () => {
     const [dataStockProduct, setdataStockProduct] = useState([])
@@ -11,24 +11,17 @@ const StockProduct = () => {
     const [numberPage, setnumberPage] = useState(0)
 
     useEffect(() => {
-        loadStockProduct()
+        fetchData()
     }, [numberPage])
 
-    let loadStockProduct = () => {
-        try {
-            let fetchData = async () => {
-                let arrData = await getStatisticStockProduct({
-                    limit: PAGINATION.pagerow,
-                    offset: numberPage * PAGINATION.pagerow,
-                })
-                if (arrData && arrData.errCode === 0) {
-                    setdataStockProduct(arrData.data)
-                    setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-                }
-            }
-            fetchData();
-        } catch (error) {
-            console.log(error)
+    let fetchData = async () => {
+        let arrData = await getStatisticStockProduct({
+            limit: PAGINATION.pagerow,
+            offset: numberPage * PAGINATION.pagerow,
+        })
+        if (arrData && arrData.errCode === 0) {
+            setdataStockProduct(arrData.data)
+            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
     }
 
@@ -73,26 +66,27 @@ const StockProduct = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataStockProduct && dataStockProduct.length > 0 ?
-                                    dataStockProduct.map((item, index) => {
-                                        let name = `${item.productdData.name} - ${item.productDetaildData.nameDetail} - ${item.sizeData.value}`
-                                        return (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{name}</td>
-                                                <td>{item.productdData.categoryData.value}</td>
-                                                <td>{item.productdData.brandData.value}</td>
-                                                <td>{item.productdData.material}</td>
-                                                <td>{item.stock}</td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={6} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                {
+                                    dataStockProduct && dataStockProduct.length > 0 ?
+                                        dataStockProduct.map((item, index) => {
+                                            let name = `${item.productdData.name} - ${item.productDetaildData.nameDetail} - ${item.sizeData.value}`
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{name}</td>
+                                                    <td>{item.productdData.categoryData.value}</td>
+                                                    <td>{item.productdData.brandData.value}</td>
+                                                    <td>{item.productdData.material}</td>
+                                                    <td>{item.stock}</td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={6} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

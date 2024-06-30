@@ -1,34 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    getAllAddressUserByUserIdService, createNewAddressUserrService, getAllTypeShip, createNewOrderService
-    , paymentOrderService, getExchangeRate
-} from '../../services/userService';
-import './OrderHomePage.scss';
+import React from 'react';
 import AddressUsersModal from '../ShopCart/AdressUserModal';
-import { ChooseTypeShipStart, getItemCartStart } from '../../action/ShopCartAction'
-import { toast } from 'react-toastify';
 import storeVoucherLogo from '../../../src/resources/img/storeVoucher.png'
 import ShopCartItem from '../../component/ShopCart/ShopCartItem';
 import VoucherModal from '../ShopCart/VoucherModal';
 import CommonUtils from '../../utils/CommonUtils';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react'
+import { getAllAddressUserByUserIdService, createNewAddressUserrService, getAllTypeShip, createNewOrderService, paymentOrderService, getExchangeRate } from '../../services/userService';
 import { EXCHANGE_RATES } from '../../utils/constant'
+import { ChooseTypeShipStart, getItemCartStart } from '../../action/ShopCartAction'
+import { toast } from 'react-toastify';
+import './OrderHomePage.scss';
 
 function OrderHomePage(props) {
     const dispatch = useDispatch()
-    const [dataAddressUser, setdataAddressUser] = useState([])
-    const { userId } = useParams()
-    let history = useHistory()
-    const [addressUserId, setaddressUserId] = useState('')
-    const [setratesData] = useState([])
-    const [priceShip, setpriceShip] = useState(0)
-    let price = 0;
-    let total = 0;
-    const [stt, setstt] = useState(0)
+    const history = useHistory()
+
     let dataCart = useSelector(state => state.shopcart.listCartItem)
     let dataVoucher = useSelector(state => state.shopcart.dataVoucher)
     let dataTypeShip = useSelector(state => state.shopcart.dataTypeShip)
+
+    const [dataAddressUser, setdataAddressUser] = useState([])
+    const { userId } = useParams()
+    const [addressUserId, setaddressUserId] = useState('')
+    const [setratesData] = useState([])
+    const [priceShip, setpriceShip] = useState(0)
+    const [stt, setstt] = useState(0)
     const [isChangeAdress, setisChangeAdress] = useState(false)
     const [isOpenModalAddressUser, setisOpenModalAddressUser] = useState(false)
     const [isOpenModal, setisOpenModal] = useState(false)
@@ -37,22 +35,12 @@ function OrderHomePage(props) {
     const [activeTypeOnlPayment, setactiveTypeOnlPayment] = useState(1)
     const [note, setnote] = useState('');
 
+    let total = 0;
+    let price = 0;
+
     useEffect(() => {
         dispatch(getItemCartStart(userId))
-        let fetchDataAddress = async () => {
-            await loadDataAddress(userId)
-        }
         fetchDataAddress()
-        let fetchTypeShip = async () => {
-            let res = await getAllTypeShip({
-                limit: '',
-                offset: '',
-                keyword: ''
-            })
-            if (res && res.errCode === 0) {
-                settypeShip(res.data)
-            }
-        }
         fetchTypeShip()
         fetchExchangeRate()
         if (dataTypeShip && dataTypeShip.price) {
@@ -60,6 +48,21 @@ function OrderHomePage(props) {
         }
         backToShop()
     }, [])
+
+    let fetchDataAddress = async () => {
+        await loadDataAddress(userId)
+    }
+
+    let fetchTypeShip = async () => {
+        let res = await getAllTypeShip({
+            limit: '',
+            offset: '',
+            keyword: ''
+        })
+        if (res && res.errCode === 0) {
+            settypeShip(res.data)
+        }
+    }
 
     let loadDataAddress = async (userId) => {
         let res = await getAllAddressUserByUserIdService(userId)
@@ -232,7 +235,8 @@ function OrderHomePage(props) {
                                 <i className="fas fa-map-marker-alt"></i>
                                 <span>Địa Chỉ Nhận Hàng</span>
                             </div>
-                            {isChangeAdress === true &&
+                            {
+                                isChangeAdress === true &&
                                 <div className="content-right">
                                     <div className="wrap-add-address">
                                         <i className="fas fa-plus"></i>
@@ -242,47 +246,51 @@ function OrderHomePage(props) {
                             }
                         </div>
                         <div className="content-down">
-                            {isChangeAdress === false ?
-                                <>
-                                    <div className="content-left">
-                                        <span>{dataAddressUser && dataAddressUser.length > 0 && dataAddressUser[stt].shipName} ({dataAddressUser && dataAddressUser.length > 0 && dataAddressUser[0].shipPhonenumber})</span>
-                                    </div>
-                                    <div className="content-center">
-                                        <span>
-                                            {dataAddressUser && dataAddressUser.length > 0 && dataAddressUser[stt].shipAdress}
-                                        </span>
-                                    </div>
-                                </>
-                                :
-                                <div>
-                                    {dataAddressUser && dataAddressUser.length > 0 && dataAddressUser.map((item, index) => {
-                                        return (
-                                            <div key={index} className="form-check ">
-                                                <input className="form-check-input" checked={item.id === addressUserId ? true : false} onChange={() => handleOnChange(item.id, index)} type="radio" name="addressRadios" id={`addressRadios${index}`} />
-                                                <label className="form-check-label wrap-radio-address" for={`addressRadios${index}`}>
-                                                    <div className="content-left">
-                                                        <span>{item.shipName} ({item.shipPhonenumber})</span>
+                            {
+                                isChangeAdress === false ?
+                                    <>
+                                        <div className="content-left">
+                                            <span>{dataAddressUser && dataAddressUser.length > 0 && dataAddressUser[stt].shipName} ({dataAddressUser && dataAddressUser.length > 0 && dataAddressUser[0].shipPhonenumber})</span>
+                                        </div>
+                                        <div className="content-center">
+                                            <span>
+                                                {dataAddressUser && dataAddressUser.length > 0 && dataAddressUser[stt].shipAdress}
+                                            </span>
+                                        </div>
+                                    </>
+                                    :
+                                    <div>
+                                        {
+                                            dataAddressUser && dataAddressUser.length > 0 && dataAddressUser.map((item, index) => {
+                                                return (
+                                                    <div key={index} className="form-check ">
+                                                        <input className="form-check-input" checked={item.id === addressUserId ? true : false} onChange={() => handleOnChange(item.id, index)} type="radio" name="addressRadios" id={`addressRadios${index}`} />
+                                                        <label className="form-check-label wrap-radio-address" for={`addressRadios${index}`}>
+                                                            <div className="content-left">
+                                                                <span>{item.shipName} ({item.shipPhonenumber})</span>
+                                                            </div>
+                                                            <div className="content-center">
+                                                                <span>
+                                                                    {item.shipAdress}
+                                                                </span>
+                                                            </div>
+                                                        </label>
                                                     </div>
-                                                    <div className="content-center">
-                                                        <span>
-                                                            {item.shipAdress}
-                                                        </span>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                        )
-                                    })
-                                    }
-                                </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
                             }
                             <div className="content-right">
                                 <span className="text-default">Mặc định</span>
-                                {isChangeAdress === false &&
+                                {
+                                    isChangeAdress === false &&
                                     <span onClick={() => setisChangeAdress(true)} className="text-change">Thay đổi</span>
                                 }
                             </div>
                         </div>
-                        {isChangeAdress === true &&
+                        {
+                            isChangeAdress === true &&
                             <div className="box-action">
                                 <div onClick={() => setisChangeAdress(false)} className="wrap-back">
                                     <span >Trở về</span>
@@ -306,7 +314,8 @@ function OrderHomePage(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dataCart && dataCart.length > 0 &&
+                                            {
+                                                dataCart && dataCart.length > 0 &&
                                                 dataCart.map((item, index) => {
                                                     price += item.quantity * item.productDetail.discountPrice
                                                     let name = `${item.productData.name} - ${item.productDetail.nameDetail} - ${item.productdetailsizeData.sizeData.value}`
@@ -324,7 +333,8 @@ function OrderHomePage(props) {
                                     Chọn đơn vị vận chuyển
                                 </h6>
                                 <div>
-                                    {typeShip && typeShip.length > 0 &&
+                                    {
+                                        typeShip && typeShip.length > 0 &&
                                         typeShip.map((item, index) => {
                                             return (
                                                 <div key={index} className="form-check">
@@ -344,7 +354,8 @@ function OrderHomePage(props) {
                                         <img width="20px" height="20px" style={{ marginLeft: "-3px" }} src={storeVoucherLogo}></img>
                                         <span className="name-easier">Jolido voucher</span>
                                         <span onClick={() => handleOpenModal()} className="choose-voucher">Chọn Mã</span>
-                                        {dataVoucher && dataVoucher.voucherData &&
+                                        {
+                                            dataVoucher && dataVoucher.voucherData &&
                                             <span className="choose-voucher">Mã voucher: {dataVoucher.voucherData.codeVoucher}</span>
                                         }
                                     </div>
@@ -370,7 +381,8 @@ function OrderHomePage(props) {
                             <div onClick={() => setactiveTypePayment(1)} className={activeTypePayment === 1 ? 'box-type-payment active' : 'box-type-payment'}>Thanh toán Online</div>
                             <div onClick={() => setactiveTypePayment(0)} className={activeTypePayment === 0 ? 'box-type-payment active' : 'box-type-payment'}>Thanh toán khi nhận hàng</div>
                         </div>
-                        {activeTypePayment != 0 &&
+                        {
+                            activeTypePayment != 0 &&
                             <div className='box-payment'>
                                 <div onClick={() => setactiveTypeOnlPayment(1)} className={activeTypeOnlPayment === 1 ? 'box-type-payment activeOnl' : 'box-type-payment'}>Thanh toán PAYPAL</div>
                                 <div onClick={() => setactiveTypeOnlPayment(2)} className={activeTypeOnlPayment === 2 ? 'box-type-payment activeOnl' : 'box-type-payment'}>Thanh toán VNPAY</div>

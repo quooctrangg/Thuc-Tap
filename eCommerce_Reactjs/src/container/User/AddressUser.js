@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import AddressUsersModal from '../ShopCart/AdressUserModal';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getAllAddressUserByUserIdService, createNewAddressUserrService, deleteAddressUserService, editAddressUserService } from '../../services/userService';
-import AddressUsersModal from '../ShopCart/AdressUserModal';
 import './AddressUser.scss';
 
 function AddressUser(props) {
     const [dataAddressUser, setdataAddressUser] = useState([])
     const [addressUserId, setaddressUserId] = useState('')
     const [isOpenModalAddressUser, setisOpenModalAddressUser] = useState(false)
+    const [userId, setUserId] = useState(null)
 
     useEffect(() => {
-        let userId = props.id
+        setUserId(props.id)
+    })
+
+    useEffect(() => {
         if (userId) {
-            let fetchDataAddress = async () => {
-                let res = await getAllAddressUserByUserIdService(userId)
-                if (res && res.errCode === 0) {
-                    setdataAddressUser(res.data)
-                }
-            }
-            fetchDataAddress()
+            fetchDataAddress(userId)
         }
-    }, [])
+    }, [userId])
+
+    let fetchDataAddress = async (userId) => {
+        let res = await getAllAddressUserByUserIdService(userId)
+        if (res && res.errCode === 0) {
+            setdataAddressUser(res.data)
+        }
+    }
 
     let sendDataFromModalAddress = async (data) => {
         if (data.isActionUpdate === false) {
@@ -111,7 +117,8 @@ function AddressUser(props) {
                             </div>
                         </div>
                     </div>
-                    {dataAddressUser && dataAddressUser.length > 0 &&
+                    {
+                        dataAddressUser && dataAddressUser.length > 0 &&
                         dataAddressUser.map((item, index) => {
                             return (
                                 <div key={index} className="box-address-user">

@@ -1,16 +1,14 @@
 import React from 'react';
+import CommonUtils from '../../../utils/CommonUtils';
 import { Modal, ModalBody } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import { createNewBannerService, getDetailBannerByIdService, updateBannerService } from '../../../services/userService';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './AddBannerModal.scss';
-import CommonUtils from '../../../utils/CommonUtils';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddBannerModal = props => {
-    const [inputValues, setInputValues] = useState({
-        name: '', description: '', image: '', imageReview: '', isOpen: false,
-    });
+    const [inputValues, setInputValues] = useState({ name: '', description: '', image: '', imageReview: '', isOpen: false, });
     const [bannerId, setBannerId] = useState(null)
 
     useEffect(() => {

@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import DeleteShopCartModal from '../../container/ShopCart/DeleteShopCartModal';
+import CommonUtils from '../../utils/CommonUtils';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getItemCartStart } from '../../action/ShopCartAction';
 import { addShopCartService, deleteItemShopCartService } from '../../services/userService';
-import DeleteShopCartModal from '../../container/ShopCart/DeleteShopCartModal';
-import CommonUtils from '../../utils/CommonUtils';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react'
 
 function ShopCartItem(props) {
+    const dispatch = useDispatch()
+
     const [quantity, setquantity] = useState('')
     const [isOpenModal, setisOpenModal] = useState(false)
-    const dispatch = useDispatch()
+
+    useEffect(() => {
+        setquantity(props.quantity)
+    })
 
     let handleOnChange = async (event) => {
         setquantity(event.target.value)
@@ -33,10 +39,6 @@ function ShopCartItem(props) {
             }
         }
     }
-
-    useEffect(() => {
-        setquantity(props.quantity)
-    })
 
     let closeModal = () => {
         setisOpenModal(false)
@@ -73,18 +75,20 @@ function ShopCartItem(props) {
                 <h5 >{CommonUtils.formatter.format(props.price)}</h5>
             </td>
             <td style={{ textAlign: 'center' }}>
-                {props.isOrder === true ? <span>{quantity}</span>
-                    :
-                    <div className="product_count">
-                        <input type="number" name="qty" id="sst" value={quantity}
-                            title="Quantity:" className="input-text qty" min="0" onChange={(event) => handleOnChange(event)} />
-                    </div>
+                {
+                    props.isOrder === true ? <span>{quantity}</span>
+                        :
+                        <div className="product_count">
+                            <input type="number" name="qty" id="sst" value={quantity}
+                                title="Quantity:" className="input-text qty" min="0" onChange={(event) => handleOnChange(event)} />
+                        </div>
                 }
             </td>
             <td style={{ textAlign: 'center' }}>
                 <h5 style={{ color: '#71cd14' }}>{CommonUtils.formatter.format(quantity * props.price)}</h5>
             </td>
-            {props.isOrder === false &&
+            {
+                props.isOrder === false &&
                 <>
                     <td className="link-delete" onClick={() => setisOpenModal(true)}>Xóa</td>
                     <DeleteShopCartModal handleDeleteShopCart={handleDeleteShopCart} name={props.name} isOpenModal={isOpenModal}

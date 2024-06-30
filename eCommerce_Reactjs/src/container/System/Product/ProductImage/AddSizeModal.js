@@ -1,23 +1,20 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import 'react-image-lightbox/style.css';
 import { useFetchAllcode } from '../../../customize/fetch';
 import { Modal, ModalFooter, ModalBody, Button } from 'reactstrap';
 import { UpdateProductDetailSizeService, createNewProductSizeService, getProductDetailSizeByIdService } from '../../../../services/userService';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import 'react-image-lightbox/style.css';
 
 const AddSizeModal = (props) => {
     const { id } = useParams()
+
     const { data: dataSize } = useFetchAllcode('SIZE')
+
     const [inputValues, setInputValues] = useState({ sizeId: '', width: '', height: '', id: '', weight: '' });
     const [productSizeId, setProductSizeId] = useState(null)
-
-    const handleOnChange = event => {
-        const { name, value } = event.target;
-        setInputValues({ ...inputValues, [name]: value });
-    };
 
     if (dataSize && dataSize.length > 0 && inputValues.sizeId === '') {
         setInputValues({ ...inputValues, ["sizeId"]: dataSize[0].code })
@@ -40,6 +37,11 @@ const AddSizeModal = (props) => {
             })
         }
     }, [productSizeId])
+
+    const handleOnChange = event => {
+        const { name, value } = event.target;
+        setInputValues({ ...inputValues, [name]: value });
+    };
 
     let fetchDetailProductSize = async (id) => {
         let res = await getProductDetailSizeByIdService(id)
@@ -114,7 +116,8 @@ const AddSizeModal = (props) => {
                         <div className="col-12 form-group">
                             <label>Kích thước</label>
                             <select value={inputValues.sizeId} name="sizeId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                                {dataSize && dataSize.length > 0 &&
+                                {
+                                    dataSize && dataSize.length > 0 &&
                                     dataSize.map((item, index) => {
                                         return (
                                             <option key={index} value={item.code}>{item.value}</option>

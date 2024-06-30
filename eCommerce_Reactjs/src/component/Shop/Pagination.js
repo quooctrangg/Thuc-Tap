@@ -2,6 +2,7 @@ import React from 'react';
 
 function Pagination(props) {
     var item = [];
+
     for (var i = 0; i < props.amountPage; i++) {
         item.push(<li className="page-item" key={i + 1}><a className="page-link" href="#">{i + 1}</a></li>);
     }

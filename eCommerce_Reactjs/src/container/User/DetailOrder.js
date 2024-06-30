@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import storeVoucherLogo from '../../../src/resources/img/storeVoucher.png'
+import CommonUtils from '../../utils/CommonUtils';
+import ShopCartItem from '../../component/ShopCart/ShopCartItem';
 import { useParams } from 'react-router-dom';
 import { getDetailOrder } from '../../services/userService';
 import './DetailOrder.scss'
-import storeVoucherLogo from '../../../src/resources/img/storeVoucher.png'
-import ShopCartItem from '../../component/ShopCart/ShopCartItem';
-import CommonUtils from '../../utils/CommonUtils';
 import 'react-image-lightbox/style.css';
+
 function DetailOrder(props) {
-    let price = 0;
     const { orderId } = useParams();
+
     const [DataOrder, setDataOrder] = useState({});
     const [priceShip, setpriceShip] = useState(0)
 
+    let price = 0;
+
     useEffect(() => {
-        loadDataOrder()
+        if (orderId) {
+            fetchOrder(orderId)
+        }
     }, [])
 
-    let loadDataOrder = () => {
-        if (orderId) {
-            let fetchOrder = async () => {
-                let order = await getDetailOrder(orderId)
-                if (order && order.errCode == 0) {
-                    setDataOrder(order.data)
-                    setpriceShip(order.data.typeShipData.price)
-                }
-            }
-            fetchOrder()
+    let fetchOrder = async (orderId) => {
+        let order = await getDetailOrder(orderId)
+        if (order && order.errCode == 0) {
+            setDataOrder(order.data)
+            setpriceShip(order.data.typeShipData.price)
         }
     }
 
@@ -56,7 +56,8 @@ function DetailOrder(props) {
                         </div>
                     </div>
                     <div className="content-down">
-                        {DataOrder && DataOrder.addressUser &&
+                        {
+                            DataOrder && DataOrder.addressUser &&
                             <>
                                 <div className="content-left">
                                     <span>{DataOrder.addressUser.shipName} ({DataOrder.addressUser.shipPhonenumber})</span>
@@ -86,7 +87,8 @@ function DetailOrder(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {DataOrder.orderDetail && DataOrder.orderDetail.length > 0 &&
+                                        {
+                                            DataOrder.orderDetail && DataOrder.orderDetail.length > 0 &&
                                             DataOrder.orderDetail.map((item, index) => {
                                                 price += item.quantity * item.realPrice
                                                 let name = `${item.product.name} - ${item.productDetail.nameDetail} - ${item.productDetailSize.sizeData.value}`
@@ -140,7 +142,8 @@ function DetailOrder(props) {
                     <div className='box-type-payment active'>{DataOrder.statusOrderData && DataOrder.statusOrderData.value}</div>
                 </div>
                 <div className="content-bottom">
-                    {DataOrder && DataOrder.addressUser &&
+                    {
+                        DataOrder && DataOrder.addressUser &&
                         <div className="wrap-bottom">
                             <div className="box-flex">
                                 <div className="head">Tên khách hàng</div>

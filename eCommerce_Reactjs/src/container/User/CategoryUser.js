@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, } from "react-router-dom";
 import orderLogo from '../../../src/resources/img/orderLogo.png'
 import storeVoucherLogo from '../../../src/resources/img/storeVoucher.png'
+import { Link, } from "react-router-dom";
 
 function CategoryUser(props) {
     return (

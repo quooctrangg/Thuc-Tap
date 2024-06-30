@@ -7,9 +7,8 @@ import { createNewReceiptService, getAllSupplier } from '../../../services/userS
 const AddReceiptModal = props => {
     const [user, setUser] = useState({})
     const [dataSupplier, setdataSupplier] = useState([])
-    const [inputValues, setInputValues] = useState({
-        supplierId: '', billNumber: ''
-    });
+    const [inputValues, setInputValues] = useState({ supplierId: '', billNumber: '' });
+
     if (dataSupplier.length && inputValues.supplierId == '') {
         setInputValues({ ...inputValues, ["supplierId"]: dataSupplier[0].id, })
     }
@@ -75,7 +74,8 @@ const AddReceiptModal = props => {
                         <div className="mb-3">
                             <label htmlFor="supplierId">Nhà cung cấp</label>
                             <select value={inputValues.supplierId} name="supplierId" onChange={(event) => handleOnChange(event)} id="supplierId" className="form-control">
-                                {dataSupplier && dataSupplier.length > 0 &&
+                                {
+                                    dataSupplier && dataSupplier.length > 0 &&
                                     dataSupplier.map((item, index) => {
                                         return (
                                             <option key={index} value={item.id}>{item.name}</option>

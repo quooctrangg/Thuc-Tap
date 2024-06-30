@@ -1,15 +1,14 @@
 import React from "react";
 import { useState } from 'react';
-import './ChangePassword.scss';
 import { handleChangePassword } from '../../../services/userService';
 import { toast } from "react-toastify";
 import { useParams } from "react-router";
+import './ChangePassword.scss';
 
 const ChangePassword = () => {
     const { id } = useParams()
-    const [inputValues, setInputValues] = useState({
-        newpassword: '', confirmpassword: '', oldpassword: ''
-    });
+
+    const [inputValues, setInputValues] = useState({ newpassword: '', confirmpassword: '', oldpassword: '' });
 
     const handleOnChange = event => {
         const { name, value } = event.target;

@@ -1,13 +1,12 @@
 import React from 'react';
+import CommonUtils from '../../../utils/CommonUtils';
+import ReactPaginate from 'react-paginate';
+import FormSearch from '../../../component/Search/FormSearch';
+import AddTypeShipModal from './AddTypeShipModal';
 import { useEffect, useState } from 'react';
 import { deleteTypeShipService, getAllTypeShip } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../../utils/CommonUtils';
-import { Link } from "react-router-dom";
-import FormSearch from '../../../component/Search/FormSearch';
-import AddTypeShipModal from './AddTypeShipModal';
 
 const ManageTypeShip = () => {
     const [dataTypeShip, setdataTypeShip] = useState([])
@@ -97,31 +96,32 @@ const ManageTypeShip = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataTypeShip && dataTypeShip.length > 0 ?
-                                    dataTypeShip.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.type}</td>
-                                                <td>{CommonUtils.formatter.format(item.price)}</td>
-                                                <td style={{ display: 'flex', gap: 2 }}>
-                                                    <button onClick={() => {
-                                                        setCurrent(item.id)
-                                                        handleShowAddTypeShipModal()
-                                                    }} className='btn btn-warning'>
-                                                        Sửa
-                                                    </button>
-                                                    <button className='btn btn-danger' onClick={() => handleDeleteTypeShip(item.id)}>Xóa</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={4} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                {
+                                    dataTypeShip && dataTypeShip.length > 0 ?
+                                        dataTypeShip.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.type}</td>
+                                                    <td>{CommonUtils.formatter.format(item.price)}</td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <button onClick={() => {
+                                                            setCurrent(item.id)
+                                                            handleShowAddTypeShipModal()
+                                                        }} className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                        <button className='btn btn-danger' onClick={() => handleDeleteTypeShip(item.id)}>Xóa</button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={4} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

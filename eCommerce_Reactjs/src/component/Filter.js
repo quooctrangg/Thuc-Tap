@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import jsrecommender from 'js-recommender'
+import { useEffect } from 'react'
 
 function Filter(props) {
+
     useEffect(() => {
         let recommender = new jsrecommender.Recommender();
         let table = new jsrecommender.Table();
-
         table.setCell('Love at last', 'Alice', 5);
         table.setCell('Remance forever', 'Alice', 5);
         table.setCell('Nonstop car chases', 'Alice', 0);
@@ -21,9 +22,7 @@ function Filter(props) {
         table.setCell('Love at last', 'Dave', 0);
         table.setCell('Remance forever', 'Dave', 0);
         table.setCell('Nonstop car chases', 'Dave', 4);
-
         let predicted_table = recommender.transform(table);
-
         for (let i = 0; i < predicted_table.columnNames.length; ++i) {
             let user = predicted_table.columnNames[i];
             console.log('For user: ' + user);

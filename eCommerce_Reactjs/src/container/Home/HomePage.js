@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import HomeBanner from "../../component/HomeFeature/HomeBanner";
 import ProductFeature from "../../component/HomeFeature/ProductFeature";
 import NewProductFeature from "../../component/HomeFeature/NewProductFeature"
-import { getAllBanner, getProductFeatureService, getProductNewService } from '../../services/userService';
 import Slider from 'react-slick';
+import { useState, useEffect } from 'react';
+import { getAllBanner, getProductFeatureService, getProductNewService } from '../../services/userService';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -29,14 +30,14 @@ function HomePage(props) {
         window.scrollTo(0, 0);
     }, [])
 
-    let fetchProductFeature = async () => {
+    const fetchProductFeature = async () => {
         let res = await getProductFeatureService(6)
         if (res && res.errCode === 0) {
             setDataProductFeature(res.data)
         }
     }
 
-    let fetchDataBrand = async () => {
+    const fetchDataBrand = async () => {
         let res = await getAllBanner({
             limit: 6,
             offset: 0,
@@ -47,7 +48,7 @@ function HomePage(props) {
         }
     }
 
-    let fetchProductNew = async () => {
+    const fetchProductNew = async () => {
         let res = await getProductNewService(8)
         if (res && res.errCode === 0) {
             setNewProductFeature(res.data)
@@ -57,7 +58,8 @@ function HomePage(props) {
     return (
         <div>
             <Slider {...settings}>
-                {dataBanner && dataBanner.length > 0 &&
+                {
+                    dataBanner && dataBanner.length > 0 &&
                     dataBanner.map((item, index) => {
                         return (
                             <HomeBanner image={item.image} name={item.name}></HomeBanner>

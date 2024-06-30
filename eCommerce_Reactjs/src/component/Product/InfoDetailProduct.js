@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
+import CommonUtils from '../../utils/CommonUtils';
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addItemCartStart } from '../../action/ShopCartAction';
 import './InfoDetailProduct.scss';
-import CommonUtils from '../../utils/CommonUtils';
+import 'react-image-lightbox/style.css';
+
 function InfoDetailProduct(props) {
+    const dispatch = useDispatch()
+
     let { dataProduct } = props
-    let [arrDetail, setarrDetail] = useState([])
+
+    const [arrDetail, setarrDetail] = useState([])
     const [productDetail, setproductDetail] = useState([])
     const [isOpen, setisOpen] = useState(false)
     const [imgPreview, setimgPreview] = useState('')
     const [activeLinkId, setactiveLinkId] = useState('')
     const [quantity, setquantity] = useState('')
     const [quantityProduct, setquantityProduct] = useState(1)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         let { productDetail } = dataProduct ? dataProduct : []
@@ -68,7 +72,8 @@ function InfoDetailProduct(props) {
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                         <div>
                             <ol className="carousel-indicators">
-                                {arrDetail && arrDetail.productImage && arrDetail.productImage.length > 0 &&
+                                {
+                                    arrDetail && arrDetail.productImage && arrDetail.productImage.length > 0 &&
                                     arrDetail.productImage.map((item, index) => {
                                         return (
                                             <li data-target="#carouselExampleIndicators" data-slide-to={index} key={item.id} className={index === 0 ? 'active' : ''}>
@@ -80,7 +85,8 @@ function InfoDetailProduct(props) {
                             </ol>
                         </div>
                         <div className="carousel-inner">
-                            {arrDetail && arrDetail.productImage && arrDetail.productImage.length > 0 &&
+                            {
+                                arrDetail && arrDetail.productImage && arrDetail.productImage.length > 0 &&
                                 arrDetail.productImage.map((item, index) => {
                                     return (
                                         <div onClick={() => openPreviewImage(item.image)} key={item.id} style={{ cursor: 'pointer' }} className={index === 0 ? 'carousel-item active' : 'carousel-item'}>
@@ -109,7 +115,8 @@ function InfoDetailProduct(props) {
                         <li>
                             <div className="box-size">
                                 <a href="/"> <span>Size</span></a>
-                                {arrDetail && arrDetail.productDetailSize && arrDetail.productDetailSize.length > 0 &&
+                                {
+                                    arrDetail && arrDetail.productDetailSize && arrDetail.productDetailSize.length > 0 &&
                                     arrDetail.productDetailSize.map((item, index) => {
                                         return (
                                             <div onClick={() => handleClickBoxSize(item)} key={index} className={item.id === activeLinkId ? 'product-size active' : 'product-size'}>
@@ -124,19 +131,17 @@ function InfoDetailProduct(props) {
                             <a href="/">{quantity} sản phẩm có sẵn</a>
                         </li>
                     </ul>
-                    <p>
-                        {arrDetail.description}
-                    </p>
+                    <p>{arrDetail.description}</p>
                     <div style={{ display: 'flex' }}>
                         <div className="product_count">
                             <label htmlFor="qty">Số lượng</label>
-                            {/* <input type="text" name="qty" id="sst" maxLength={12} defaultValue={1} title="Quantity:" className="input-text qty" /> */}
                             <input type="number" value={quantityProduct} onChange={(event) => setquantityProduct(event.target.value)} min="1" />
                         </div>
                         <div className="form-group">
                             <label style={{ fontSize: '14px', color: '#797979', fontFamily: '"Roboto",sans-serif', marginLeft: '16px' }} htmlFor="type">Màu</label>
                             <select onChange={(event) => handleSelectDetail(event)} className="sorting" name="type" style={{ outline: 'none', border: '1px solid #eee', marginLeft: '16px' }}>
-                                {dataProduct && productDetail && productDetail.length > 0 &&
+                                {
+                                    dataProduct && productDetail && productDetail.length > 0 &&
                                     productDetail.map((item, index) => {
                                         return (
                                             <option key={index} value={index}>{item.nameDetail}</option>
@@ -148,17 +153,12 @@ function InfoDetailProduct(props) {
                     </div>
                     <div className="card_area">
                         <p className={`main_btn ${quantity === 0 ? 'disable-hover' : ''}`} onClick={() => handleAddShopCart()}>Thêm vào giỏ</p>
-                        {/* <a className="icon_btn" href="/">
-                            <i className="lnr lnr lnr-heart" />
-                        </a> */}
                     </div>
                 </div>
             </div>
             {
                 isOpen === true &&
-                <Lightbox mainSrc={imgPreview}
-                    onCloseRequest={() => setisOpen(false)}
-                />
+                <Lightbox mainSrc={imgPreview} onCloseRequest={() => setisOpen(false)} />
             }
         </div>
     );

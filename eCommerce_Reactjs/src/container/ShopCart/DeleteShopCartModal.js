@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, ModalFooter, ModalBody, Button } from 'reactstrap';
 
 const DeleteShopCartModal = (props) => {
+
     let handleCloseModal = () => {
         props.closeModal()
     }

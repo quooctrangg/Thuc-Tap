@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { getAllCodeService } from '../../services/userService';
+import { useState, useEffect } from 'react'
+
 function Category(props) {
     const [arrCategory, setarrCategory] = useState([])
     const [activeLinkId, setactiveLinkId] = useState('')
@@ -34,7 +36,8 @@ function Category(props) {
             </div>
             <div className="widgets_inner">
                 <ul className="list">
-                    {arrCategory && arrCategory.length > 0 &&
+                    {
+                        arrCategory && arrCategory.length > 0 &&
                         arrCategory.map((item, index) => {
                             return (
                                 <li className={item.code === activeLinkId ? 'active' : ''} style={{ cursor: 'pointer' }} onClick={() => handleClickCategory(item.code)} key={index}>

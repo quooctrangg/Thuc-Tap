@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
-import { getDetailProductByIdService, getProductRecommendService } from '../../services/userService';
+import React from 'react';
 import InfoDetailProduct from '../../component/Product/InfoDetailProduct';
 import ProfileProduct from '../../component/Product/ProfileProduct';
 import ReviewProduct from '../../component/Product/ReviewProduct';
 import DescriptionProduct from '../../component/Product/DescriptionProduct';
 import NewProductFeature from "../../component/HomeFeature/NewProductFeature"
+import { Link, useParams } from "react-router-dom";
+import { getDetailProductByIdService, getProductRecommendService } from '../../services/userService';
+import { useEffect, useState } from 'react';
 
 function DetailProductPage(props) {
+    const { id } = useParams();
+
     const [dataProduct, setDataProduct] = useState({})
     const [dataDetailSize, setdataDetailSize] = useState({})
-    const { id } = useParams();
     const [user, setUser] = useState({})
     const [dataProductRecommend, setdataProductRecommend] = useState([])
 
@@ -23,11 +25,11 @@ function DetailProductPage(props) {
         await fetchDetailProduct()
     }, [id])
 
-    let sendDataFromInforDetail = (data) => {
+    const sendDataFromInforDetail = (data) => {
         setdataDetailSize(data)
     }
 
-    let fetchDetailProduct = async () => {
+    const fetchDetailProduct = async () => {
         let res = await getDetailProductByIdService(id)
         if (res && res.errCode === 0) {
             setDataProduct(res.data)
@@ -35,7 +37,7 @@ function DetailProductPage(props) {
         }
     }
 
-    let fetchProductFeature = async (categoryId, currentProductId) => {
+    const fetchProductFeature = async (categoryId, currentProductId) => {
         let res = await getProductRecommendService({
             limit: 4,
             categoryId: categoryId,
@@ -98,7 +100,8 @@ function DetailProductPage(props) {
                         </div>
                     </div>
                 </div>
-                {dataProductRecommend && dataProductRecommend.length > 0 &&
+                {
+                    dataProductRecommend && dataProductRecommend.length > 0 &&
                     <div className='mt-5'>
                         <NewProductFeature title="Sản phẩm cùng loại" description="" data={dataProductRecommend}></NewProductFeature>
                     </div>

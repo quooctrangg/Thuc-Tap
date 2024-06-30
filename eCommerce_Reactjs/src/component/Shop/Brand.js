@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react'
 import { getAllCodeService } from '../../services/userService';
 
 function Brand(props) {
@@ -35,7 +36,8 @@ function Brand(props) {
             </div>
             <div className="widgets_inner">
                 <ul className="list">
-                    {arrBrand && arrBrand.length > 0 &&
+                    {
+                        arrBrand && arrBrand.length > 0 &&
                         arrBrand.map((item, index) => {
                             return (
                                 <li className={item.code === activeLinkId ? 'active' : ''} style={{ cursor: 'pointer' }} onClick={() => handleClickBrand(item.code)} key={index}>

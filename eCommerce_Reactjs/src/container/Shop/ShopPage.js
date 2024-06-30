@@ -1,23 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import MainShop from '../../component/Shop/MainShop';
 import Category from '../../component/Shop/Category';
 import Brand from '../../component/Shop/Brand';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function ShopPage(props) {
+    const myRef = useRef(null)
     const [categoryId, setcategoryId] = useState('')
     const [brandId, setbrandId] = useState('')
-    const myRef = useRef(null)
 
     useEffect(async () => {
         window.scrollTo(0, 0);
     }, [])
 
-    let handleRecevieDataCategory = (code) => {
+    const handleRecevieDataCategory = (code) => {
         setcategoryId(code)
     }
 
-    let handleRecevieDataBrand = (code) => {
+    const handleRecevieDataBrand = (code) => {
         setbrandId(code)
     }
 
@@ -50,11 +51,8 @@ function ShopPage(props) {
                             </div>
                         </div>
                     </div>
-                    {/* <Pagination amountPage={3}
-                        myFunction={{ changePage: handleChangePage, changePerPage: handleChangePage }}></Pagination> */}
                 </div>
             </section>
-            {/* <Footer /> */}
         </div>
     );
 }

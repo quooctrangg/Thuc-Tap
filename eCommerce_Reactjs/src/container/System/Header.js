@@ -1,24 +1,23 @@
 import React from 'react';
+import socketIOClient from "socket.io-client";
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getItemCartStart } from '../../action/ShopCartAction'
 import { listRoomOfAdmin } from '../../services/userService';
 import './Header1.scss';
-import socketIOClient from "socket.io-client";
+
 require('dotenv').config();
+
+const host = process.env.REACT_APP_BACKEND_URL;
+
 const Header = () => {
+    const [setId] = useState();
+    const socketRef = useRef();
+    const dispatch = useDispatch()
+
     const [quantityMessage, setquantityMessage] = useState('')
     const [user, setUser] = useState({})
-    const dispatch = useDispatch()
-    const socketRef = useRef();
-    const [setId] = useState();
-    const host = process.env.REACT_APP_BACKEND_URL;
-    let handleLogout = () => {
-        localStorage.removeItem("userData");
-        localStorage.removeItem("token");
-        window.location.href = '/login'
-    }
 
     useEffect(() => {
         socketRef.current = socketIOClient.connect(host)
@@ -28,7 +27,7 @@ const Header = () => {
             dispatch(getItemCartStart(userData.id))
             socketRef.current.on('getId', data => {
                 setId(data)
-            }) // phần này đơn giản để gán id cho mỗi phiên kết nối vào page. Mục đích chính là để phân biệt đoạn nào là của mình đang chat.
+            })
             fetchListRoom(userData.id)
             socketRef.current.on('sendDataServer', dataGot => {
                 fetchListRoom(userData.id)
@@ -53,6 +52,12 @@ const Header = () => {
             }
             setquantityMessage(count)
         }
+    }
+
+    let handleLogout = () => {
+        localStorage.removeItem("userData");
+        localStorage.removeItem("token");
+        window.location.href = '/login'
     }
 
     return (

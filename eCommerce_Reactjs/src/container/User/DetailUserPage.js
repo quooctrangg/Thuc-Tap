@@ -188,9 +188,7 @@ function DetailUserPage(props) {
             </div>
             {
                 inputValues.isOpen === true &&
-                <Lightbox mainSrc={inputValues.imageReview}
-                    onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false })}
-                />
+                <Lightbox mainSrc={inputValues.imageReview} onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false })} />
             }
         </div >
     );

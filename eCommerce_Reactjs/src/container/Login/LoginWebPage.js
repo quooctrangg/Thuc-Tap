@@ -1,25 +1,24 @@
 import React from "react";
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import './LoginWebPage.css';
-import { GoogleLoginButton } from "react-social-login-buttons";
-import { handleLoginService, checkPhonenumberEmail, createNewUser } from '../../services/userService';
 import Otp from "./Otp";
-import { authentication } from "../../utils/firebase";
-import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth'
 import axios from "axios";
 import CommonUtils from "../../utils/CommonUtils";
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { handleLoginService, checkPhonenumberEmail, createNewUser } from '../../services/userService';
+import { authentication } from "../../utils/firebase";
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import './LoginWebPage.css';
+
 const LoginWebPage = () => {
-    const [inputValues, setInputValues] = useState({
-        email: '', password: 'passwordsecrect', lastName: '', phonenumber: '', isOpen: false, dataUser: {}
-    });
+    const [inputValues, setInputValues] = useState({ email: '', password: 'passwordsecrect', lastName: '', phonenumber: '', isOpen: false, dataUser: {} });
 
     const handleOnChange = event => {
         const { name, value } = event.target;
         setInputValues({ ...inputValues, [name]: value });
     };
 
-    let handleLogin = async () => {
+    const handleLogin = async () => {
         const element = document.querySelector('form');
         element.addEventListener('submit', event => {
             event.preventDefault();
@@ -43,7 +42,7 @@ const LoginWebPage = () => {
         }
     }
 
-    let handleLoginSocial = async (email) => {
+    const handleLoginSocial = async (email) => {
         const element = document.querySelector('form');
         element.addEventListener('submit', event => {
             event.preventDefault();
@@ -67,7 +66,7 @@ const LoginWebPage = () => {
         }
     }
 
-    let handleSaveUser = async () => {
+    const handleSaveUser = async () => {
         if (!CommonUtils.isValidPhoneNumber(inputValues.phonenumber)) {
             toast.error("Số điện thoại không hợp lệ")
             return
@@ -110,18 +109,7 @@ const LoginWebPage = () => {
         });
     }
 
-    let signInwithFacebook = () => {
-        const provider = new FacebookAuthProvider()
-        signInWithPopup(authentication, provider)
-            .then((re) => {
-                LoginWithSocial(re)
-            })
-            .catch((err) => {
-                console.log(err.message)
-            })
-    }
-
-    let LoginWithSocial = async (re) => {
+    const LoginWithSocial = async (re) => {
         if (!CommonUtils.isValidPhoneNumber(inputValues.phonenumber)) {
             toast.error("Số điện thoại không hợp lệ")
             return
@@ -137,7 +125,6 @@ const LoginWebPage = () => {
             })
             handleLoginSocial(re.user.providerData[0].email)
         } else {
-            // const value = await getBase64FromUrl(re.user.providerData[0].photoURL)
             let res = await createNewUser({
                 email: re.user.providerData[0].email,
                 lastName: re.user.providerData[0].displayName,
@@ -154,7 +141,7 @@ const LoginWebPage = () => {
         }
     }
 
-    let signInwithGoogle = async () => {
+    const signInwithGoogle = async () => {
         const provider = new GoogleAuthProvider()
         signInWithPopup(authentication, provider)
             .then(async (re) => {
@@ -172,17 +159,13 @@ const LoginWebPage = () => {
                     <div className="login-container">
                         <section id="formHolder">
                             <div className="row">
-                                {/* Brand Box */}
                                 <div className="col-sm-6 brand">
-                                    {/* <a href="#" className="logo">MR <span>.</span></a> */}
                                     <div className="heading">
                                         <h2>Jolido</h2>
                                         <p>chất lượng hàng đầu</p>
                                     </div>
                                 </div>
-                                {/* Form Box */}
                                 <div className="col-sm-6 form">
-                                    {/* Login Form */}
                                     <div className="login form-peice ">
                                         <form className="login-form" >
                                             <div className="form-group">
@@ -199,12 +182,9 @@ const LoginWebPage = () => {
                                             </div>
                                             <hr></hr>
                                             <h5 className="text-center">hoặc</h5>
-                                            {/* <FacebookLoginButton text="Đăng nhập với Facebook" iconSize="25px" style={{ width: "350px", height: "40px", fontSize: "16px", marginTop: "20px", marginBottom: "10px" }} onClick={() => signInwithFacebook()} /> */}
                                             <GoogleLoginButton text="Đăng nhập với Google" iconSize="25px" style={{ width: "350px", height: "40px", fontSize: "16px" }} onClick={() => signInwithGoogle()} />
                                         </form>
                                     </div>
-                                    {/* End Login Form */}
-                                    {/* Signup Form */}
                                     <div className="signup form-peice switched">
                                         <form className="signup-form" >
                                             <div className="form-group">
@@ -237,7 +217,6 @@ const LoginWebPage = () => {
                                             </div>
                                         </form>
                                     </div>
-                                    {/* End Signup Form */}
                                 </div>
                             </div>
                         </section>

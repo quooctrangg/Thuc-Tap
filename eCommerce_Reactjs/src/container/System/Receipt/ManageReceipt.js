@@ -1,12 +1,12 @@
 import React from 'react';
+import moment from 'moment';
+import CommonUtils from '../../../utils/CommonUtils';
+import ReactPaginate from 'react-paginate';
+import AddReceiptModal from './AddReceiptModal'
 import { useEffect, useState } from 'react';
 import { getAllReceipt } from '../../../services/userService';
-import moment from 'moment';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
-import AddReceiptModal from './AddReceiptModal'
 
 const ManageReceipt = () => {
     const [dataReceipt, setdataReceipt] = useState([])
@@ -78,30 +78,31 @@ const ManageReceipt = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataReceipt && dataReceipt.length > 0 ?
-                                    dataReceipt.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.billNumber}</td>
-                                                <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                <td>{item.supplierData.name}</td>
-                                                <td>
-                                                    <Link to={`/admin/detail-receipt/${item.id}`}>
-                                                        <button className='btn btn-primary'>
-                                                            Xem
-                                                        </button>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={6} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                {
+                                    dataReceipt && dataReceipt.length > 0 ?
+                                        dataReceipt.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.billNumber}</td>
+                                                    <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
+                                                    <td>{item.supplierData.name}</td>
+                                                    <td>
+                                                        <Link to={`/admin/detail-receipt/${item.id}`}>
+                                                            <button className='btn btn-primary'>
+                                                                Xem
+                                                            </button>
+                                                        </Link>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={6} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>
@@ -128,7 +129,6 @@ const ManageReceipt = () => {
                     onPageChange={handleChangePage}
                 />
             }
-
             <AddReceiptModal handleCloseReceiptModal={handleCloseReceiptModal} isOpenModalReceipt={isOpenModalReceipt} fetchData={fetchData} />
         </div >
     )

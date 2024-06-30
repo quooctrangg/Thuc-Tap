@@ -9,14 +9,18 @@ import TopMenu from './TopMenu';
 import socketIOClient from "socket.io-client";
 require('dotenv').config();
 
+const host = process.env.REACT_APP_BACKEND_URL;
+
 const Header = props => {
+    const dispatch = useDispatch()
+    const socketRef = useRef();
+
+    let dataCart = useSelector(state => state.shopcart.listCartItem)
+
     const [quantityMessage, setquantityMessage] = useState('')
     const [user, setUser] = useState({})
-    const dispatch = useDispatch()
-    let dataCart = useSelector(state => state.shopcart.listCartItem)
-    const host = process.env.REACT_APP_BACKEND_URL;
-    const socketRef = useRef();
     const [id, setId] = useState();
+
 
     useEffect(() => {
         socketRef.current = socketIOClient.connect(host)
@@ -40,7 +44,7 @@ const Header = props => {
         }
     }, [])
 
-    let scrollHeader = () => {
+    const scrollHeader = () => {
         window.addEventListener("scroll", function () {
             var header = document.querySelector(".main_menu");
             if (header) {
@@ -49,7 +53,7 @@ const Header = props => {
         })
     }
 
-    let fetchListRoom = async (userId) => {
+    const fetchListRoom = async (userId) => {
         let res = await listRoomOfUser(userId)
         if (res && res.errCode == 0) {
             let count = 0;
@@ -70,7 +74,6 @@ const Header = props => {
             <div className="main_menu">
                 <div className="container">
                     <nav className="navbar navbar-expand-lg navbar-light w-100">
-                        {/* Brand and toggle get grouped for better mobile display */}
                         <NavLink to="/" className="navbar-brand logo_h">
                             <img src="/resources/img/logo.png" alt="" />
                         </NavLink>
@@ -81,7 +84,6 @@ const Header = props => {
                             <span className="icon-bar" />
                             <span className="icon-bar" />
                         </button>
-                        {/* Collect the nav links, forms, and other content for toggling */}
                         <div className="collapse navbar-collapse offset w-100" id="navbarSupportedContent">
                             <div className="row w-100 mr-0">
                                 <div className="col-lg-9 pr-0">
@@ -98,12 +100,6 @@ const Header = props => {
                                                 Cửa hàng
                                             </NavLink>
                                         </li>
-                                        {/* <li className="nav-item ">
-                                            <NavLink to="/blog" className="nav-link"
-                                                activeClassName="selected" activeStyle={{ color: '#e46300' }}>
-                                                Tin tức
-                                            </NavLink>
-                                        </li> */}
                                         <li className="nav-item">
                                             <NavLink to="/voucher" className="nav-link"
                                                 activeClassName="selected" activeStyle={{ color: '#e46300' }}>
@@ -118,7 +114,8 @@ const Header = props => {
                                     </ul>
                                 </div>
                                 <div className="col-lg-3 pr-0">
-                                    {user && user.id ?
+                                    {
+                                        user && user.id &&
                                         <ul className="nav navbar-nav navbar-right right_nav pull-right">
                                             <li className="nav-item">
                                                 <Link to={"/user/messenger"} className="icons">
@@ -147,8 +144,6 @@ const Header = props => {
                                                 </Link>
                                             </li>
                                         </ul>
-                                        :
-                                        ''
                                     }
                                 </div>
                             </div>

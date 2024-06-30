@@ -1,24 +1,23 @@
 import React from 'react';
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
 import { Modal, ModalBody } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useFetchAllcode } from '../../customize/fetch';
 import { UpdateProductService, getDetailProductByIdService } from '../../../services/userService';
-import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-markdown-editor-lite/lib/index.css';
 import './Product.scss';
 
 const UpdateProductModal = props => {
     const mdParser = new MarkdownIt();
-    const [productId, setProductId] = useState(null)
+
     const { data: dataBrand } = useFetchAllcode('BRAND');
     const { data: dataCategory } = useFetchAllcode('CATEGORY')
-    const [inputValues, setInputValues] = useState({
-        brandId: '', categoryId: '', name: '', contentHTML: '', contentMarkdown: '',
-        madeby: '', material: '',
-    });
+
+    const [productId, setProductId] = useState(null)
+    const [inputValues, setInputValues] = useState({ brandId: '', categoryId: '', name: '', contentHTML: '', contentMarkdown: '', madeby: '', material: '', });
 
     useEffect(() => {
         setProductId(props.id)
@@ -108,18 +107,14 @@ const UpdateProductModal = props => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="inputAddress">Mô tả sản phẩm</label>
-                    <MdEditor
-                        style={{ height: '400px' }}
-                        renderHTML={text => mdParser.render(text)}
-                        onChange={handleEditorChange}
-                        value={inputValues.contentMarkdown}
-                    />
+                    <MdEditor style={{ height: '400px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} value={inputValues.contentMarkdown} />
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label htmlFor="inputEmail4">Danh mục sản phẩm</label>
                         <select value={inputValues.categoryId} name="categoryId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                            {dataCategory && dataCategory.length > 0 &&
+                            {
+                                dataCategory && dataCategory.length > 0 &&
                                 dataCategory.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>
@@ -131,7 +126,8 @@ const UpdateProductModal = props => {
                     <div className="form-group col-md-6">
                         <label htmlFor="inputPassword4">Nhãn hàng</label>
                         <select value={inputValues.brandId} name="brandId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                            {dataBrand && dataBrand.length > 0 &&
+                            {
+                                dataBrand && dataBrand.length > 0 &&
                                 dataBrand.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>

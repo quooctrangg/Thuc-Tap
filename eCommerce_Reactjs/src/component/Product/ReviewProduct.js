@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import './ReviewProduct.scss';
+import React from 'react';
 import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
+import ReviewModal from './ReviewModal';
 import { getAllReviewByProductIdService, ReplyReviewService, deleteReviewService } from '../../services/userService';
 import { useParams } from 'react-router';
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import ReviewModal from './ReviewModal';
+import 'react-image-lightbox/style.css';
+import './ReviewProduct.scss';
 
 function ReviewProduct(props) {
     const { id } = useParams()
+
     const [inputValues, setInputValues] = useState({
-        activeStar: '', imageReview: '', image: '', content: '', user: JSON.parse(localStorage.getItem('userData')), dataReview: [], countStar: {}, isOpen: false,
+        activeStar: '',
+        imageReview: '',
+        image: '',
+        content: '',
+        user: JSON.parse(localStorage.getItem('userData')),
+        dataReview: [],
+        countStar: {},
+        isOpen: false,
         isOpenModal: false, parentId: ''
     });
 
     useEffect(() => {
-        let fetchAllReview = async () => {
-            await loadAllReview()
-        }
-        fetchAllReview()
+        loadAllReview()
     }, [])
 
     let openPreviewImage = (url) => {
@@ -143,72 +149,72 @@ function ReviewProduct(props) {
                     </div>
                 </div>
                 <div className="review_list">
-                    {inputValues.dataReview && inputValues.dataReview.length > 0 && inputValues.dataReview.map((item, index) => {
-                        if (!item.parentId) {
-                            let name = `${item.user.firstName ? item.user.firstName : ''} ${item.user.lastName}`
-                            let arrStar = []
-                            for (let i = 0; i < item.star; i++) {
-                                arrStar[i] = 1
-                            }
-                            return (
-                                <div key={index} className="review_item">
-                                    <div className="media">
-                                        <div className="d-flex">
-                                            <img className="img-avatar" src={item.user.image} alt="" />
+                    {
+                        inputValues.dataReview && inputValues.dataReview.length > 0 && inputValues.dataReview.map((item, index) => {
+                            if (!item.parentId) {
+                                let name = `${item.user.firstName ? item.user.firstName : ''} ${item.user.lastName}`
+                                let arrStar = []
+                                for (let i = 0; i < item.star; i++) {
+                                    arrStar[i] = 1
+                                }
+                                return (
+                                    <div key={index} className="review_item">
+                                        <div className="media">
+                                            <div className="d-flex">
+                                                <img className="img-avatar" src={item.user.image} alt="" />
+                                            </div>
+                                            <div className="media-body">
+                                                <h4>{name}</h4>
+                                                {
+                                                    arrStar && arrStar.length > 0 &&
+                                                    arrStar.map((item, index) => {
+                                                        return (
+                                                            <i key={index} className="fa fa-star" />
+                                                        )
+                                                    })
+                                                }
+                                                {
+                                                    inputValues.user && inputValues.user.roleId === "R1" &&
+                                                    <a style={{ cursor: 'pointer' }} onClick={() => handleOpenModal(item.id)} className="reply_btn" >Phản hồi</a>
+                                                }
+                                            </div>
                                         </div>
-                                        <div className="media-body">
-                                            <h4>{name}</h4>
-                                            {arrStar && arrStar.length > 0 &&
-                                                arrStar.map((item, index) => {
+                                        <div style={{ marginLeft: '88px' }}>
+                                            <p style={{ paddingTop: '0px' }}>
+                                                {item.content}
+                                            </p>
+                                            {
+                                                item.image &&
+                                                <img onClick={() => openPreviewImage(item.image)} className="img-cmt" src={item.image}></img>
+                                            }
+                                            {
+                                                item.childComment && item.childComment.length > 0 &&
+                                                item.childComment.map((item, index) => {
                                                     return (
-                                                        <i key={index} className="fa fa-star" />
+                                                        <div key={index} className="box-reply">
+                                                            <span>Phản hồi của người bán</span>
+                                                            <p>{item.content}</p>
+                                                            {
+                                                                inputValues.user && inputValues.user.roleId === "R1" &&
+                                                                <button onClick={() => handleDeleteReply(item.id)} className="btn-delete-reply" type="button">Xóa</button>
+                                                            }
+                                                        </div>
                                                     )
                                                 })
                                             }
-                                            {inputValues.user && inputValues.user.roleId === "R1" &&
-                                                <a style={{ cursor: 'pointer' }} onClick={() => handleOpenModal(item.id)} className="reply_btn" >Phản hồi</a>
-                                            }
                                         </div>
                                     </div>
-                                    <div style={{ marginLeft: '88px' }}>
-                                        <p style={{ paddingTop: '0px' }}>
-                                            {item.content}
-                                        </p>
-                                        {item.image &&
-                                            <img onClick={() => openPreviewImage(item.image)} className="img-cmt" src={item.image}></img>
-                                        }
-                                        {item.childComment && item.childComment.length > 0 &&
-                                            item.childComment.map((item, index) => {
-                                                return (
-                                                    <div key={index} className="box-reply">
-                                                        <span>Phản hồi của người bán</span>
-                                                        <p>{item.content}</p>
-                                                        {inputValues.user && inputValues.user.roleId === "R1" &&
-                                                            <button onClick={() => handleDeleteReply(item.id)} className="btn-delete-reply" type="button">Xóa</button>
-                                                        }
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                            )
-                        }
-                    })
+                                )
+                            }
+                        })
                     }
                 </div>
             </div>
             {
                 inputValues.isOpen === true &&
-                <Lightbox mainSrc={inputValues.imageReview}
-                    onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false, ["imageReview"]: '' })}
-                />
+                <Lightbox mainSrc={inputValues.imageReview} onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false, ["imageReview"]: '' })} />
             }
-            <ReviewModal
-                isOpenModal={inputValues.isOpenModal}
-                closeModal={closeModal}
-                sendDataFromReViewModal={sendDataFromReViewModal}
-            />
+            <ReviewModal isOpenModal={inputValues.isOpenModal} closeModal={closeModal} sendDataFromReViewModal={sendDataFromReViewModal} />
         </div>
     );
 }

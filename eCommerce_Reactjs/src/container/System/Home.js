@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import moment from 'moment'
+import DatePicker from "react-datepicker";
+import { useEffect, useState } from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -13,9 +16,7 @@ import {
 } from 'chart.js';
 import { Line, Pie, Bar } from 'react-chartjs-2';
 import { getCountCardStatistic, getCountStatusOrder, getStatisticByMonth, getStatisticByDay } from '../../services/userService'
-import moment from 'moment'
 import { Link } from 'react-router-dom';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 ChartJS.register(
@@ -52,7 +53,6 @@ const Home = () => {
     const [StatisticOrderByDay, setStatisticOrderByDay] = useState({})
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
-
     const [DateTime, setDateTime] = useState(new Date());
     const [type, settype] = useState('month')
     const [month, setmonth] = useState(new Date());
@@ -161,9 +161,6 @@ const Home = () => {
     return (
         <div className="container-fluid px-4">
             <h1 className="mt-4">TRANG CHỦ</h1>
-            {/* <ol className="breadcrumb mb-4">
-                <li className="breadcrumb-item active">Trang thống kê</li>
-            </ol> */}
             <div className="row">
                 <div className="col-xl-4 col-md-6">
                     <div className="card bg-primary text-white mb-4">
@@ -174,15 +171,6 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div className="col-xl-3 col-md-6">
-          <div className="card bg-warning text-white mb-4">
-            <div className="card-body">ĐÁNH GIÁ ({CountCard.countReview})</div>
-            <div className="card-footer d-flex align-items-center justify-content-between">
-              <a className="small text-white stretched-link" href="#">Chi tiết</a>
-              <div className="small text-white"><i className="fas fa-angle-right" /></div>
-            </div>
-          </div>
-        </div> */}
                 <div className="col-xl-4 col-md-6">
                     <div className="card bg-success text-white mb-4">
                         <div className="card-body">SẢN PHẨM ({CountCard.countProduct})</div>
@@ -227,7 +215,8 @@ const Home = () => {
                             </div>
                         </div>
                         <div className="form-row">
-                            {type == "day" &&
+                            {
+                                type == "day" &&
                                 <div style={{ display: 'flex', gap: 5, alignItems: 'center', width: 'auto' }}>
                                     <label htmlFor="startDate">Từ</label>
                                     <DatePicker
@@ -253,7 +242,8 @@ const Home = () => {
                                     />
                                 </div>
                             }
-                            {type == "month" &&
+                            {
+                                type == "month" &&
                                 <div className="form-group col-md-8">
                                     <label htmlFor="inputCity">Chọn tháng</label>
                                     <DatePicker
@@ -265,7 +255,8 @@ const Home = () => {
                                     />
                                 </div>
                             }
-                            {type == "year" &&
+                            {
+                                type == "year" &&
                                 <div className="form-group col-md-8">
                                     <label htmlFor="inputCity">Chọn năm</label>
                                     <DatePicker

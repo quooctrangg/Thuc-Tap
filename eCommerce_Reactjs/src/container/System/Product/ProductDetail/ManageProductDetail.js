@@ -1,16 +1,17 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
+import CommonUtils from '../../../../utils/CommonUtils';
+import AddProductDetailModal from './AddProductDetailModal';
+import UpdateProductDetailModal from './UpdateProductDetail';
 import { useEffect, useState } from 'react';
 import { getAllProductDetailByIdService, DeleteProductDetailService } from '../../../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../../../utils/CommonUtils';
 import { Link, useParams } from "react-router-dom";
-import AddProductDetailModal from './AddProductDetailModal';
-import UpdateProductDetailModal from './UpdateProductDetail';
 
 const ManageProductDetail = () => {
     const { id } = useParams()
+
     const [dataProductDetail, setdataProductDetail] = useState([])
     const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
@@ -95,7 +96,8 @@ const ManageProductDetail = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataProductDetail && dataProductDetail.length > 0 &&
+                                {
+                                    dataProductDetail && dataProductDetail.length > 0 &&
                                     dataProductDetail.map((item, index) => {
                                         return (
                                             <tr key={index}>

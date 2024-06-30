@@ -1,11 +1,11 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
+import FormSearch from '../../../component/Search/FormSearch';
+import AddSupplierModal from './AddSupplierModal';
 import { useEffect, useState } from 'react';
 import { deleteSupplierService, getAllSupplier } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import FormSearch from '../../../component/Search/FormSearch';
-import AddSupplierModal from './AddSupplierModal';
 
 const ManageSupplier = () => {
     const [keyword, setkeyword] = useState('')
@@ -98,33 +98,34 @@ const ManageSupplier = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataSupplier && dataSupplier.length > 0 ?
-                                    dataSupplier.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.name}</td>
-                                                <td>{item.phonenumber}</td>
-                                                <td>{item.email}</td>
-                                                <td>{item.address}</td>
-                                                <td style={{ display: 'flex', gap: 2 }}>
-                                                    <button onClick={() => {
-                                                        setCurrent(item.id)
-                                                        handleShowAddSupplierModal()
-                                                    }} className='btn btn-warning'>
-                                                        Sửa
-                                                    </button>
-                                                    <button className='btn btn-danger' onClick={(event) => handleDeleteSupplier(event, item.id)}>Xóa</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={6} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                {
+                                    dataSupplier && dataSupplier.length > 0 ?
+                                        dataSupplier.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.name}</td>
+                                                    <td>{item.phonenumber}</td>
+                                                    <td>{item.email}</td>
+                                                    <td>{item.address}</td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <button onClick={() => {
+                                                            setCurrent(item.id)
+                                                            handleShowAddSupplierModal()
+                                                        }} className='btn btn-warning'>
+                                                            Sửa
+                                                        </button>
+                                                        <button className='btn btn-danger' onClick={(event) => handleDeleteSupplier(event, item.id)}>Xóa</button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={6} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

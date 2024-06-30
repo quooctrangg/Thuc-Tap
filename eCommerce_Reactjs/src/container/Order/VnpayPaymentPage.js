@@ -5,10 +5,15 @@ import './OrderHomePage.scss';
 import { toast } from 'react-toastify';
 
 function VnpayPaymentPage(props) {
-    const [inputValues, setInputValues] = useState({
-        orderType: 'billpayment', orderDescription: '', bankCode: '', language: 'vn', amount: ''
-    });
     const location = useLocation();
+
+    const [inputValues, setInputValues] = useState({ orderType: 'billpayment', orderDescription: '', bankCode: '', language: 'vn', amount: '' });
+
+    useEffect(() => {
+        if (location && location.orderData) {
+            setInputValues({ ...inputValues, ["amount"]: location.orderData.total });
+        }
+    }, [location])
 
     const handleOnChange = event => {
         const { name, value } = event.target;
@@ -17,12 +22,6 @@ function VnpayPaymentPage(props) {
         }
         setInputValues({ ...inputValues, [name]: value });
     };
-
-    useEffect(() => {
-        if (location && location.orderData) {
-            setInputValues({ ...inputValues, ["amount"]: location.orderData.total });
-        }
-    }, [location])
 
     let handleOnclick = async () => {
         let res = await paymentOrderVnpayService({

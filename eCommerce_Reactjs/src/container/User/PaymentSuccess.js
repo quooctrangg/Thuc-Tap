@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect } from 'react'
 import { toast } from 'react-toastify';
 import { paymentOrderSuccessService } from '../../services/userService'
 import { useLocation } from "react-router-dom";

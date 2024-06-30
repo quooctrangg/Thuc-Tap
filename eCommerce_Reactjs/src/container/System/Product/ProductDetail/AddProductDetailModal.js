@@ -1,20 +1,32 @@
 import React from 'react';
+import CommonUtils from '../../../../utils/CommonUtils';
 import { Modal, ModalBody } from 'reactstrap';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from "react-router-dom";
 import { useFetchAllcode } from '../../../customize/fetch';
 import { CreateNewProductDetailService } from '../../../../services/userService';
-import CommonUtils from '../../../../utils/CommonUtils';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddProductDetailModal = props => {
     const { id } = useParams()
-    const { data: dataSize } = useFetchAllcode('SIZE')
+
     const [inputValues, setInputValues] = useState({
-        width: '', height: '', sizeId: '', originalPrice: '', discountPrice: '',
-        image: '', imageReview: '', isOpen: false, nameDetail: '', description: '', weight: ''
-    });
+        width: '',
+        height: '',
+        sizeId: '',
+        originalPrice: '',
+        discountPrice: '',
+        image: '',
+        imageReview: '',
+        isOpen: false,
+        nameDetail: '',
+        description: '',
+        weight: ''
+    })
+
+    const { data: dataSize } = useFetchAllcode('SIZE')
+
     if (dataSize && dataSize.length > 0 && inputValues.sizeId === '') {
         setInputValues({ ...inputValues, ["sizeId"]: dataSize[0].code })
     }
@@ -120,7 +132,8 @@ const AddProductDetailModal = props => {
                     <div className="form-group col-md-4">
                         <label htmlFor="inputPassword4">Kích thước</label>
                         <select value={inputValues.sizeId} name="sizeId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                            {dataSize && dataSize.length > 0 &&
+                            {
+                                dataSize && dataSize.length > 0 &&
                                 dataSize.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>

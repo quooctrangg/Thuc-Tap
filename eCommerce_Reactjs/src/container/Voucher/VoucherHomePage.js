@@ -1,13 +1,13 @@
 import React from 'react';
+import VoucherItem from './VoucherItem';
+import moment from 'moment';
+import ReactPaginate from 'react-paginate';
+import CommonUtils from '../../utils/CommonUtils';
 import { useEffect, useState } from 'react';
 import { getAllVoucher } from '../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../utils/constant';
 import { saveUserVoucherService } from '../../services/userService';
-import VoucherItem from './VoucherItem';
-import moment from 'moment';
-import ReactPaginate from 'react-paginate';
-import CommonUtils from '../../utils/CommonUtils';
 import './VoucherHomePage.scss';
 
 function VoucherHomePage(props) {
@@ -80,35 +80,31 @@ function VoucherHomePage(props) {
 
     return (
         <div className="voucher-container">
-            {/* <div className="voucher-banner">
-                <img className="photo-banner" src={bannerPhoto}></img>
-                <img src={voucherTodayPhoto}></img>
-                <img src={voucherAllPhoto}></img>
-                <img src={applyVoucherPhoto}></img>
-            </div> */}
             <div className="voucher-list mt-5">
-                {dataVoucher && dataVoucher.length > 0 ?
-                    dataVoucher.map((item, index) => {
-                        let percent = ""
-                        if (item.typeVoucherOfVoucherData.typeVoucher === "percent") {
-                            percent = item.typeVoucherOfVoucherData.value + "%"
-                        }
-                        if (item.typeVoucherOfVoucherData.typeVoucher === "money") {
-                            percent = CommonUtils.formatter.format(item.typeVoucherOfVoucherData.value)
-                        }
-                        let MaxValue = item.typeVoucherOfVoucherData.maxValue
-                        return (
-                            <VoucherItem sendDataFromVoucherItem={sendDataFromVoucherItem} id={item.id} width="550px" height="330px" key={index} name={item.codeVoucher} widthPercent={item.usedAmount * 100 / item.amount} maxValue={MaxValue} usedAmount={Math.round((item.usedAmount * 100 / item.amount) * 10) / 10} typeVoucher={percent} />
-                        )
-                    })
-                    :
-                    <div className='w-100'>
-                        <h2 className='text-center text-red'>Không có mã giảm giá.</h2>
-                    </div>
+                {
+                    dataVoucher && dataVoucher.length > 0 ?
+                        dataVoucher.map((item, index) => {
+                            let percent = ""
+                            if (item.typeVoucherOfVoucherData.typeVoucher === "percent") {
+                                percent = item.typeVoucherOfVoucherData.value + "%"
+                            }
+                            if (item.typeVoucherOfVoucherData.typeVoucher === "money") {
+                                percent = CommonUtils.formatter.format(item.typeVoucherOfVoucherData.value)
+                            }
+                            let MaxValue = item.typeVoucherOfVoucherData.maxValue
+                            return (
+                                <VoucherItem sendDataFromVoucherItem={sendDataFromVoucherItem} id={item.id} width="550px" height="330px" key={index} name={item.codeVoucher} widthPercent={item.usedAmount * 100 / item.amount} maxValue={MaxValue} usedAmount={Math.round((item.usedAmount * 100 / item.amount) * 10) / 10} typeVoucher={percent} />
+                            )
+                        })
+                        :
+                        <div className='w-100'>
+                            <h2 className='text-center text-red'>Không có mã giảm giá.</h2>
+                        </div>
                 }
             </div>
             <div className="box-pagination">
-                {dataVoucher && dataVoucher.length > 1 &&
+                {
+                    count > 1 &&
                     <ReactPaginate
                         previousLabel={'Quay lại'}
                         nextLabel={'Tiếp'}

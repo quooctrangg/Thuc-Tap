@@ -1,44 +1,38 @@
 import React from 'react';
+import CommonUtils from '../../../utils/CommonUtils';
+import moment from 'moment';
+import ReactPaginate from 'react-paginate';
 import { useEffect, useState } from 'react';
 import { getAllOrder } from '../../../services/userService';
-import moment from 'moment';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
 import { useFetchAllcode } from '../../customize/fetch';
-import CommonUtils from '../../../utils/CommonUtils';
 import { Link } from "react-router-dom";
+
 const ManageOrder = () => {
     const [dataOrder, setdataOrder] = useState([])
     const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
-    const { data: dataStatusOrder } = useFetchAllcode('STATUS-ORDER');
     const [StatusId, setStatusId] = useState('ALL')
 
+    const { data: dataStatusOrder } = useFetchAllcode('STATUS-ORDER');
+
     useEffect(() => {
-        loadOrderData(StatusId)
+        fetchData()
     }, [numberPage, StatusId])
 
-    let loadOrderData = (statusId) => {
-        try {
-            let fetchData = async () => {
-                let arrData = await getAllOrder({
-                    limit: PAGINATION.pagerow,
-                    offset: numberPage * PAGINATION.pagerow,
-                    statusId: statusId
-                })
-                if (arrData && arrData.errCode === 0) {
-                    setdataOrder(arrData.data)
-                    setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-                }
-            }
-            fetchData();
-        } catch (error) {
-            console.log(error)
+    let fetchData = async () => {
+        let arrData = await getAllOrder({
+            limit: PAGINATION.pagerow,
+            offset: numberPage * PAGINATION.pagerow,
+            statusId: StatusId
+        })
+        if (arrData && arrData.errCode === 0) {
+            setdataOrder(arrData.data)
+            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
     }
 
     let handleOnchangeStatus = (event) => {
-        loadOrderData(event.target.value)
         setStatusId(event.target.value)
     }
 
@@ -91,46 +85,40 @@ const ManageOrder = () => {
                                     <th>SDT</th>
                                     <th>Email</th>
                                     <th>Ngày đặt</th>
-                                    {/* <th>Loại ship</th> */}
-                                    {/* <th>Mã voucher</th> */}
                                     <th>Hình thức</th>
                                     <th>Trạng thái</th>
-                                    {/* <th>Shipper</th> */}
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataOrder && dataOrder.length > 0 ?
-                                    dataOrder.map((item, index) => {
-                                        // let date = moment.unix(item.orderdate / 1000).format('DD/MM/YYYY')
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.id}</td>
-                                                <td>{item.addressUser.shipPhonenumber}</td>
-                                                <td>{item.userData.email}</td>
-                                                <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                {/* <td>{item.typeShipData.type}</td> */}
-                                                {/* <td>{item.voucherData.codeVoucher}</td> */}
-                                                <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
-                                                <td>{item.statusOrderData.value}</td>
-                                                {/* <td>{item.shipperData && item.shipperData.firstName + " " + item.shipperData.lastName + " - " + item.shipperData.phonenumber}</td> */}
-                                                <td>
-                                                    <Link to={`/admin/order-detail/${item.id}`}>
-                                                        <button className='btn btn-primary'>
-                                                            Xem chi tiết
-                                                        </button>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={8} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                {
+                                    dataOrder && dataOrder.length > 0 ?
+                                        dataOrder.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.id}</td>
+                                                    <td>{item.addressUser.shipPhonenumber}</td>
+                                                    <td>{item.userData.email}</td>
+                                                    <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
+                                                    <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
+                                                    <td>{item.statusOrderData.value}</td>
+                                                    <td>
+                                                        <Link to={`/admin/order-detail/${item.id}`}>
+                                                            <button className='btn btn-primary'>
+                                                                Xem chi tiết
+                                                            </button>
+                                                        </Link>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={8} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

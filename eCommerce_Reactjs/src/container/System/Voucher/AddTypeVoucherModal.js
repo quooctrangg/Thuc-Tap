@@ -3,15 +3,15 @@ import { Modal, ModalBody } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import { createNewTypeVoucherService, getDetailTypeVoucherByIdService, updateTypeVoucherService } from '../../../services/userService';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useFetchAllcode } from '../../customize/fetch';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddTypeVoucherModal = props => {
     const { data: dataTypeVoucher } = useFetchAllcode('DISCOUNT')
+
     const [typeVoucherId, setTypeVoucherId] = useState(null)
-    const [inputValues, setInputValues] = useState({
-        typeVoucher: '', value: '', maxValue: '', minValue: ''
-    });
+    const [inputValues, setInputValues] = useState({ typeVoucher: '', value: '', maxValue: '', minValue: '' });
+
     if (dataTypeVoucher && dataTypeVoucher.length > 0 && inputValues.typeVoucher === '') {
         setInputValues({ ...inputValues, ["typeVoucher"]: dataTypeVoucher[0].code })
     }
@@ -111,7 +111,8 @@ const AddTypeVoucherModal = props => {
                     <div className="form-group col-md-6">
                         <label htmlFor="typeVoucher">Loại voucher</label>
                         <select value={inputValues.typeVoucher} name="typeVoucher" onChange={(event) => handleOnChange(event)} id="typeVoucher" className="form-control">
-                            {dataTypeVoucher && dataTypeVoucher.length > 0 &&
+                            {
+                                dataTypeVoucher && dataTypeVoucher.length > 0 &&
                                 dataTypeVoucher.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>

@@ -13,6 +13,10 @@ function VnpayPaymentSuccess(props) {
     let query = useQuery();
 
     useEffect(() => {
+        confirm()
+    }, [])
+
+    let confirm = async () => {
         let objectParam = {
             vnp_Amount: query.get('vnp_Amount'),
             vnp_BankCode: query.get('vnp_BankCode'),
@@ -27,19 +31,15 @@ function VnpayPaymentSuccess(props) {
             vnp_TxnRef: query.get('vnp_TxnRef'),
             vnp_SecureHash: query.get('vnp_SecureHash')
         }
-
-        let confirm = async () => {
-            let orderData = JSON.parse(localStorage.getItem("orderData"))
-            localStorage.removeItem("orderData")
-            if (orderData) {
-                let res = await confirmOrderVnpay(objectParam)
-                if (res && res.errCode == 0) {
-                    createNewOrder(orderData)
-                }
+        let orderData = JSON.parse(localStorage.getItem("orderData"))
+        localStorage.removeItem("orderData")
+        if (orderData) {
+            let res = await confirmOrderVnpay(objectParam)
+            if (res && res.errCode == 0) {
+                createNewOrder(orderData)
             }
         }
-        confirm()
-    }, [])
+    }
 
     let createNewOrder = async (data) => {
         let res = await paymentOrderVnpaySuccessService(data)

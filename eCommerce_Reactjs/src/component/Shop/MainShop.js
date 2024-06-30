@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ItemProduct from '../Product/ItemProduct';
-import { getAllProductUser } from '../../services/userService';
 import ReactPaginate from 'react-paginate';
 import FormSearch from '../Search/FormSearch';
+import { getAllProductUser } from '../../services/userService';
+import { useState, useEffect } from 'react'
 
 function MainShop(props) {
-    const limitPage = 9
     const [dataProduct, setdataProduct] = useState([])
     const [count, setCount] = useState(0)
     const [numberPage, setnumberPage] = useState(0)
@@ -14,6 +14,8 @@ function MainShop(props) {
     const [categoryId, setcategoryId] = useState('')
     const [brandId, setbrandId] = useState('')
     const [keyword, setkeyword] = useState('')
+
+    const limitPage = 9
 
     useEffect(() => {
         setcategoryId(props.categoryId)
@@ -85,16 +87,17 @@ function MainShop(props) {
             </div>
             <div style={{ marginBottom: '10px' }} className="latest_product_inner">
                 <div className="row">
-                    {dataProduct && dataProduct.length > 0 ?
-                        dataProduct.map((item, index) => {
-                            return (
-                                <ItemProduct id={item.id} width={"255px"} height={"254px"} key={index} type="col-lg-4 col-md-6" name={item.name} img={item.productDetail[0].productImage[0].image}
-                                    discountPrice={item.productDetail[0].discountPrice} price={item.productDetail[0].originalPrice}>
-                                </ItemProduct>
-                            )
-                        })
-                        :
-                        <h4 className='text-center text-2xl text-red'>Không có sản phẩm nào.</h4>
+                    {
+                        dataProduct && dataProduct.length > 0 ?
+                            dataProduct.map((item, index) => {
+                                return (
+                                    <ItemProduct id={item.id} width={"255px"} height={"254px"} key={index} type="col-lg-4 col-md-6" name={item.name} img={item.productDetail[0].productImage[0].image}
+                                        discountPrice={item.productDetail[0].discountPrice} price={item.productDetail[0].originalPrice}>
+                                    </ItemProduct>
+                                )
+                            })
+                            :
+                            <h4 className='text-center text-2xl text-red'>Không có sản phẩm nào.</h4>
                     }
                 </div>
             </div>

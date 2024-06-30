@@ -6,25 +6,24 @@ import CommonUtils from '../../utils/CommonUtils';
 import { toast } from 'react-toastify';
 
 const AddressUsersModal = (props) => {
-    const [inputValues, setInputValues] = useState({
-        shipName: '', shipAdress: '', shipEmail: '', shipPhonenumber: '', isActionUpdate: false
-    });
+    const [inputValues, setInputValues] = useState({ shipName: '', shipAdress: '', shipEmail: '', shipPhonenumber: '', isActionUpdate: false });
 
     useEffect(() => {
         let id = props.addressUserId
         if (id) {
-            let fetchDetailAddress = async () => {
-                let res = await getDetailAddressUserByIdService(id)
-                if (res && res.errCode === 0) {
-                    setInputValues({
-                        ...inputValues, ["isActionUpdate"]: true, ["shipName"]: res.data.shipName, ["shipAdress"]: res.data.shipAdress
-                        , ["shipEmail"]: res.data.shipEmail, ["shipPhonenumber"]: res.data.shipPhonenumber
-                    })
-                }
-            }
-            fetchDetailAddress()
+            fetchDetailAddress(id)
         }
     }, [props.isOpenModal])
+
+    let fetchDetailAddress = async (id) => {
+        let res = await getDetailAddressUserByIdService(id)
+        if (res && res.errCode === 0) {
+            setInputValues({
+                ...inputValues, ["isActionUpdate"]: true, ["shipName"]: res.data.shipName, ["shipAdress"]: res.data.shipAdress
+                , ["shipEmail"]: res.data.shipEmail, ["shipPhonenumber"]: res.data.shipPhonenumber
+            })
+        }
+    }
 
     const handleOnChange = event => {
         const { name, value } = event.target;

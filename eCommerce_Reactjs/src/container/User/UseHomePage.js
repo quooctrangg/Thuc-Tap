@@ -1,9 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
+import React from 'react';
 import DetailUserPage from './DetailUserPage';
 import CategoryUser from './CategoryUser';
 import StoreVoucher from './StoreVoucher';
@@ -12,6 +7,8 @@ import ChangePassword from '../System/User/ChangePassword';
 import OrderUser from './OrderUser';
 import MessagePage from '../Message/MessagePage';
 import DetailOrder from './DetailOrder';
+import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
+import { useState, useEffect } from 'react'
 
 function UserHomePage(props) {
     const [user, setUser] = useState({})

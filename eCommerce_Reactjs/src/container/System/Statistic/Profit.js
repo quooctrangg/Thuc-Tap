@@ -75,7 +75,8 @@ const Profit = (props) => {
                                 <option value="month">Tháng</option>
                                 <option value="year">Năm</option>
                             </select>
-                            {type == "day" &&
+                            {
+                                type == "day" &&
                                 <div style={{ display: 'flex', gap: 5, alignItems: 'center', width: 'auto' }}>
                                     <label htmlFor="startDate">Từ</label>
                                     <DatePicker
@@ -101,7 +102,8 @@ const Profit = (props) => {
                                     />
                                 </div>
                             }
-                            {type == "month" &&
+                            {
+                                type == "month" &&
                                 <div style={{ with: 'auto' }}>
                                     <DatePicker
                                         selected={DateTime}
@@ -112,7 +114,8 @@ const Profit = (props) => {
                                     />
                                 </div>
                             }
-                            {type == "year" &&
+                            {
+                                type == "year" &&
                                 <div style={{ with: 'auto' }}>
                                     <DatePicker
                                         selected={DateTime}
@@ -149,49 +152,49 @@ const Profit = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataOrder && dataOrder.length > 0 ?
-                                    dataOrder.map((item, index) => {
-                                        let totalPriceProduct = 0
-                                        item.orderDetail.forEach(e => {
-                                            totalPriceProduct += e.realPrice
+                                {
+                                    dataOrder && dataOrder.length > 0 ?
+                                        dataOrder.map((item, index) => {
+                                            let totalPriceProduct = 0
+                                            item.orderDetail.forEach(e => {
+                                                totalPriceProduct += e.realPrice
+                                            })
+                                            totalPriceProduct -= item.totalpriceProduct
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{item.id}</td>
+                                                    <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY')}</td>
+                                                    <td>{moment.utc(item.updatedAt).local().format('DD/MM/YYYY')}</td>
+                                                    <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
+                                                    <td>{CommonUtils.formatter.format(item.totalpriceProduct + item.typeShipData.price)}</td>
+                                                    <td className='text-red'>+{CommonUtils.formatter.format(item.typeShipData.price)}</td>
+                                                    <td>
+                                                        {
+                                                            item.voucherData.codeVoucher &&
+                                                            <div>
+                                                                <p className='text-red'>-{CommonUtils.formatter.format(totalPriceProduct)}</p>
+                                                                <p>({item.voucherData.codeVoucher})</p>
+                                                            </div>
+                                                        }
+                                                    </td>
+                                                    <td>{CommonUtils.formatter.format(item.importPrice)}</td>
+                                                    <td>{CommonUtils.formatter.format(item.profitPrice)}</td>
+                                                    <td>
+                                                        <Link to={`/admin/order-detail/${item.id}`}>
+                                                            <button className='btn btn-primary'>
+                                                                Xem chi tiết
+                                                            </button>
+                                                        </Link>
+                                                    </td>
+                                                </tr>
+                                            )
                                         })
-                                        // totalPriceProduct += item.typeShipData.price
-                                        totalPriceProduct -= item.totalpriceProduct
-                                        return (
-                                            <tr key={index}>
-                                                <td>{item.id}</td>
-                                                <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY')}</td>
-                                                <td>{moment.utc(item.updatedAt).local().format('DD/MM/YYYY')}</td>
-                                                <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
-                                                <td>{CommonUtils.formatter.format(item.totalpriceProduct + item.typeShipData.price)}</td>
-                                                <td className='text-red'>+{CommonUtils.formatter.format(item.typeShipData.price)}</td>
-                                                <td>
-                                                    {
-                                                        item.voucherData.codeVoucher &&
-                                                        <div>
-                                                            <p className='text-red'>-{CommonUtils.formatter.format(totalPriceProduct)}</p>
-                                                            <p>({item.voucherData.codeVoucher})</p>
-                                                        </div>
-                                                    }
-                                                </td>
-                                                <td>{CommonUtils.formatter.format(item.importPrice)}</td>
-                                                <td>{CommonUtils.formatter.format(item.profitPrice)}</td>
-                                                <td>
-                                                    <Link to={`/admin/order-detail/${item.id}`}>
-                                                        <button className='btn btn-primary'>
-                                                            Xem chi tiết
-                                                        </button>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={11} className='text-center text-red'>
-                                            Không có dữ liệu
-                                        </td>
-                                    </tr>
+                                        :
+                                        <tr>
+                                            <td colSpan={11} className='text-center text-red'>
+                                                Không có dữ liệu
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

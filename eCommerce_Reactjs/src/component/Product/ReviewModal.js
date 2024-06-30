@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { Modal, ModalFooter, ModalBody, Button } from 'reactstrap';
 
 const ReviewModal = (props) => {
-    const [inputValues, setInputValues] = useState({
-        content: ''
-    });
+    const [inputValues, setInputValues] = useState({ content: '' });
 
     const handleOnChange = event => {
         const { name, value } = event.target;

@@ -6,9 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddBrandModal = props => {
-    const [inputValues, setInputValues] = useState({
-        value: '', code: ''
-    });
+    const [inputValues, setInputValues] = useState({ value: '', code: '' });
     const [barndId, setBrandId] = useState(null)
 
     useEffect(() => {

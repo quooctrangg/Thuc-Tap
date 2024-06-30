@@ -6,9 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddCategoryModal = props => {
-    const [inputValues, setInputValues] = useState({
-        value: '', code: ''
-    });
+    const [inputValues, setInputValues] = useState({ value: '', code: '' });
     const [categoryId, setCategoryId] = useState(null)
 
     useEffect(() => {

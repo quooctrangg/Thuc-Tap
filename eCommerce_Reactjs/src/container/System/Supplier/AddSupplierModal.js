@@ -6,9 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddSupplierModal = props => {
-    const [inputValues, setInputValues] = useState({
-        name: '', address: '', phonenumber: '', email: ''
-    });
+    const [inputValues, setInputValues] = useState({ name: '', address: '', phonenumber: '', email: '' });
     const [supplierId, setSupplierId] = useState(null)
 
     useEffect(() => {

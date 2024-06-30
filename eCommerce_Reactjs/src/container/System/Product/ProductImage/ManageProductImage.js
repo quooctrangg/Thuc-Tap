@@ -1,22 +1,19 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import {
-    getAllProductDetailImageByIdService, createNewProductImageService, UpdateProductDetailImageService,
-    DeleteProductDetailImageService, getAllProductDetailSizeByIdService,
-    DeleteProductDetailSizeService
-} from '../../../../services/userService';
-import { toast } from 'react-toastify';
-import './ManageProductImage.scss';
 import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
-import { PAGINATION } from '../../../../utils/constant';
-import ReactPaginate from 'react-paginate';
-import { useParams } from "react-router-dom";
 import AddImageModal from './AddImageModal';
+import ReactPaginate from 'react-paginate';
 import AddSizeModal from './AddSizeModal';
+import { useEffect, useState } from 'react';
+import { getAllProductDetailImageByIdService, DeleteProductDetailImageService, getAllProductDetailSizeByIdService, DeleteProductDetailSizeService } from '../../../../services/userService';
+import { toast } from 'react-toastify';
+import { PAGINATION } from '../../../../utils/constant';
+import { useParams } from "react-router-dom";
+import 'react-image-lightbox/style.css';
+import './ManageProductImage.scss';
 
 const ManageProductImage = () => {
     const { id } = useParams()
+
     const [dataProductDetailImage, setdataProductDetailImage] = useState([])
     const [dataProductDetailSize, setdataProductDetailSize] = useState([])
     const [isOpen, setisOpen] = useState(false)
@@ -145,7 +142,8 @@ const ManageProductImage = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataProductDetailImage && dataProductDetailImage.length > 0 &&
+                                    {
+                                        dataProductDetailImage && dataProductDetailImage.length > 0 &&
                                         dataProductDetailImage.map((item, index) => {
                                             return (
                                                 <tr key={index}>
@@ -171,18 +169,11 @@ const ManageProductImage = () => {
                             </table>
                         </div>
                     </div>
-                    <AddImageModal
-                        isOpenImageModal={isOpenImageModal}
-                        handleCloseImageModal={handleCloseImageModal}
-                        productImageId={productImageId}
-                        loadProductDetailImage={loadProductDetailImage}
-                    />
+                    <AddImageModal isOpenImageModal={isOpenImageModal} handleCloseImageModal={handleCloseImageModal} productImageId={productImageId} loadProductDetailImage={loadProductDetailImage} />
                 </div>
                 {
                     isOpen === true &&
-                    <Lightbox mainSrc={imgPreview}
-                        onCloseRequest={() => setisOpen(false)}
-                    />
+                    <Lightbox mainSrc={imgPreview} onCloseRequest={() => setisOpen(false)} />
                 }
                 {
                     countImage > 1 &&
@@ -264,9 +255,7 @@ const ManageProductImage = () => {
                 </div>
                 {
                     isOpen === true &&
-                    <Lightbox mainSrc={imgPreview}
-                        onCloseRequest={() => setisOpen(false)}
-                    />
+                    <Lightbox mainSrc={imgPreview} onCloseRequest={() => setisOpen(false)} />
                 }
                 {
                     countSize > 1 &&

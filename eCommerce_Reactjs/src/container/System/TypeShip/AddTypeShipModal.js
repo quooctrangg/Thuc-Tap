@@ -5,9 +5,7 @@ import { createNewTypeShipService, getDetailTypeShipByIdService, updateTypeShipS
 import { toast } from 'react-toastify';
 
 const AddTypeShipModal = props => {
-    const [inputValues, setInputValues] = useState({
-        type: '', price: ''
-    });
+    const [inputValues, setInputValues] = useState({ type: '', price: '' });
     const [typeShipId, setTypeShipId] = useState(null)
 
     useEffect(() => {
@@ -50,7 +48,6 @@ const AddTypeShipModal = props => {
             })
             props.fetchData()
             props.handleCloseAddTypeShipModal()
-
         }
         else if (res && res.errCode === 2) {
             toast.error(res.errMessage)
@@ -100,7 +97,8 @@ const AddTypeShipModal = props => {
                     typeShipId ?
                         <button type="button" onClick={() => handleUpdateTypeShip()} className="btn btn-primary">Cập nhật</button>
                         :
-                        <button type="button" onClick={() => handleAddTypeShip()} className="btn btn-primary">Thêm</button>}
+                        <button type="button" onClick={() => handleAddTypeShip()} className="btn btn-primary">Thêm</button>
+                }
             </ModalBody>
         </Modal>
     )

@@ -10,10 +10,20 @@ import DatePicker from "react-datepicker";
 import CommonUtils from '../../../utils/CommonUtils'
 
 const AddUserModal = props => {
-    const [inputValues, setInputValues] = useState({
-        email: '', password: '', firstName: '', lastName: '', address: '', phonenumber: '', genderId: '', roleId: '', id: '', dob: new Date()
-    });
     const { data: dataGender } = useFetchAllcode('GENDER');
+
+    const [inputValues, setInputValues] = useState({
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        address: '',
+        phonenumber: '',
+        genderId: '',
+        roleId: '',
+        id: '',
+        dob: new Date()
+    });
     const [userId, setUserId] = useState(null)
 
     useEffect(async () => {
@@ -181,7 +191,8 @@ const AddUserModal = props => {
                     <div className="form-group col-md-6">
                         <label htmlFor="genderId">Giới tính</label>
                         <select value={inputValues.genderId} name="genderId" onChange={(event) => handleOnChange(event)} id="genderId" className="form-control">
-                            {dataGender && dataGender.length > 0 &&
+                            {
+                                dataGender && dataGender.length > 0 &&
                                 dataGender.map((item, index) => {
                                     return (
                                         <option key={index} value={item.code}>{item.value}</option>

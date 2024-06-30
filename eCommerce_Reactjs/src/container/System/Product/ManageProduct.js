@@ -1,13 +1,13 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
+import FormSearch from '../../../component/Search/FormSearch';
+import AddProductModal from './AddProductModal';
+import UpdateProductModal from './UpdateProductModal';
 import { useEffect, useState } from 'react';
 import { getAllProductAdmin, handleBanProductService, handleActiveProductService } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { PAGINATION } from '../../../utils/constant';
-import ReactPaginate from 'react-paginate';
 import { Link } from "react-router-dom";
-import FormSearch from '../../../component/Search/FormSearch';
-import AddProductModal from './AddProductModal';
-import UpdateProductModal from './UpdateProductModal';
 
 const ManageProduct = () => {
     const [dataProduct, setdataProduct] = useState([])
@@ -126,46 +126,47 @@ const ManageProduct = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataProduct && dataProduct.length > 0 ?
-                                    dataProduct.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{(numberPage * 10) + index + 1}</td>
-                                                <td>{item.name}</td>
-                                                <td>{item.categoryData.value}</td>
-                                                <td>{item.brandData.value}</td>
-                                                <td>{item.material}</td>
-                                                <td>{item.madeby}</td>
-                                                <td>{item.view ? item.view : 0}</td>
-                                                <td>{item.statusData.value}</td>
-                                                <td style={{ display: 'flex', gap: 2 }}>
-                                                    <Link to={`/admin/list-product-detail/${item.id}`}>
-                                                        <button className='btn btn-primary'>
-                                                            Xem
+                                {
+                                    dataProduct && dataProduct.length > 0 ?
+                                        dataProduct.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{(numberPage * 10) + index + 1}</td>
+                                                    <td>{item.name}</td>
+                                                    <td>{item.categoryData.value}</td>
+                                                    <td>{item.brandData.value}</td>
+                                                    <td>{item.material}</td>
+                                                    <td>{item.madeby}</td>
+                                                    <td>{item.view ? item.view : 0}</td>
+                                                    <td>{item.statusData.value}</td>
+                                                    <td style={{ display: 'flex', gap: 2 }}>
+                                                        <Link to={`/admin/list-product-detail/${item.id}`}>
+                                                            <button className='btn btn-primary'>
+                                                                Xem
+                                                            </button>
+                                                        </Link>
+                                                        <button onClick={() => {
+                                                            setCurrent(item.id)
+                                                            handleShowUpdateProductModal()
+                                                        }} className='btn btn-warning'>
+                                                            Sửa
                                                         </button>
-                                                    </Link>
-                                                    <button onClick={() => {
-                                                        setCurrent(item.id)
-                                                        handleShowUpdateProductModal()
-                                                    }} className='btn btn-warning'>
-                                                        Sửa
-                                                    </button>
-                                                    {
-                                                        item.statusData.code === 'S1' ?
-                                                            <button className='btn btn-danger' onClick={() => handleBanProduct(item.id)}>Ẩn</button>
-                                                            :
-                                                            <span className='btn btn-success' onClick={() => handleActiveProduct(item.id)}>Hiện</span>
-                                                    }
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                    :
-                                    <tr>
-                                        <td colSpan={9} className='text-center text-red'>
-                                            Không có dữ liệu.
-                                        </td>
-                                    </tr>
+                                                        {
+                                                            item.statusData.code === 'S1' ?
+                                                                <button className='btn btn-danger' onClick={() => handleBanProduct(item.id)}>Ẩn</button>
+                                                                :
+                                                                <span className='btn btn-success' onClick={() => handleActiveProduct(item.id)}>Hiện</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                        :
+                                        <tr>
+                                            <td colSpan={9} className='text-center text-red'>
+                                                Không có dữ liệu.
+                                            </td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

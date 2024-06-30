@@ -1,31 +1,43 @@
 import React from 'react';
+import CommonUtils from '../../../utils/CommonUtils';
+import DatePicker from "react-datepicker";
+import moment from 'moment'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import DatePicker from "react-datepicker";
-import moment from 'moment'
 import { getDetailUserById, UpdateUserService, handleSendVerifyEmail } from '../../../services/userService';
 import { useFetchAllcode } from '../../customize/fetch';
-import CommonUtils from '../../../utils/CommonUtils';
+import 'react-toastify/dist/ReactToastify.css';
 import 'react-image-lightbox/style.css';
 
 const Information = () => {
     const { id } = useParams();
-    const [inputValues, setInputValues] = useState({
-        firstName: '', lastName: '', address: '', phonenumber: '', genderId: '', dob: new Date(), roleId: '', email: '', image: '', isActiveEmail: '', imageReview: ''
-    });
+
     const { data: dataGender } = useFetchAllcode('GENDER');
 
+    const [inputValues, setInputValues] = useState({
+        firstName: '',
+        lastName: '',
+        address: '',
+        phonenumber: '',
+        genderId: '',
+        dob: new Date(),
+        email: '',
+        image: '',
+        isActiveEmail: '',
+        imageReview: ''
+    });
+
     useEffect(() => {
-        let fetchUser = async () => {
-            let res = await getDetailUserById(id)
-            if (res && res.errCode === 0) {
-                setStateUser(res.data)
-            }
-        }
         fetchUser();
     }, [])
+
+    let fetchUser = async () => {
+        let res = await getDetailUserById(id)
+        if (res && res.errCode === 0) {
+            setStateUser(res.data)
+        }
+    }
 
     let setStateUser = (data) => {
         setInputValues({
@@ -57,7 +69,6 @@ const Information = () => {
             firstName: inputValues.firstName,
             lastName: inputValues.lastName,
             address: inputValues.address,
-            roleId: inputValues.roleId,
             genderId: inputValues.genderId,
             phonenumber: inputValues.phonenumber,
             dob: moment(inputValues.dob).format('MM/DD/YYYY'),
@@ -144,7 +155,8 @@ const Information = () => {
                             <div className="col-md-6">
                                 <label className="labels">Giới tính</label>
                                 <select value={inputValues.genderId} name="genderId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
-                                    {dataGender && dataGender.length > 0 &&
+                                    {
+                                        dataGender && dataGender.length > 0 &&
                                         dataGender.map((item, index) => {
                                             return (
                                                 <option key={index} value={item.code}>{item.value}</option>

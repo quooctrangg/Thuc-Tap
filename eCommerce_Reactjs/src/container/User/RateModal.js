@@ -1,15 +1,13 @@
 import React from 'react';
+import CommonUtils from '../../utils/CommonUtils';
 import { useState } from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import { createNewReviewService } from '../../services/userService'
 import { toast } from 'react-toastify';
-import CommonUtils from '../../utils/CommonUtils';
 import './RateModal.scss'
 
 const RateModal = (props) => {
-    const [inputValues, setInputValues] = useState({
-        activeStar: '', imageReview: '', image: '', content: '', dataReview: [], countStar: {}
-    });
+    const [inputValues, setInputValues] = useState({ activeStar: '', imageReview: '', image: '', content: '', dataReview: [], countStar: {} });
 
     let handleChooseStart = (number) => {
         setInputValues({ ...inputValues, ["activeStar"]: number })
@@ -112,7 +110,6 @@ const RateModal = (props) => {
                             </div>
                             <div className="content-right">
                                 <button onClick={() => handleSaveComment()} className="btn btn-primary">
-                                    {/* <i className="fas fa-pencil-alt"></i> */}
                                     Đánh giá
                                 </button>
                             </div>

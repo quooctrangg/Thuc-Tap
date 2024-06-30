@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 
 const AddImageModal = (props) => {
     const { id } = useParams()
+
     const [inputValues, setInputValues] = useState({ image: '', imageReview: '', caption: '', isOpen: false, id: '' });
     const [productImageId, setProductImageId] = useState(null)
 
@@ -130,10 +131,9 @@ const AddImageModal = (props) => {
                     </Button>
                 </ModalFooter>
             </Modal>
-            {inputValues.isOpen === true &&
-                <Lightbox mainSrc={inputValues.imageReview}
-                    onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false })}
-                />
+            {
+                inputValues.isOpen === true &&
+                <Lightbox mainSrc={inputValues.imageReview} onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false })} />
             }
         </div >
     )
