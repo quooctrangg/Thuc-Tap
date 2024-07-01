@@ -91,6 +91,19 @@ let createNewReceiptDetail = async (req, res) => {
     }
 }
 
+let importGoods = async (req, res) => {
+    try {
+        let data = await receiptService.importGoods(req.body);
+        return res.status(200).json(data);
+    } catch (error) {
+        console.log(error)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Lỗi từ máy chủ'
+        })
+    }
+}
+
 module.exports = {
     createNewReceipt: createNewReceipt,
     getDetailReceiptById: getDetailReceiptById,
@@ -98,5 +111,6 @@ module.exports = {
     updateReceipt: updateReceipt,
     deleteReceipt: deleteReceipt,
     createNewReceiptDetail: createNewReceiptDetail,
-    deleteDetailReceipt: deleteDetailReceipt
+    deleteDetailReceipt: deleteDetailReceipt,
+    importGoods: importGoods
 }

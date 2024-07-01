@@ -176,6 +176,7 @@ let initwebRoutes = (app) => {
     router.delete('/api/delete-receipt', middlewareControllers.verifyTokenAdmin, receiptController.deleteReceipt)
     router.post('/api/create-new-detail-receipt', middlewareControllers.verifyTokenAdmin, receiptController.createNewReceiptDetail)
     router.delete('/api/delete-detail-receipt', middlewareControllers.verifyTokenAdmin, receiptController.deleteDetailReceipt)
+    router.post('/api/import-goods', middlewareControllers.verifyTokenAdmin, receiptController.importGoods)
 
     return app.use("/", router);
 }

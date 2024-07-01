@@ -1,7 +1,7 @@
 import React from 'react';
 import CommonUtils from '../../../utils/CommonUtils';
 import { useEffect, useState } from 'react';
-import { deleteDetailReceiptService, getDetailReceiptByIdService } from '../../../services/userService';
+import { deleteDetailReceiptService, getDetailReceiptByIdService, importGoods } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { useParams } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
@@ -48,6 +48,16 @@ const DetailReceipt = (props) => {
             toast.success("Xóa sản phẩm thành công")
             await loadReceiptDetail(id)
         } else toast.error("Xóa sản phẩm thất bại")
+    }
+
+    const handleImportGoods = async (receiptId) => {
+        let res = await importGoods({
+            id: receiptId
+        })
+        if (res && res.errCode === 0) {
+            toast.success("Nhập hàng thành công")
+            await loadReceiptDetail(id)
+        } else toast.error("Nhập hàng thất bại")
     }
 
 
@@ -117,7 +127,7 @@ const DetailReceipt = (props) => {
                         <div className='d-flex gap-2 justify-content-end mb-2'>
                             {
                                 status !== 1 &&
-                                <button onClick={() => handleShowDetailReceiptModal()} className="btn btn-info" >Nhập kho</button>
+                                <button onClick={() => handleImportGoods(id)} className="btn btn-info" >Nhập kho</button>
                             }
                         </div>
                     </div>

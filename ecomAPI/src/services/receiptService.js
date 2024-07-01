@@ -255,6 +255,49 @@ let deleteReceipt = (data) => {
     })
 }
 
+const importGoods = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log(data);
+            if (!data.id) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Thiếu tham số bắt buộc'
+                })
+            } else {
+                let receipt = await db.Receipt.findOne({
+                    where: {
+                        id: data.id,
+                        status: 0
+                    },
+                    raw: false
+                })
+                if (receipt) {
+                    receipt.status = 1
+                    await receipt.save()
+                    const detailReceipt = await db.ReceiptDetail.findAll({
+                        where: {
+                            receiptId: data.id,
+                            status: 0
+                        },
+                        raw: false
+                    })
+                    for (let i = 0; i < detailReceipt.length; i++) {
+                        detailReceipt[i].status = 1
+                        await detailReceipt[i].save()
+                    }
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thành công'
+                    })
+                }
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     createNewReceipt: createNewReceipt,
     getDetailReceiptById: getDetailReceiptById,
@@ -262,5 +305,6 @@ module.exports = {
     updateReceipt: updateReceipt,
     deleteReceipt: deleteReceipt,
     createNewReceiptDetail: createNewReceiptDetail,
-    deleteDetailReceipt: deleteDetailReceipt
+    deleteDetailReceipt: deleteDetailReceipt,
+    importGoods: importGoods
 }

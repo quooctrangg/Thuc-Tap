@@ -525,6 +525,10 @@ const createNewReceiptDetailService = (data) => {
     return axios.post(`/api/create-new-detail-receipt`, data)
 }
 
+const importGoods = (data) => {
+    return axios.post(`/api/import-goods`, data)
+}
+
 //======================THIRTY SERVICE==========================//
 const getExchangeRate = () => {
     return axios.get(`https://tygia.com/json.php?ran=0&gold=0&bank=VIETCOM&date=now`)
@@ -553,5 +557,5 @@ export {
     getStatisticByMonth, getStatisticByDay, checkPhonenumberEmail, createNewSupplierService, updateSupplierService, deleteSupplierService, getDetailSupplierByIdService,
     getAllSupplier, createNewReceiptService, getAllReceipt, getDetailReceiptByIdService, deleteReceiptService, updateReceiptService, createNewReceiptDetailService,
     getStatisticOverturn, getStatisticProfit, getProductShopcartService, getDetailUserByEmail, getProductRecommendService,
-    getStatisticStockProduct, getExchangeRate, paymentOrderVnpayService, confirmOrderVnpay, paymentOrderVnpaySuccessService, unBanUserService, deleteDetailReceiptService
+    getStatisticStockProduct, getExchangeRate, paymentOrderVnpayService, confirmOrderVnpay, paymentOrderVnpaySuccessService, unBanUserService, deleteDetailReceiptService, importGoods
 }
